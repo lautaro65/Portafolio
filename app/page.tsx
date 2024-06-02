@@ -55,7 +55,7 @@ export default function Home() {
               <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1 grid grid-cols-3 gap-10">
                 <div className="w-full  col-span-3 sm:col-span-3  md:col-span-2  lg:col-span-2 xl:col-span-2 flex justify-center xl:justify-end">
                   <Image
-                    src="/yo.jpg"
+                    src="/yo.webp"
                     title="Foto de Lautaro Octavio Faure"
                     alt="Foto de Lautaro Octavio Faure"
                     layout="responsive"
