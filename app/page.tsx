@@ -6,11 +6,10 @@ import { FiMail } from "react-icons/fi";
 import { FaWhatsapp, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { GrBriefcase } from "react-icons/gr";
 import CardProjects from "@/components/SwiperProject";
-import { use, useState } from "react";
 import { motion } from "framer-motion";
 import ContactForm from "@/components/form";
 import CardSkills from "@/components/Skills";
-
+import Link from "next/link";
 export default function Home() {
   return (
     <main>
@@ -23,7 +22,7 @@ export default function Home() {
             whileInView={{ opacity: 1, translateY: 0 }}
             transition={{ duration: 2 }}
             viewport={{ once: true }}
-            className="mt-40 flex justify-center"
+            className="mt-20 flex justify-center"
           >
             <div className="w-fit h-10/12 grid grid-cols-2 border lg:w-11/12 xs:w-10/12 2 rounded   border-white p-10">
               <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1  w-full h-auto justify-center underline-dad grid grid-cols-1 mb-5 items-center">
@@ -55,10 +54,13 @@ export default function Home() {
               </div>
               <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1 grid grid-cols-3 gap-10">
                 <div className="w-full  col-span-3 sm:col-span-3  md:col-span-2  lg:col-span-2 xl:col-span-2 flex justify-center xl:justify-end">
-                  <img
-                    src="../yo.jpg"
+                  <Image
+                    src="/yo.jpg"
                     alt="Foto de Lautaro Octavio Faure"
-                    className="w-full sm:w-full md:w-11/12 lg:w-11/12  xl:w-11/12 h-auto"
+                    layout="responsive"
+                    width={1920}
+                    height={1280}
+                    className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
                   />
                 </div>
                 <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-white p-5">
@@ -67,41 +69,65 @@ export default function Home() {
                     <div className="underline mb-5 " />
                   </div>
                   <div className=" relative   col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded  border-white ">
-                    <a target="_blank" href="curriculum">
+                    <Link
+                      aria-label="Ir a ver el curriculum"
+                      title="curriculum"
+                      target="_blank"
+                      href="curriculum"
+                    >
                       <GrBriefcase color="white" fontSize={"45px"} />
-                    </a>
+                    </Link>
                     <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Curriculum</p>
                     </div>
                   </div>
                   <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
-                    <a  href="#contact">
+                    <Link
+                      aria-label="Ir a ver enviar un gmail"
+                      title="contact"
+                      href="#contact"
+                    >
                       <FiMail color="white" fontSize={"45px"} />
-                    </a>
+                    </Link>
                     <div className="absolute z-10  top-[-35px] right-[-40px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Mail</p>
                     </div>
                   </div>
                   <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
-                    <a target="_blank" href="www.linkedin.com/in/lautaro-ocatavio-faure-64aa66310">
+                    <Link
+                      aria-label="Ir a un perfil de linkedin"
+                      title="linkedin"
+                      target="_blank"
+                      href="https://www.linkedin.com/in/lautaro-ocatavio-faure/"
+                    >
                       <FaLinkedin color="white" fontSize={"45px"} />
-                    </a>
+                    </Link>
                     <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Linkedin</p>
                     </div>
                   </div>
                   <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
-                    <a target="_blank" href="https://wa.me/3541335850">
+                    <Link
+                      aria-label="Ir a un contacto de Whatsapp"
+                      title="Whatsapp"
+                      target="_blank"
+                      href="https://wa.me/3541335850"
+                    >
                       <FaWhatsapp color="white" fontSize={"45px"} />
-                    </a>
+                    </Link>
                     <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">whatsapp</p>
                     </div>
                   </div>
                   <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
-                    <a target="_blank" href="https://www.instagram.com/faurelautaro/">
+                    <Link
+                      aria-label="Ir a un perfil de Instagram"
+                      title="Instagram"
+                      target="_blank"
+                      href="https://www.instagram.com/faurelautaro/"
+                    >
                       <FaInstagram color="white" fontSize={"45px"} />
-                    </a>
+                    </Link>
                     <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Instagram</p>
                     </div>
@@ -203,9 +229,12 @@ export default function Home() {
                 </div>
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
-                <img
+                <Image
                   src="/project.png"
                   alt="Imagen del Proyecto"
+                  layout="responsive"
+                  width={1920}
+                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
                   className="w-full h-auto min-h-full"
                 />
                 <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
@@ -232,9 +261,12 @@ export default function Home() {
                 </div>
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
-                <img
+                <Image
                   src="/project.png"
                   alt="Imagen del Proyecto"
+                  layout="responsive"
+                  width={1920}
+                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
                   className="w-full h-auto min-h-full"
                 />
                 <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
@@ -261,9 +293,12 @@ export default function Home() {
                 </div>
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
-                <img
+                <Image
                   src="/project.png"
                   alt="Imagen del Proyecto"
+                  layout="responsive"
+                  width={1920}
+                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
                   className="w-full h-auto min-h-full"
                 />
                 <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
@@ -290,9 +325,12 @@ export default function Home() {
                 </div>
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
-                <img
+                <Image
                   src="/project.png"
                   alt="Imagen del Proyecto"
+                  layout="responsive"
+                  width={1920}
+                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
                   className="w-full h-auto min-h-full"
                 />
                 <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
@@ -348,24 +386,44 @@ export default function Home() {
               <h3 className="text-xl font-bold">Enlaces</h3>
               <ul className="mt-4">
                 <li>
-                  <a href="/" className="hover:text-gray-300">
+                  <Link
+                    aria-label="Ir al inicio de la pagina"
+                    title="Home"
+                    href="/"
+                    className="hover:text-gray-300"
+                  >
                     Inicio
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#Skills" className="hover:text-gray-300">
+                  <Link
+                    aria-label="Ir a la seccion de las skills"
+                    title="Skills"
+                    href="#Skills"
+                    className="hover:text-gray-300"
+                  >
                     Skills
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#Project" className="hover:text-gray-300">
+                  <Link
+                    aria-label="Ir a la seccion de las Proyectos"
+                    title="Proyectos"
+                    href="#Project"
+                    className="hover:text-gray-300"
+                  >
                     Proyectos
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#contact" className="hover:text-gray-300">
+                  <Link
+                    aria-label="Ir a la seccion para mandar gmail"
+                    title="Contacto"
+                    href="#contact"
+                    className="hover:text-gray-300"
+                  >
                     Contacto
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

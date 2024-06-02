@@ -17,6 +17,8 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-8 justify-center w-full">
           <div className="underline-dad">
             <Link
+              aria-label="Ir al principio de la pagina"
+              title="inicio"
               href="/"
               className="text-white text-xl hover:text-gray-300"
             >
@@ -26,6 +28,8 @@ const Navbar = () => {
           </div>
           <div className="underline-dad">
             <Link
+              aria-label="Ir a la seccion de las skills"
+              title="Skills"
               href="#Skills"
               className="text-white text-xl hover:text-gray-300 "
             >
@@ -35,6 +39,8 @@ const Navbar = () => {
           </div>
           <div className="underline-dad">
             <Link
+              aria-label="Ir al seccion de los Projectos"
+              title="Projectos"
               href="#Project"
               className="text-white text-xl hover:text-gray-300 "
             >
@@ -44,6 +50,8 @@ const Navbar = () => {
           </div>
           <div className="underline-dad">
             <Link
+              aria-label="Ir al seccion para mandar gmail"
+              title="Contacto"
               href="#contact"
               className="text-white text-xl hover:text-gray-300 "
             >
@@ -79,8 +87,10 @@ const Navbar = () => {
           <ul className="flex flex-col items-center space-y-4 mt-4">
             <li>
               <Link
+                aria-label="Ir al principio de la pagina"
+                title="inicio"
                 href="#home"
-                className="text-gray-300 hover:text-white"
+                className="text-white text-xl hover:text-gray-300 "
                 onClick={toggleMenu}
               >
                 Inicio
@@ -88,26 +98,32 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="#about"
-                className="text-gray-300 hover:text-white"
+                aria-label="Ir a la seccion de las skills"
+                title="Skills"
+                href="#Skills"
+                className="text-white text-xl hover:text-gray-300 "
                 onClick={toggleMenu}
               >
-                Sobre mí
+                Skills
               </Link>
             </li>
             <li>
               <Link
-                href="#portfolio"
-                className="text-gray-300 hover:text-white"
+                aria-label="Ir a la seccion de las Proyectos"
+                title="Project"
+                href="#Project"
+                className="text-white text-xl hover:text-gray-300 "
                 onClick={toggleMenu}
               >
-                Portafolio
+                Project
               </Link>
             </li>
             <li>
-              <Link
-                href="#contact"
-                className="text-gray-300 hover:text-white"
+            <Link
+                aria-label="Ir a la seccion para mandar gmail"
+                title="Contact"
+                href="#Contact"
+                className="text-white text-xl hover:text-gray-300 "
                 onClick={toggleMenu}
               >
                 Contacto

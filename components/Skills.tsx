@@ -23,7 +23,7 @@ const CardSkills = ({ Titulo, texto1, texto2 }: any) => {
           <div>
             {!isFlipped ? (
               <h2 className="text-white text-3xl font-semibold   ">
-                {Titulo}{" "}
+                {Titulo}
               </h2>
             ) : (
               <h2
