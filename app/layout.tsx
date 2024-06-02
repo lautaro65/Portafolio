@@ -80,7 +80,7 @@ export default function RootLayout({
           rel="apple-touch-icon"
           href="https://portafolio-lautaro-faures-projects.vercel.app/portada.png"
         />
-        <title>Portafolio web de Lautaro Octavio Faure"</title>
+        <title>Portafolio web de Lautaro Octavio Faure</title>
       </head>
       <body className={poppins.className}>{children}</body>
     </html>

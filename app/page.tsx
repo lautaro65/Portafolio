@@ -56,6 +56,7 @@ export default function Home() {
                 <div className="w-full  col-span-3 sm:col-span-3  md:col-span-2  lg:col-span-2 xl:col-span-2 flex justify-center xl:justify-end">
                   <Image
                     src="/yo.jpg"
+                    title="Foto de Lautaro Octavio Faure"
                     alt="Foto de Lautaro Octavio Faure"
                     layout="responsive"
                     width={1920}
@@ -230,6 +231,7 @@ export default function Home() {
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
                 <Image
+                  title="foto del proyecto"
                   src="/project.png"
                   alt="Imagen del Proyecto"
                   layout="responsive"
@@ -262,6 +264,7 @@ export default function Home() {
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
                 <Image
+                  title="foto del proyecto"
                   src="/project.png"
                   alt="Imagen del Proyecto"
                   layout="responsive"
@@ -294,6 +297,7 @@ export default function Home() {
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
                 <Image
+                  title="foto del proyecto"
                   src="/project.png"
                   alt="Imagen del Proyecto"
                   layout="responsive"
@@ -326,6 +330,7 @@ export default function Home() {
                 <div className="underline " />
                 <div className="h-0.5 bg-gray-300"></div>
                 <Image
+                  title="foto del proyecto"
                   src="/project.png"
                   alt="Imagen del Proyecto"
                   layout="responsive"
