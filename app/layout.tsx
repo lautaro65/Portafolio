@@ -33,6 +33,7 @@ export default function RootLayout({
         />
         <meta name="author" content="Lautaro Octavio Faure" />
         <meta name="robots" content="index, follow" />
+        <meta name="language" content="es"/>
         <meta
           property="og:title"
           content="portafolio web de Lautaro Octavio Faure"

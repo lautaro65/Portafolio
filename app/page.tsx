@@ -59,14 +59,14 @@ export default function Home() {
                     title="Foto de Lautaro Octavio Faure"
                     alt="Foto de Lautaro Octavio Faure"
                     layout="responsive"
-                    width={1920}
-                    height={1280}
+                    width={400}
+                    height={400}
                     className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
                   />
                 </div>
                 <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-white p-5">
                   <div className="  col-span-6  underline-dad ">
-                    <h4 className=" text-white  text-xl sm:text-4xl ">Redes</h4>
+                    <h3 className=" text-white  text-xl sm:text-4xl ">Redes</h3>
                     <div className="underline mb-5 " />
                   </div>
                   <div className=" relative   col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded  border-white ">

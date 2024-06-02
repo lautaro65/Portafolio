@@ -62,6 +62,8 @@ const Navbar = () => {
         </div>
         <div className="md:hidden ml-auto mr-5">
           <button
+            aria-label="toggleMenu"
+            title="toggleMenu"
             onClick={toggleMenu}
             className="text-gray-300 hover:text-white focus:outline-none"
           >
@@ -119,7 +121,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-            <Link
+              <Link
                 aria-label="Ir a la seccion para mandar gmail"
                 title="Contact"
                 href="#Contact"

@@ -21,7 +21,6 @@ const CardProjects = ({
   reactNative,
   javascript,
 }: any) => {
-  const [visible, setVisible] = useState(false);
   return (
     <Swiper
       direction="horizontal"
