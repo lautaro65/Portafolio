@@ -2,32 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.card {
+  perspective: 1000px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.card-inner {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card-flip {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #000000;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.underline-dad:hover .underline {
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  /*Colorinicial*/
+  animation: mostrar-degradado 3s linear infinite;
+  -webkit-animation: mostrar-degradado 3s linear infinite;
+}
+
+.underline {
+  width: 100%; /* Ancho completo */
+  height: 2px; /* Grosor de la línea */
+  background-color: #fff;
+}
+
+@keyframes mostrar-degradado {
+  0% {
+    background-color: #fff; /* Color inicial */
+  }
+  50% {
+    background-color: #2c2c2c; /* Color intermedio */
+  }
+  100% {
+    background-color: #fff; /* Color final */
+  }
+}
+
+.relative:hover .absolute {
+  opacity: 1;
+}
+.titulo {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+.text-container {
+  /* Mantener el tamaño del contenedor en pantallas grandes */
+  max-height: 100%;
+}
+@media (max-width: 500px) {
+  .text-container {
+    max-height: 200px; /* Ajusta esta altura según sea necesario */
+    overflow-y: scroll;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+    opacity: 0;
+    display: none;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+  }
+}
+
+/* Aplicar las animaciones a la tarjeta de detalles */
+.card-content.slide-in {
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.card-content.slide-out {
+  animation: slide-out 0.5s ease-in forwards;
+}
+
+/*----------------------------clases de Swiper------------------------------------------*/
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nextui-c-gEEnVX-qXFXw-color-default .nextui-avatar-bg {
+  background-color: transparent;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000000 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #025a4e !important;
+  opacity: 1;
+}
+.swiper-pagination-bullet {
+  width: var(
+    --swiper-pagination-bullet-width,
+    var(--swiper-pagination-bullet-size, 8px)
+  );
+  height: var(
+    --swiper-pagination-bullet-height,
+    var(--swiper-pagination-bullet-size, 8px)
+  );
+  display: inline-block;
+  border-radius: var(--swiper-pagination-bullet-border-radius, 50%);
+  background: #025a4e !important;
+  opacity: 0.5;
+}
+
+/* Estilo para el scrollbar en navegadores webkit (Chrome, Safari, etc.) */
+/* Cambia el color del scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Ancho del scrollbar */
+}
+
+/* Cambia el color del fondo del scrollbar */
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Color del fondo */
+}
+
+/* Cambia el color del thumb (la parte deslizable del scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 5px;
+
+}
+
+/* Cambia el color del thumb cuando se desplaza */
+::-webkit-scrollbar-thumb:hover {
+  background: #cccccc; /* Color del thumb al pasar el mouse */
 }
