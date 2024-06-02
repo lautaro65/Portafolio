@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import 'tailwindcss/tailwind.css';
+import "tailwindcss/tailwind.css";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700", "900"], // Puedes especificar los pesos que necesitas
@@ -80,6 +80,11 @@ export default function RootLayout({
           rel="apple-touch-icon"
           href="https://portafolio-lautaro-faures-projects.vercel.app/portada.png"
         />
+        <link
+          rel="preconnect"
+          href="https://portafolio-dun-sigma.vercel.app"
+          crossOrigin="anonymous"
+        ></link>
         <title>Portafolio web de Lautaro Octavio Faure</title>
       </head>
       <body className={poppins.className}>{children}</body>

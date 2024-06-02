@@ -62,7 +62,6 @@ export default function Home() {
                     width={1920}
                     height={1280}
                     className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
-                    priority
                   />
                 </div>
                 <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-white p-5">
