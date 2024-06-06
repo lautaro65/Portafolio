@@ -10,7 +10,20 @@ import { motion } from "framer-motion";
 import ContactForm from "@/components/form";
 import CardSkills from "@/components/Skills";
 import Link from "next/link";
+import ProjectCard from "@/components/projects";
+
 export default function Home() {
+  const lenguajes1 = [
+    "Nextjs",
+    "NextUI",
+    "Bootstrap",
+    "Sass",
+    "MongoDB",
+
+  ];
+
+  const lenguajes2 = ["C#", "Ruby", "Go"];
+  const lenguajes3 = ["C++", "TypeScript", "Swift"];
   return (
     <main>
       <Navbar />
@@ -59,8 +72,8 @@ export default function Home() {
                     title="Foto de Lautaro Octavio Faure"
                     alt="Foto de Lautaro Octavio Faure"
                     layout="responsive"
-                    width={400}
-                    height={400}
+                    width={782}
+                    height={1043}
                     className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
                   />
                 </div>
@@ -223,140 +236,13 @@ export default function Home() {
                 <div className="underline mt-2 mb-2" />
               </div>
             </div>
-            <div className="w-full grid   grid-cols-2  ">
-              <div className="rounded-lg border border-white shadow-lg overflow-hidden mt-20 w-full sm:w-full  md:w-full lg:w-10/12 xl:w-10/12 mr-auto ml-auto relative col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-1 xs:col-span-1 ">
-                <div className=" text-white p-4 text-center font-bold text-xl">
-                  <h1>DivGeeks</h1>
-                </div>
-                <div className="underline " />
-                <div className="h-0.5 bg-gray-300"></div>
-                <Image
-                  title="foto del proyecto"
-                  src="/project.png"
-                  alt="Imagen del Proyecto"
-                  layout="responsive"
-                  width={1920}
-                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
-                  className="w-full h-auto min-h-full"
-                />
-                <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
-                  <div className="flex align-middle ">
-                    <CardProjects
-                      nextjs="true"
-                      nextui="true"
-                      bootstrap="true"
-                      sass="true"
-                      mongodb="true"
-                      firebase="true"
-                      html="true"
-                      css="true"
-                      framerMotion="true"
-                      reactNative="true"
-                      javascript="true"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white shadow-lg overflow-hidden mt-20 w-full sm:w-full  md:w-full lg:w-10/12 xl:w-10/12 mr-auto ml-auto relative col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-1 xs:col-span-1   ">
-                <div className=" text-white p-4 text-center font-bold text-xl">
-                  <h1>DivGeeks</h1>
-                </div>
-                <div className="underline " />
-                <div className="h-0.5 bg-gray-300"></div>
-                <Image
-                  title="foto del proyecto"
-                  src="/project.png"
-                  alt="Imagen del Proyecto"
-                  layout="responsive"
-                  width={1920}
-                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
-                  className="w-full h-auto min-h-full"
-                />
-                <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
-                  <div className="flex align-middle ">
-                    <CardProjects
-                      nextjs="true"
-                      nextui="true"
-                      bootstrap="true"
-                      sass="true"
-                      mongodb="true"
-                      firebase="true"
-                      html="true"
-                      css="true"
-                      framerMotion="true"
-                      reactNative="true"
-                      javascript="true"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white shadow-lg overflow-hidden mt-20 w-full sm:w-full  md:w-full lg:w-10/12 xl:w-10/12   mr-auto ml-auto relative col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-1 xs:col-span-1  ">
-                <div className=" text-white p-4 text-center font-bold text-xl">
-                  <h1>DivGeeks</h1>
-                </div>
-                <div className="underline " />
-                <div className="h-0.5 bg-gray-300"></div>
-                <Image
-                  title="foto del proyecto"
-                  src="/project.png"
-                  alt="Imagen del Proyecto"
-                  layout="responsive"
-                  width={1920}
-                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
-                  className="w-full h-auto min-h-full"
-                />
-                <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
-                  <div className="flex align-middle ">
-                    <CardProjects
-                      nextjs="true"
-                      nextui="true"
-                      bootstrap="true"
-                      sass="true"
-                      mongodb="true"
-                      firebase="true"
-                      html="true"
-                      css="true"
-                      framerMotion="true"
-                      reactNative="true"
-                      javascript="true"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white shadow-lg overflow-hidden mt-20 w-full sm:w-full  md:w-full lg:w-10/12 xl:w-10/12   mr-auto ml-auto relative col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-1 xs:col-span-1  ">
-                <div className=" text-white p-4 text-center font-bold text-xl">
-                  <h1>DivGeeks</h1>
-                </div>
-                <div className="underline " />
-                <div className="h-0.5 bg-gray-300"></div>
-                <Image
-                  title="foto del proyecto"
-                  src="/project.png"
-                  alt="Imagen del Proyecto"
-                  layout="responsive"
-                  width={1920}
-                  height={1080} // O ajusta estas dimensiones según el tamaño real de tu imagen
-                  className="w-full h-auto min-h-full"
-                />
-                <div className="absolute bottom-0 z-2 w-full filter bg-transparent  p-2 text-center">
-                  <div className="flex align-middle ">
-                    <CardProjects
-                      nextjs="true"
-                      nextui="true"
-                      bootstrap="true"
-                      sass="true"
-                      mongodb="true"
-                      firebase="true"
-                      html="true"
-                      css="true"
-                      framerMotion="true"
-                      reactNative="true"
-                      javascript="true"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProjectCard
+              titulo="Divgeeks"
+              texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat urna."
+              botones={lenguajes1}
+              link="https://divgeeks.vercel.app"
+              linkgithub="https://github.com/lautaro65/lautaro65/tree/main"
+            />
           </motion.div>
         </div>
         {/* --------------------------------------------------------------------Contact-------------------------------------------------------------------- */}
