@@ -170,3 +170,59 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #cccccc; /* Color del thumb al pasar el mouse */
 }
+
+
+
+
+
+
+.swal2-modal  {
+  display: none;
+  position: relative;
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 100%);
+  width: 32em;
+  max-width: 100%;
+  padding: 0 0 1.25em;
+  border: white 1px solid;
+  border-radius: 15px;
+  background: #545454;
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+.swal2-success-circular-line-right{
+  background-color: #545454;
+}
+.swal2-error-circular-line-right{
+  background-color: #545454;
+}
+
+/* Estilo para Chrome, Safari y Opera */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset !important; /* Fondo negro */
+  box-shadow: 0 0 0px 1000px #000000 inset !important; /* Fondo negro */
+  -webkit-text-fill-color: #ffffff !important; /* Texto blanco */
+}
+
+/* Estilo para Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px #000000 inset !important; /* Fondo negro */
+  -moz-text-fill-color: #ffffff !important; /* Texto blanco */
+}
+
+/* Estilo para Edge */
+input:-ms-autofill {
+  box-shadow: 0 0 0px 1000px #000000 inset !important; /* Fondo negro */
+  -ms-text-fill-color: #ffffff !important; /* Texto blanco */
+}
+
+/* Estilo general */
+input.autocomplete {
+  background-color: #000000 !important; /* Fondo negro */
+  color: #ffffff !important; /* Texto blanco */
+}

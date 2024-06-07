@@ -1,13 +1,18 @@
 // components/ContactForm.js
 import { useState } from "react";
 import emailjs from "emailjs-com";
+import Swal from "sweetalert2";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+
+
+
   const handleSubmit = (e: any) => {
+    
     e.preventDefault();
 
     // Configura los datos para enviar a Email.js
@@ -27,16 +32,22 @@ const ContactForm = () => {
       )
       .then(
         (response) => {
-          console.log(
-            "Correo enviado correctamente!",
-            response.status,
-            response.text
-          );
-          // Puedes añadir lógica adicional aquí, como mostrar un mensaje de éxito al usuario.
+          Swal.fire({
+            icon: "success",
+            title: "Correo enviado correctamente!",
+            showConfirmButton: false,
+            timer:1500,
+            backdrop:true
+          });
         },
         (error) => {
-          console.error("Error al enviar el correo:", error);
-          // Puedes añadir lógica adicional aquí, como mostrar un mensaje de error al usuario.
+          Swal.fire({
+            icon: "error",
+            title: "No se pudo enviar el correo",
+            showConfirmButton: false,
+            timer: 1500,
+            backdrop:true
+          });
         }
       );
 
@@ -60,7 +71,7 @@ const ContactForm = () => {
             Name
           </label>
           <input
-            className="w-full h-auto p-2 border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-auto p-2 my-input border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
             type="text"
             id="name"
             name="name"
@@ -78,7 +89,7 @@ const ContactForm = () => {
             Email
           </label>
           <input
-            className="w-full h-16 p-2 border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-16 p-2 my-input border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
             type="email"
             id="email"
             name="email"
@@ -96,7 +107,7 @@ const ContactForm = () => {
             Message
           </label>
           <textarea
-            className="w-full border p-2 border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full my-input border p-2 border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
             id="message"
             name="message"
             placeholder="Enter your message"

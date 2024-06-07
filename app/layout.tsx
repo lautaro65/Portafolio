@@ -76,7 +76,7 @@ export default function RootLayout({
           content="https://portafolio-lautaro-faures-projects.vercel.app/portada.png"
         />
         <meta name="msapplication-config" content="browserconfig.xml" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <link
           rel="apple-touch-icon"
           href="https://portafolio-lautaro-faures-projects.vercel.app/portada.png"

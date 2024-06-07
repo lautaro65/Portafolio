@@ -5,7 +5,6 @@ import Navbar from "@/components/navbar";
 import { FiMail } from "react-icons/fi";
 import { FaWhatsapp, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { GrBriefcase } from "react-icons/gr";
-import CardProjects from "@/components/SwiperProject";
 import { motion } from "framer-motion";
 import ContactForm from "@/components/form";
 import CardSkills from "@/components/Skills";
@@ -21,9 +20,14 @@ export default function Home() {
     "MongoDB",
 
   ];
+  const lenguajes2 = [
+    "Nextjs",
+    "NextUI",
+    "Bootstrap",
+    "Sass",
+    "MongoDB",
 
-  const lenguajes2 = ["C#", "Ruby", "Go"];
-  const lenguajes3 = ["C++", "TypeScript", "Swift"];
+  ];
   return (
     <main>
       <Navbar />
@@ -240,6 +244,13 @@ export default function Home() {
               titulo="Divgeeks"
               texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat urna."
               botones={lenguajes1}
+              link="https://divgeeks.vercel.app"
+              linkgithub="https://github.com/lautaro65/lautaro65/tree/main"
+            />
+             <ProjectCard
+              titulo="Divgeeks"
+              texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat urna."
+              botones={lenguajes2}
               link="https://divgeeks.vercel.app"
               linkgithub="https://github.com/lautaro65/lautaro65/tree/main"
             />

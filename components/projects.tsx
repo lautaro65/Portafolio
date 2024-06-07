@@ -15,10 +15,11 @@ import {
   SiNextui,
 } from "react-icons/si";
 import { GrReactjs } from "react-icons/gr";
+import Link from "next/link";
 
 const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 mt-10 ">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 mt-10 md:ml-5 ">
       <div className="md:col-span-4 flex justify-start">
         <h1 className="text-4xl font-bold mb-4 text-white">{titulo}</h1>
       </div>
@@ -29,11 +30,11 @@ const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
             alt="Example Image"
             width={950}
             height={720}
-            className="rounded xl:w-full h-full w-fit "
+            className=" rounded-3xl xl:w-full h-full w-fit  "
           />
         </div>
       </div>
-      <div className="md:col-span-2 P-10 flex flex-col justify-center">
+      <div className="md:col-span-2 ml-10 P-10 flex flex-col justify-center">
         <p className="mb-4 text-white">{texto}</p>
         <div className="flex flex-wrap gap-2">
           {botones.map((boton: any, index: any) => (
@@ -58,16 +59,16 @@ const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
         </div>
 
         <div className="flex space-x-4 mt-10">
-          <a href={linkgithub} target="_blank">
+          <Link aria-label="link para ir al codigo" title="link para ir al codigo" href={linkgithub} target="_blank">
             <button className="bg-transparent border border-white text-white px-4 py-2 rounded mb-2 flex items-center">
               <AiOutlineGithub className="mr-2" /> Código
             </button>
-          </a>
-          <a href={link} target="_blank">
+          </Link>
+          <Link aria-label="link para ir a la pagina" title="link para ir a la pagina"  href={link} target="_blank">
             <button className="bg-transparent border border-white text-white px-4 py-2 rounded mb-2 flex items-center">
               <AiOutlineLink className="mr-2 text-white" /> Link
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
