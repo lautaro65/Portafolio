@@ -35,11 +35,22 @@ import { FaYarn } from "react-icons/fa";
 import { SiInsomnia } from "react-icons/si";
 import { SiDjango } from "react-icons/si";
 
-
 export default function Home() {
-  const lenguajes1 = ["Nextjs", "MongoDB", "FramerMotion", "Tailwilnd", "typescript"];
+  const lenguajes1 = [
+    "Nextjs",
+    "MongoDB",
+    "FramerMotion",
+    "Tailwilnd",
+    "typescript",
+  ];
 
-  const lenguajes2 = ["Nextjs", "Sass","FramerMotion","Tailwilnd","typescript"];
+  const lenguajes2 = [
+    "Nextjs",
+    "Sass",
+    "FramerMotion",
+    "Tailwilnd",
+    "typescript",
+  ];
   const languagesList = [
     { name: "HTML", icon: FaHtml5, color: "#E34F26" }, // Color HTML
     { name: "CSS", icon: FaCss3Alt, color: "#1572B6" }, // Color CSS
@@ -50,9 +61,6 @@ export default function Home() {
     { name: "TypeScript", icon: SiTypescript, color: "#007ACC" }, // Color TypeScript
     { name: "Bootstrap", icon: SiBootstrap, color: "#7952B3" }, // Color Bootstrap
     { name: "Next.UI", icon: SiNextui, color: "#000000" }, // Color Next.js
-
-
-
   ];
   const backendLanguagesList = [
     { name: "MongoDB", icon: SiMongodb, color: "#47A248" }, // Color MongoDB
@@ -60,7 +68,6 @@ export default function Home() {
     { name: "Next.js", icon: FaServer, color: "#000000" }, // Color Next.js
     { name: "Python", icon: FaPython, color: "#3776AB" }, // Color Python
     { name: "Django", icon: SiDjango, color: "#1d7a5e" }, // Color NPM
-
   ];
   const learningLanguagesList = [
     { name: "Angular", icon: SiAngular, color: "#DD0031" }, // Color Angular
@@ -69,13 +76,11 @@ export default function Home() {
   const toolsList = [
     { name: "Git", icon: SiGit, color: "#F05032" }, // Color Git
     { name: "GitHub", icon: SiGithub, color: "#333532" }, // Color GitHub
-    { name: "Terminal", icon: IoTerminal , color: "#333532" }, // Color Terminal
+    { name: "Terminal", icon: IoTerminal, color: "#333532" }, // Color Terminal
     { name: "VSCode", icon: SiVisualstudiocode, color: "#007ACC" }, // Color VSCode
     { name: "NPM", icon: SiNpm, color: "#CB3837" }, // Color NPM
     { name: "Yarn", icon: FaYarn, color: "#2e2a65" }, // Color NPM
     { name: "Insomia", icon: SiInsomnia, color: "#5b00d1" }, // Color NPM
-
-
   ];
 
   return (
@@ -231,11 +236,17 @@ export default function Home() {
                 <div className="underline mt-2 mb-2" />
               </div>
             </div>
-            <div className="w-[80vh] grid pt-10 mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 mb-10 gap-6 place-items-center w-full">
+            <div className="w-full max-w-7xl pt-10 mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  gap-6 place-items-center w-full">
                 <CardSkills title="Frontend" languagesList={languagesList} />
-                <CardSkills title="Backend" languagesList={backendLanguagesList} />
-                <CardSkills title="Aprendiendo" languagesList={learningLanguagesList} />
+                <CardSkills
+                  title="Backend"
+                  languagesList={backendLanguagesList}
+                />
+                <CardSkills
+                  title="Aprendiendo"
+                  languagesList={learningLanguagesList}
+                />
                 <CardSkills title="Herramientas" languagesList={toolsList} />
               </div>
             </div>

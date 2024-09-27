@@ -40,10 +40,10 @@ const CardSkills: React.FC<LanguageCardProps> = ({ title, languagesList }: any) 
 
   return (
     <div
-      className="relative w-full rounded-lg border border-[#0F172A] border-opacity-100 bg-[#FFFFFF0D] overflow-hidden min-h-[376px]"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
+    className="relative w-full sm:w-[90vw] md:w-[45vw] lg:w-[40vw] xl:w-[30vw] rounded-lg border border-[#0F172A] border-opacity-100 bg-[#FFFFFF0D] overflow-hidden sm:min-h-[376px]"
+    onMouseMove={handleMouseMove}
+    onMouseLeave={handleMouseLeave}
+  >
       <div className="p-4 w-full">
         <h2 className="text-2xl font-bold text-[#b361ac] w-min mx-auto">
           {title}
