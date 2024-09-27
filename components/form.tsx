@@ -65,13 +65,13 @@ const ContactForm = () => {
       >
         <div className=" col-span-2 w-full   sm:w-full  md:w-full lg:w-6/12 xl:w-4/12  mr-auto ml-auto">
           <label
-            className="block text-white text-xl font-bold mb-2"
+            className="block  text-white text-xl font-bold mb-2"
             htmlFor="name"
           >
             Name
           </label>
           <input
-            className="w-full h-auto p-2 my-input border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-auto p-2 my-input border rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
             type="text"
             id="name"
             name="name"
@@ -89,7 +89,7 @@ const ContactForm = () => {
             Email
           </label>
           <input
-            className="w-full h-16 p-2 my-input border border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-16 p-2 my-input border  rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
             type="email"
             id="email"
             name="email"
@@ -107,7 +107,7 @@ const ContactForm = () => {
             Message
           </label>
           <textarea
-            className="w-full my-input border p-2 border-white rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full my-input border p-2 rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
             id="message"
             name="message"
             placeholder="Enter your message"
@@ -119,7 +119,7 @@ const ContactForm = () => {
         <div className=" col-span-2">
           <div className="flex justify-center mt-5">
             <button
-              className=" w-full   sm:w-full  md:w-full lg:w-6/12 xl:w-4/12 p-2 mt-4  bg-black border border-white rounded-lg text-white hover:bg-white hover:text-black transition-colors duration-300"
+              className=" w-full   sm:w-full  md:w-full lg:w-6/12 xl:w-4/12 p-2 mt-4 border bg-[#FFFFFF0D]   border-[#FFFFFF33] rounded-lg text-white hover:bg-[#ffffff41] transition-colors duration-300"
               type="submit"
             >
               Send Message

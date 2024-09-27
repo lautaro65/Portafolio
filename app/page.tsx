@@ -10,30 +10,84 @@ import ContactForm from "@/components/form";
 import CardSkills from "@/components/Skills";
 import Link from "next/link";
 import ProjectCard from "@/components/projects";
+import { FaHtml5, FaCss3Alt, FaReact, FaJs } from "react-icons/fa"; // Agrega FaJs
+import { SiTailwindcss, SiSass, SiFigma } from "react-icons/si";
+import { FaNodeJs } from "react-icons/fa"; // Icono de Node.js
+import { SiMongodb } from "react-icons/si"; // Icono de MongoDB
+import { SiFirebase } from "react-icons/si"; // Icono de Firebase
+import { FaServer } from "react-icons/fa"; // Icono de servidor
+import { FaPython } from "react-icons/fa"; // Icono de Python
+import { SiExpress } from "react-icons/si"; // Icono de Express.js
+import { SiPostgresql } from "react-icons/si"; // Icono de PostgreSQL
+import { SiAngular } from "react-icons/si"; // Icono de Angular
+import { SiVuedotjs } from "react-icons/si"; // Icono de Vue.js
+import { SiTypescript } from "react-icons/si"; // Icono de TypeScript
+import { SiBootstrap } from "react-icons/si"; // Icono de Bootstrap
+import { SiJest } from "react-icons/si"; // Icono de Jest
+import { SiWebpack } from "react-icons/si"; // Icono de Webpack
+import { SiGit } from "react-icons/si"; // Icono de Git
+import { SiGithub } from "react-icons/si"; // Icono de GitHub
+import { SiNpm } from "react-icons/si"; // Icono de NPM
+import { SiVisualstudiocode } from "react-icons/si"; // Icono de VSCode
+import { IoTerminal } from "react-icons/io5";
+import { SiNextui } from "react-icons/si";
+import { FaYarn } from "react-icons/fa";
+import { SiInsomnia } from "react-icons/si";
+import { SiDjango } from "react-icons/si";
+
 
 export default function Home() {
-  const lenguajes1 = [
-    "Nextjs",
-    "NextUI",
-    "Bootstrap",
-    "Sass",
-    "MongoDB",
+  const lenguajes1 = ["Nextjs", "MongoDB", "FramerMotion", "Tailwilnd", "typescript"];
+
+  const lenguajes2 = ["Nextjs", "Sass","FramerMotion","Tailwilnd","typescript"];
+  const languagesList = [
+    { name: "HTML", icon: FaHtml5, color: "#E34F26" }, // Color HTML
+    { name: "CSS", icon: FaCss3Alt, color: "#1572B6" }, // Color CSS
+    { name: "JavaScript", icon: FaJs, color: "#F7DF1E" }, // Color JavaScript
+    { name: "React", icon: FaReact, color: "#61DAFB" }, // Color React
+    { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" }, // Color Tailwind
+    { name: "Figma", icon: SiFigma, color: "#F24E1E" }, // Color Figma
+    { name: "TypeScript", icon: SiTypescript, color: "#007ACC" }, // Color TypeScript
+    { name: "Bootstrap", icon: SiBootstrap, color: "#7952B3" }, // Color Bootstrap
+    { name: "Next.UI", icon: SiNextui, color: "#000000" }, // Color Next.js
+
+
 
   ];
-  const lenguajes2 = [
-    "Nextjs",
-    "NextUI",
-    "Bootstrap",
-    "Sass",
-    "MongoDB",
+  const backendLanguagesList = [
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" }, // Color MongoDB
+    { name: "Firebase", icon: SiFirebase, color: "#FFCA28" }, // Color Firebase
+    { name: "Next.js", icon: FaServer, color: "#000000" }, // Color Next.js
+    { name: "Python", icon: FaPython, color: "#3776AB" }, // Color Python
+    { name: "Django", icon: SiDjango, color: "#1d7a5e" }, // Color NPM
 
   ];
+  const learningLanguagesList = [
+    { name: "Angular", icon: SiAngular, color: "#DD0031" }, // Color Angular
+    { name: "Vue.js", icon: SiVuedotjs, color: "#42b883" }, // Color Vue.js
+  ];
+  const toolsList = [
+    { name: "Git", icon: SiGit, color: "#F05032" }, // Color Git
+    { name: "GitHub", icon: SiGithub, color: "#333532" }, // Color GitHub
+    { name: "Terminal", icon: IoTerminal , color: "#333532" }, // Color Terminal
+    { name: "VSCode", icon: SiVisualstudiocode, color: "#007ACC" }, // Color VSCode
+    { name: "NPM", icon: SiNpm, color: "#CB3837" }, // Color NPM
+    { name: "Yarn", icon: FaYarn, color: "#2e2a65" }, // Color NPM
+    { name: "Insomia", icon: SiInsomnia, color: "#5b00d1" }, // Color NPM
+
+
+  ];
+
   return (
-    <main>
+    <main className="bg-slate-950 overflow-x-hidden">
       <Navbar />
-      <div className="flex min-h-screen flex-col items-center justify-between p-10">
+      <div className="flex min-h-screen flex-col items-center justify-between  ">
         {/* --------------------------------------------------------------------Home-------------------------------------------------------------------- */}
-        <div className=" min-h-screen">
+        <div className=" relative h-full w-full bg-slate-950 p-10 ">
+          {/* Primer degradado radial */}
+          <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
+          {/* Segundo degradado radial */}
+          <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
           <motion.div
             initial={{ opacity: 0, translateY: 100 }}
             whileInView={{ opacity: 1, translateY: 0 }}
@@ -41,7 +95,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="mt-20 flex justify-center"
           >
-            <div className="w-fit h-10/12 grid grid-cols-2 border lg:w-11/12 xs:w-10/12 2 rounded   border-white p-10">
+            <div className="w-fit h-10/12 grid grid-cols-2 border lg:w-11/12 xs:w-10/12 2 rounded bg-[#FFFFFF0D]   border-[#FFFFFF33] p-10">
               <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1  w-full h-auto justify-center underline-dad grid grid-cols-1 mb-5 items-center">
                 <div className="">
                   <div>
@@ -81,12 +135,12 @@ export default function Home() {
                     className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
                   />
                 </div>
-                <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-white p-5">
+                <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-[#FFFFFF33] p-5">
                   <div className="  col-span-6  underline-dad ">
                     <h3 className=" text-white  text-xl sm:text-4xl ">Redes</h3>
                     <div className="underline mb-5 " />
                   </div>
-                  <div className=" relative   col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded  border-white ">
+                  <div className=" relative   col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta  ">
                     <Link
                       aria-label="Ir a ver el curriculum"
                       title="curriculum"
@@ -95,11 +149,11 @@ export default function Home() {
                     >
                       <GrBriefcase color="white" fontSize={"45px"} />
                     </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
+                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Curriculum</p>
                     </div>
                   </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
+                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
                     <Link
                       aria-label="Ir a ver enviar un gmail"
                       title="contact"
@@ -107,11 +161,11 @@ export default function Home() {
                     >
                       <FiMail color="white" fontSize={"45px"} />
                     </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-40px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
+                    <div className="absolute z-10  top-[-35px] right-[-40px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Mail</p>
                     </div>
                   </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
+                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
                     <Link
                       aria-label="Ir a un perfil de linkedin"
                       title="linkedin"
@@ -120,11 +174,11 @@ export default function Home() {
                     >
                       <FaLinkedin color="white" fontSize={"45px"} />
                     </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
+                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Linkedin</p>
                     </div>
                   </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
+                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
                     <Link
                       aria-label="Ir a un contacto de Whatsapp"
                       title="Whatsapp"
@@ -133,11 +187,11 @@ export default function Home() {
                     >
                       <FaWhatsapp color="white" fontSize={"45px"} />
                     </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
+                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">whatsapp</p>
                     </div>
                   </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3 border ml-auto mr-auto h-min w-min p-2 rounded border-white ">
+                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
                     <Link
                       aria-label="Ir a un perfil de Instagram"
                       title="Instagram"
@@ -146,7 +200,7 @@ export default function Home() {
                     >
                       <FaInstagram color="white" fontSize={"45px"} />
                     </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2 bg-white text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
+                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
                       <p className="text-black">Instagram</p>
                     </div>
                   </div>
@@ -156,7 +210,11 @@ export default function Home() {
           </motion.div>
         </div>
         {/* --------------------------------------------------------------------Skills-------------------------------------------------------------------- */}
-        <div className=" min-h-screen">
+        <div className=" relative w-full bg-slate-950 p-10 ">
+          {/* Primer degradado radial */}
+          <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
+          {/* Segundo degradado radial */}
+          <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
           <motion.div
             initial={{ opacity: 0, translateY: 100 }}
             whileInView={{ opacity: 1, translateY: 0 }}
@@ -173,57 +231,22 @@ export default function Home() {
                 <div className="underline mt-2 mb-2" />
               </div>
             </div>
-            <div className="w-full grid   p-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-10 gap-6">
-                <CardSkills
-                  Titulo="CSS"
-                  texto1="Al mismo tiempo que aprendía HTML, también me sumergí en los estilos y diseños web con CSS. Desde entonces, he estado refinando mis habilidades para crear interfaces atractivas y responsivas"
-                  texto2="CSS (Cascading Style Sheets)
-                  CSS es un lenguaje utilizado para estilizar el aspecto de las páginas web. Permite definir el diseño, los colores, las fuentes y otros aspectos visuales de una página web."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="HTML"
-                  texto1="Hace dos años, comencé a explorar el mundo del desarrollo web y aprendí HTML como mi primera incursión en la creación de contenido web estático."
-                  texto2="HTML (HyperText Markup Language) es el lenguaje de marcado estándar utilizado para crear páginas web. Consiste en una serie de elementos que rodean el contenido para darle estructura y significado. HTML utiliza etiquetas para definir diferentes partes del contenido, como encabezados, párrafos, enlaces, imágenes, etc."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="Next.js"
-                  texto1="Descubrí Next.js hace aproximadamente un año y desde entonces ha sido mi elección principal para desarrollar aplicaciones web React. Su enfoque en la eficiencia y la escalabilidad ha mejorado significativamente mi flujo de trabajo."
-                  texto2=" Next.js es un framework de React que facilita la creación de aplicaciones web escalables y de rendimiento óptimo. Proporciona características como el renderizado del lado del servidor, el enrutamiento automático y la pre-renderización, lo que ayuda a mejorar la velocidad y la eficiencia de las aplicaciones web."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="Next UI"
-                  texto1="Mi experiencia con Next UI ha mejorado aún más mi flujo de trabajo al proporcionarme una amplia gama de componentes reutilizables y herramientas de diseño que aceleran el desarrollo de interfaces de usuario modernas y estéticamente atractivas."
-                  texto2="Next UI es una biblioteca de componentes para Next.js que ofrece una experiencia de desarrollo más rápida. Proporciona una variedad de componentes reutilizables y personalizables que pueden ser fácilmente integrados en aplicaciones web desarrolladas con Next.js."
-                ></CardSkills>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <CardSkills
-                  Titulo="Tailwind CSS"
-                  texto1="Recientemente, he estado adoptando Tailwind CSS como mi herramienta preferida para la creación de interfaces de usuario. La combinación de su enfoque utilitario y su flexibilidad me ha permitido desarrollar interfaces más rápidamente sin sacrificar la personalización."
-                  texto2="Tailwind CSS es un framework CSS que facilita la creación de interfaces de usuario personalizadas y responsivas. En lugar de utilizar clases predefinidas, Tailwind CSS permite construir estilos de forma modular utilizando clases utilitarias que se aplican directamente en el HTML."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="MockAPI"
-                  texto1="Recientemente, empecé a utilizar MockAPI como una solución rápida y eficiente para simular servicios RESTful en el desarrollo de prototipos de aplicaciones. Su simplicidad y facilidad de uso han sido invaluable para mí en la fase de desarrollo inicial de proyectos."
-                  texto2="MockAPI es una herramienta que permite simular una API para desarrollar y probar aplicaciones sin una backend real. Permite definir endpoints personalizados y generar datos ficticios que pueden ser utilizados durante el desarrollo y la prueba de aplicaciones web."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="MongoDB"
-                  texto1="Hace un año, comencé a explorar bases de datos NoSQL y me enamoré de la flexibilidad y la escalabilidad de MongoDB. He utilizado MongoDB en varios proyectos para almacenar datos de forma eficiente y escalable."
-                  texto2="MongoDB es una base de datos NoSQL flexible y escalable, ampliamente utilizada en el desarrollo de aplicaciones web modernas. Utiliza un modelo de documentos para almacenar datos en lugar de tablas, lo que facilita la escalabilidad y la flexibilidad de los datos."
-                ></CardSkills>
-                <CardSkills
-                  Titulo="Firebase"
-                  texto1="Desde que descubrí Firebase hace seis meses, he estado impresionado por su conjunto completo de herramientas para el desarrollo de aplicaciones móviles y web. He utilizado Firebase para implementar autenticación de usuarios, almacenamiento de datos en tiempo real y notificaciones push en varios proyectos."
-                  texto2="Firebase es una plataforma de desarrollo de aplicaciones que proporciona una variedad de servicios backend, incluyendo autenticación de usuarios, almacenamiento en la nube y bases de datos en tiempo real. Permite a los desarrolladores crear aplicaciones web y móviles de alta calidad de forma rápida y sencilla utilizando servicios backend listos para usar."
-                ></CardSkills>
+            <div className="w-[80vh] grid pt-10 mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 mb-10 gap-6 place-items-center w-full">
+                <CardSkills title="Frontend" languagesList={languagesList} />
+                <CardSkills title="Backend" languagesList={backendLanguagesList} />
+                <CardSkills title="Aprendiendo" languagesList={learningLanguagesList} />
+                <CardSkills title="Herramientas" languagesList={toolsList} />
               </div>
             </div>
           </motion.div>
         </div>
         {/* --------------------------------------------------------------------Project-------------------------------------------------------------------- */}
-        <div className=" min-h-screen">
+        <div className=" relative min-h-screen w-full bg-slate-950 p-10 ">
+          {/* Primer degradado radial */}
+          <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
+          {/* Segundo degradado radial */}
+          <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
           <motion.div
             initial={{ opacity: 0, translateY: 100 }}
             whileInView={{ opacity: 1, translateY: 0 }}
@@ -241,23 +264,27 @@ export default function Home() {
               </div>
             </div>
             <ProjectCard
-              titulo="Divgeeks"
-              texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat urna."
+              titulo="Ecommerce Project"
+              texto="Este proyecto es un e-commerce de ropa desarrollado como prueba de concepto, que incluye todas las funciones esenciales de un sitio de comercio electrónico. El objetivo es ofrecer una plataforma fluida y atractiva para la venta de prendas de vestir, diseñada con una arquitectura moderna y completamente funcional."
               botones={lenguajes1}
-              link="https://divgeeks.vercel.app"
-              linkgithub="https://github.com/lautaro65/lautaro65/tree/main"
+              link="https://ecommerce-de-prueba.vercel.app"
+              linkgithub="https://github.com/lautaro65/Ecommerce-de-prueba"
             />
-             <ProjectCard
-              titulo="Divgeeks"
-              texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis, auctor consequat urna."
+            <ProjectCard
+              titulo="Clone Apple Web"
+              texto="Este proyecto es un clon de la página oficial de Apple, diseñado para replicar su estética minimalista y funcional, utilizando tecnologías modernas como Next.js y Sass. El sitio incluye una interfaz responsiva y elegante, con un diseño visual limpio y animaciones suaves para brindar una experiencia de usuario fluida."
               botones={lenguajes2}
-              link="https://divgeeks.vercel.app"
-              linkgithub="https://github.com/lautaro65/lautaro65/tree/main"
+              link="https://clone-apple-zeta.vercel.app"
+              linkgithub="https://github.com/lautaro65/Clone-Apple"
             />
           </motion.div>
         </div>
         {/* --------------------------------------------------------------------Contact-------------------------------------------------------------------- */}
-        <div className=" w-full min-h-screen">
+        <div className=" relative min-h-screen w-full bg-slate-950 p-10 ">
+          {/* Primer degradado radial */}
+          <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
+          {/* Segundo degradado radial */}
+          <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
           <motion.div
             initial={{ opacity: 0, translateY: 100 }}
             whileInView={{ opacity: 1, translateY: 0 }}
@@ -280,8 +307,8 @@ export default function Home() {
         </div>
         {/* --------------------------------------------------------------------Footer-------------------------------------------------------------------- */}
       </div>
-      <footer className="bg-trasparent text-white py-8">
-        <div className="underline mb-5"></div>
+      <footer className=" border bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white py-8">
+        <div className=" border w-full border-[#FFFFFF33]  mb-5"></div>
         <div className="container mx-auto px-4 lg:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-8">
             <div>
@@ -345,7 +372,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <hr className="border-t border-white mt-8"></hr>
+        <hr className="border-t  w-full border-[#FFFFFF33]  mt-8"></hr>
         <div className="container mx-auto mt-4 text-center">
           <p>Derechos de autor © 2024. Todos los derechos reservados.</p>
         </div>

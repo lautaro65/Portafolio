@@ -11,8 +11,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" fixed backdrop-blur  top-0 left-0 w-full z-50">
-      <hr className="border-t border-white mb-5"></hr>
+    <nav className=" fixed backdrop-blur bg-[#FFFFFF0D]     top-0 left-0 w-full z-50">
+      <hr className="border-t border-[#FFFFFF33] mb-5"></hr>
       <div className="container mx-auto flex justify-between items-center">
         <div className="hidden md:flex space-x-8 justify-center w-full">
           <div className="underline-dad">
@@ -134,7 +134,7 @@ const Navbar = () => {
           </ul>
         </div>
       )}
-      <hr className="border-t border-white mt-5"></hr>
+      <hr className="border-t border-[#FFFFFF33] mt-5"></hr>
     </nav>
   );
 };

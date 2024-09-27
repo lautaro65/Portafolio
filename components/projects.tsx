@@ -13,7 +13,10 @@ import {
   SiCss3,
   SiNextdotjs,
   SiNextui,
+  SiTypescript
 } from "react-icons/si";
+import { RiTailwindCssFill } from "react-icons/ri";
+
 import { GrReactjs } from "react-icons/gr";
 import Link from "next/link";
 
@@ -26,7 +29,7 @@ const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
       <div className="md:col-span-2 lg:col-span-2  xl:col-span-1 flex  align-middle  ">
         <div>
           <Image
-            src="/project.png"
+            src="/ApplePortada.PNG"
             alt="Example Image"
             width={950}
             height={720}
@@ -53,6 +56,9 @@ const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
               {boton === "FramerMotion" && <SiFramer className="mr-1" />}
               {boton === "Javascript" && <SiJavascript className="mr-1" />}
               {boton === "React" && <SiReact className="mr-1" />}
+              {boton === "Tailwilnd" && <RiTailwindCssFill  className="mr-1" />}
+              {boton === "typescript" && <SiTypescript  className="mr-1" />}
+               
               {boton}
             </button>
           ))}

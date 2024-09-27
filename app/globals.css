@@ -2,35 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .card {
-  perspective: 1000px;
-}
-
-.card-inner {
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
   position: relative;
+  overflow: hidden; /* Asegúrate de que el efecto no se desborde */
+}
+/* styles.css */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background: linear-gradient(90deg, #00cfef, #c9fffe);
 }
 
-.card-flip {
-  transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
+.card::before {
+  content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3); /* Efecto de iluminación */
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.3s; /* Transición suave */
 }
 
-.card-back {
-  transform: rotateY(180deg);
+.card:hover::before {
+  opacity: 1; /* Mostrar el efecto de iluminación al pasar el mouse */
 }
 
-body {
-  background-color: #000000;
+
+
+
+.fondo2 {
+  background-color: #0f172a; /* Color base diferente */
+  background-image: radial-gradient(
+    circle farthest-side,
+    rgba(0, 182, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+/* Puedes agregar más clases como fondo3, fondo4, etc. */
+.fondo3 {
+  background-color: #0a0a0a; /* Otro color base */
+  background-image: radial-gradient(
+    circle farthest-side,
+    rgba(182, 255, 0, 0.15),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.tarjeta {
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: parpadeo 2s infinite;
+  -webkit-animation: parpadeo 2s infinite;
+}
+
+/* Animación del parpadeo */
+@keyframes parpadeo {
+  0%,
+  100% {
+    border-color: rgba(255, 255, 255, 0.2); /* Color original */
+  }
+  25% {
+    border-color: rgba(
+      255,
+      255,
+      255,
+      0.3
+    ); /* Color ligeramente más brillante */
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.4); /* Color un poco más brillante */
+  }
+  75% {
+    border-color: rgba(
+      255,
+      255,
+      255,
+      0.3
+    ); /* Regresar a un brillo intermedio */
+  }
+}
+
+/* Para evitar que el borde parpadee al hacer hover */
+.tarjeta:hover {
+  animation: none; /* Detener la animación al hacer hover */
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 @layer utilities {
@@ -163,7 +220,6 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #ffffff;
   border-radius: 5px;
-
 }
 
 /* Cambia el color del thumb cuando se desplaza */
@@ -171,12 +227,7 @@ body {
   background: #cccccc; /* Color del thumb al pasar el mouse */
 }
 
-
-
-
-
-
-.swal2-modal  {
+.swal2-modal {
   display: none;
   position: relative;
   box-sizing: border-box;
@@ -195,10 +246,10 @@ body {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
 }
-.swal2-success-circular-line-right{
+.swal2-success-circular-line-right {
   background-color: #545454;
 }
-.swal2-error-circular-line-right{
+.swal2-error-circular-line-right {
   background-color: #545454;
 }
 
