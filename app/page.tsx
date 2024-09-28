@@ -88,7 +88,7 @@ export default function Home() {
       <Navbar />
       <div className="flex min-h-screen flex-col items-center justify-between  ">
         {/* --------------------------------------------------------------------Home-------------------------------------------------------------------- */}
-        <div className=" relative h-full w-full bg-slate-950 p-10 ">
+        <div className=" relative h-full w-full bg-slate-950 p-3  md:p-10 ">
           {/* Primer degradado radial */}
           <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
           {/* Segundo degradado radial */}
@@ -100,15 +100,15 @@ export default function Home() {
             viewport={{ once: true }}
             className="mt-20 flex justify-center"
           >
-            <div className="w-fit h-10/12 grid grid-cols-2 border lg:w-11/12 xs:w-10/12 2 rounded bg-[#FFFFFF0D]   border-[#FFFFFF33] p-10">
-              <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1  w-full h-auto justify-center underline-dad grid grid-cols-1 mb-5 items-center">
+            <div className="w-fit h-10/12 grid grid-cols-3 border lg:w-11/12 xs:w-10/12 2 rounded bg-[#FFFFFF0D]   border-[#FFFFFF33] py-10 px-5">
+              <div className=" col-span-3 sm:col-span-3 md:col-span-3  lg:col-span-2 xl:col-span-2  w-full h-auto justify-center underline-dad grid grid-cols-1 mb-5 items-center">
                 <div className="">
                   <div>
                     <div className="w-full  ">
-                      <h2 className="text-white titulo  text-xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-[85px] ">
+                      <h2 className="text-white titulo  text-xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-[85px] ">
                         WEB
                       </h2>
-                      <h2 className="text-white titulo  text-xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-[85px] ">
+                      <h2 className="text-white titulo  text-xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-[85px] ">
                         DEVELOPER
                       </h2>
                     </div>
@@ -128,88 +128,16 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className=" col-span-2 sm:col-span-2  md:col-span-2  lg:col-span-2 xl:col-span-1 grid grid-cols-3 gap-10">
-                <div className="w-full  col-span-3 sm:col-span-3  md:col-span-2  lg:col-span-2 xl:col-span-2 flex justify-center xl:justify-end">
-                  <Image
-                    src="/yo.webp"
-                    title="Foto de Lautaro Octavio Faure"
-                    alt="Foto de Lautaro Octavio Faure"
-                    layout="responsive"
-                    width={782}
-                    height={1043}
-                    className="w-full sm:w-full md:w-11/12 lg:w-11/12 xl:w-11/12 h-auto"
-                  />
-                </div>
-                <div className="col-span-3 sm:col-span-3  md:col-span-1  lg:col-span-1 xl:col-span-1 grid grid-cols-6  border rounded border-[#FFFFFF33] p-5">
-                  <div className="  col-span-6  underline-dad ">
-                    <h3 className=" text-white  text-xl sm:text-4xl ">Redes</h3>
-                    <div className="underline mb-5 " />
-                  </div>
-                  <div className=" relative   col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta  ">
-                    <Link
-                      aria-label="Ir a ver el curriculum"
-                      title="curriculum"
-                      target="_blank"
-                      href="curriculum"
-                    >
-                      <GrBriefcase color="white" fontSize={"45px"} />
-                    </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
-                      <p className="text-black">Curriculum</p>
-                    </div>
-                  </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
-                    <Link
-                      aria-label="Ir a ver enviar un gmail"
-                      title="contact"
-                      href="#contact"
-                    >
-                      <FiMail color="white" fontSize={"45px"} />
-                    </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-40px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
-                      <p className="text-black">Mail</p>
-                    </div>
-                  </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
-                    <Link
-                      aria-label="Ir a un perfil de linkedin"
-                      title="linkedin"
-                      target="_blank"
-                      href="https://www.linkedin.com/in/lautaro-ocatavio-faure/"
-                    >
-                      <FaLinkedin color="white" fontSize={"45px"} />
-                    </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
-                      <p className="text-black">Linkedin</p>
-                    </div>
-                  </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
-                    <Link
-                      aria-label="Ir a un contacto de Whatsapp"
-                      title="Whatsapp"
-                      target="_blank"
-                      href="https://wa.me/3541335850"
-                    >
-                      <FaWhatsapp color="white" fontSize={"45px"} />
-                    </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
-                      <p className="text-black">whatsapp</p>
-                    </div>
-                  </div>
-                  <div className="relative col-span-6 sm:col-span-6  md:col-span-6  lg:col-span-6 xl:col-span-6 mb-3  ml-auto mr-auto h-min w-min p-2 rounded tarjeta ">
-                    <Link
-                      aria-label="Ir a un perfil de Instagram"
-                      title="Instagram"
-                      target="_blank"
-                      href="https://www.instagram.com/faurelautaro/"
-                    >
-                      <FaInstagram color="white" fontSize={"45px"} />
-                    </Link>
-                    <div className="absolute z-10  top-[-35px] right-[-60px] pointer-events-none  p-2  text-white  opacity-0 rounded-md text-sm   transition-opacity duration-300">
-                      <p className="text-black">Instagram</p>
-                    </div>
-                  </div>
-                </div>
+              <div className=" col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1 xl:col-span-1 lg:w-10/12 xl:w-10/12 w-8/12  mx-auto ">
+                <Image
+                  src="/yo.webp"
+                  title="Foto de Lautaro Octavio Faure"
+                  alt="Foto de Lautaro Octavio Faure"
+                  layout="responsive"
+                  width={782}
+                  height={1043}
+                  className=""
+                />
               </div>
             </div>
           </motion.div>

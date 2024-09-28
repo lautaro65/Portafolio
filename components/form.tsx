@@ -71,7 +71,7 @@ const ContactForm = () => {
             Name
           </label>
           <input
-            className="w-full h-auto p-2 my-input border rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-auto p-2 my-input border rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-purple-500 "
             type="text"
             id="name"
             name="name"
@@ -89,7 +89,7 @@ const ContactForm = () => {
             Email
           </label>
           <input
-            className="w-full h-16 p-2 my-input border  rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full h-16 p-2 my-input border  rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             type="email"
             id="email"
             name="email"
@@ -107,7 +107,7 @@ const ContactForm = () => {
             Message
           </label>
           <textarea
-            className="w-full my-input border p-2 rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full my-input border p-2 rounded-lg bg-[#FFFFFF0D]   border-[#FFFFFF33] text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             id="message"
             name="message"
             placeholder="Enter your message"

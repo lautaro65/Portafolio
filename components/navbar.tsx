@@ -1,5 +1,5 @@
 "use client"; // Asegúrate de que esto esté en la primera línea del archivo
-
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import Link from "next/link";
 
@@ -85,7 +85,14 @@ const Navbar = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="md:hidden">
+        <motion.div
+          className="md:hidden"
+          initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -100, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ zIndex: 20 }}
+        >
           <ul className="flex flex-col items-center space-y-4 mt-4">
             <li>
               <Link
@@ -132,7 +139,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-        </div>
+        </motion.div>
       )}
       <hr className="border-t border-[#FFFFFF33] mt-5"></hr>
     </nav>
