@@ -137,7 +137,11 @@
 @media (max-width: 500px) {
   .text-container {
     max-height: 200px; /* Ajusta esta altura según sea necesario */
-    overflow-y: scroll;
+    max-height: 200px;
+    overflow-y: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  
   }
 }
 

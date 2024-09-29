@@ -20,7 +20,7 @@ import { RiTailwindCssFill } from "react-icons/ri";
 import { GrReactjs } from "react-icons/gr";
 import Link from "next/link";
 
-const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
+const ProjectCard = ({ titulo, texto, botones, linkgithub, link,src }: any) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 mt-10 md:ml-5 ">
       <div className="md:col-span-4 flex justify-start">
@@ -28,13 +28,14 @@ const ProjectCard = ({ titulo, texto, botones, linkgithub, link }: any) => {
       </div>
       <div className="md:col-span-2 lg:col-span-2  xl:col-span-1 flex  align-middle  ">
         <div>
-          <Image
-            src="/ApplePortada.PNG"
-            alt="Example Image"
-            width={950}
-            height={720}
-            className=" rounded-3xl xl:w-full h-full w-fit  "
-          />
+        <video
+        src={src} // Cambia esta ruta a tu video
+        width={950}
+        height={720}
+        className="rounded-3xl w-full h-full"
+        autoPlay
+        muted
+      />
         </div>
       </div>
       <div className="md:col-span-2 ml-10 P-10 flex flex-col justify-center">
