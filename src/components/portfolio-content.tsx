@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,23 +32,10 @@ export default function PortfolioContent({
   activeFile,
   theme,
 }: PortfolioContentProps) {
-  if (activeFile === "proyectos.js") {
-    return <ProjectsPage theme={theme} />;
-  }
-
-  if (activeFile === "contacto.md") {
-    return <ContactPage theme={theme} />;
-  }
-
-  if (activeFile === "habilidades.md") {
-    return <SkillsPage theme={theme} />;
-  }
-
-  if (activeFile === "proceso.md") {
-    return <ProcessPage theme={theme} />;
-  }
-
-  // Default to about page
+  if (activeFile === "proyectos.js") return <ProjectsPage theme={theme} />;
+  if (activeFile === "contacto.md") return <ContactPage theme={theme} />;
+  if (activeFile === "habilidades.md") return <SkillsPage theme={theme} />;
+  if (activeFile === "proceso.md") return <ProcessPage theme={theme} />;
   return <AboutPage theme={theme} />;
 }
 
@@ -62,7 +49,6 @@ function AboutPage({ theme }: { theme?: any }) {
       }}
     >
       <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-4 md:gap-12 py-4 md:py-8">
-        {/* Perfil e info principal */}
         <div className="flex-1 flex flex-col items-start">
           <span
             className="uppercase text-xs tracking-widest mb-2"
@@ -166,15 +152,18 @@ function AboutPage({ theme }: { theme?: any }) {
             </a>
           </div>
         </div>
-        {/* Imagen y datos actuales */}
         <div className="flex-1 flex flex-col items-center md:items-end">
-          <img
-            src="/profile.jpg"
+          <Image
+            src="/profile.webp"
             alt="Lautaro Dev"
+            title="Lautaro Dev"
+            width={160}
+            height={160}
             className="w-40 h-40 rounded-full object-cover mb-6 shadow-lg"
             style={{
               border: `4px solid ${theme?.accent}`,
             }}
+            priority
           />
           <div className="w-full max-w-xs">
             <div className="mb-6">
@@ -252,7 +241,7 @@ function ProjectsPage({ theme }: { theme?: any }) {
       description:
         "Demo de la plataforma Controllity: gestión de tareas, tableros Kanban y colaboración en tiempo real.\n\n⚠️ Esta es una demo de prueba, por eso no está optimizada ni tiene un estilo estandarizado. En una misma página pueden verse componentes similares con diseños distintos, ya que el foco fue mostrar funcionalidades y no la UI final.",
       technologies: ["React", "Node.js", "Socket.io", "MongoDB"],
-      github: null, // Repositorio privado
+      github: null,
       demo: "https://controllity.vercel.app",
       status: "En desarrollo",
     },
@@ -330,7 +319,6 @@ function ProjectsPage({ theme }: { theme?: any }) {
               >
                 {formatProject(project)}
               </pre>
-              {/* Avisos especiales para Controllity Demo */}
               {project.title === "Controllity Demo" && (
                 <div className="px-3 sm:px-4 pb-2 flex flex-col gap-2">
                   <div
@@ -366,7 +354,6 @@ function ProjectsPage({ theme }: { theme?: any }) {
                 </div>
               )}
               <div className="flex flex-col sm:flex-row gap-2 px-3 sm:px-4 pb-4">
-                {/* Botón de código solo si el repo es público */}
                 {project.github ? (
                   <a
                     href={project.github}
@@ -419,9 +406,13 @@ function ProjectsPage({ theme }: { theme?: any }) {
 
 function ContactPage({ theme }: { theme?: any }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle"
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -450,14 +441,12 @@ function ContactPage({ theme }: { theme?: any }) {
       }}
     >
       <div className="w-full max-w-4xl mx-auto flex flex-col gap-4">
-        {/* CONTACTO / 2025 arriba del título */}
         <span
           className="uppercase text-xs tracking-widest mb-1"
           style={{ color: theme?.accent || "#9cdcfe" }}
         >
           CONTACTO / 2025
         </span>
-        {/* Título ocupa 100% */}
         <h1
           className="text-4xl md:text-5xl font-bold w-full mb-2 leading-tight"
           style={{
@@ -466,9 +455,7 @@ function ContactPage({ theme }: { theme?: any }) {
         >
           Contacto
         </h1>
-        {/* Subtítulo y contenido en 2 columnas */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-full">
-          {/* Columna izquierda: texto y links (sin card) */}
           <div className="flex-1 flex flex-col items-start justify-start gap-4 px-0 md:px-2 py-0">
             <p
               className="text-lg mb-2"
@@ -525,7 +512,6 @@ function ContactPage({ theme }: { theme?: any }) {
               <span style={{ color: theme?.text || "#cccccc" }}>Argentina</span>
             </div>
           </div>
-          {/* Columna derecha: formulario en card */}
           <div
             className="flex-1 flex flex-col items-center justify-center rounded-2xl border shadow-lg px-4 md:px-6 py-6"
             style={{
@@ -792,7 +778,6 @@ function ProcessPage({ theme }: { theme?: any }) {
           soluciones end-to-end y garantizo la calidad, escalabilidad y
           mantenibilidad de los productos que construimos.
         </p>
-
         <div
           className="rounded-xl shadow-lg p-4 md:p-8 flex flex-col gap-4 transition-colors"
           style={
@@ -881,7 +866,6 @@ function ProcessPage({ theme }: { theme?: any }) {
             </li>
           </ol>
         </div>
-
         <div className="flex flex-col md:flex-row items-center gap-4 mt-8">
           <div className="flex-1">
             <h3
@@ -897,7 +881,7 @@ function ProcessPage({ theme }: { theme?: any }) {
               Estoy listo para aportar valor desde el Día 1.
             </p>
           </div>
-          <div className="">
+          <div>
             <a
               href="mailto:lautaroofaure@gmail.com"
               className="mb-2 px-6 py-2 rounded text-base font-semibold shadow-md transition flex items-center gap-2"

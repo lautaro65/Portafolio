@@ -121,17 +121,14 @@
   }
 }
 
-/* Estilos responsive */
 @media (max-width: 768px) {
   .desktop-icon span {
     font-size: 0.75rem;
   }
-
   .taskbar-icon {
     width: 2.5rem;
     height: 2.5rem;
   }
-
   .notification {
     width: 90%;
     left: 5%;
@@ -143,7 +140,6 @@
   .window-controls {
     padding: 0.25rem;
   }
-
   .window-title {
     font-size: 0.875rem;
   }

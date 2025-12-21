@@ -20,39 +20,15 @@ import {
 } from "lucide-react";
 import React from "react";
 import { CalculatorContent } from "./Calculator";
+import Image from "next/image";
 
-// Fondos de pantalla y colores sólidos
 const wallpapers = [
-  {
-    name: "Pradera verde",
-    url: "/wallpapers/5.jpg",
-    type: "image",
-  },
-  {
-    name: "Playa del naufragio",
-    url: "/wallpapers/6.jpg",
-    type: "image",
-  },
-  {
-    name: "Arco marino",
-    url: "/wallpapers/7.jpg",
-    type: "image",
-  },
-  {
-    name: "Árbol solitario",
-    url: "/wallpapers/8.jpg",
-    type: "image",
-  },
-  {
-    name: "Lago Braies",
-    url: "/wallpapers/9.jpg",
-    type: "image",
-  },
-  {
-    name: "Ventana de luz",
-    url: "/wallpapers/11.jpg",
-    type: "image",
-  },
+  { name: "Pradera verde", url: "/wallpapers/5.jpg", type: "image" },
+  { name: "Playa del naufragio", url: "/wallpapers/6.jpg", type: "image" },
+  { name: "Arco marino", url: "/wallpapers/7.jpg", type: "image" },
+  { name: "Árbol solitario", url: "/wallpapers/8.jpg", type: "image" },
+  { name: "Lago Braies", url: "/wallpapers/9.jpg", type: "image" },
+  { name: "Ventana de luz", url: "/wallpapers/11.jpg", type: "image" },
 ];
 
 const solidColors = [
@@ -65,17 +41,14 @@ const solidColors = [
 ];
 
 function isColorLight(hex: string) {
-  // Simple luminancia para saber si el color es claro
   hex = hex.replace("#", "");
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
-  // Fórmula de luminancia
   return 0.299 * r + 0.587 * g + 0.114 * b > 200;
 }
 
 export function Desktop() {
-  // Estados de la ventana y VS Code
   const [windowState, setWindowState] = useState("open");
   const [maximized, setMaximized] = useState(true);
   const [showVsCodeMsg, setShowVsCodeMsg] = useState(false);
@@ -101,7 +74,6 @@ export function Desktop() {
   const [calculatorMinimized, setCalculatorMinimized] = useState(false);
   const [showCalculatorMsg, setShowCalculatorMsg] = useState(false);
 
-  // Ejemplo de contenido
   const notepadContent = `¿Por qué contratarme?
 
 • Experiencia profesional en desarrollo web con React, Next.js y TypeScript.
@@ -125,17 +97,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   const windowPositionRef = useRef({ x: initialX, y: initialY });
   const windowRef = useRef<HTMLDivElement>(null);
 
-  // Control de drag
   const dragging = useRef(false);
   const dragOffset = useRef({ x: 0, y: 0 });
 
-  // Actualiza la hora cada minuto
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Mover ventana
   const handleDragStart = (e: React.MouseEvent) => {
     if (maximized) return;
     dragging.current = true;
@@ -172,14 +141,11 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     };
   }, [maximized]);
 
-  // Reset transform al maximizar
   useEffect(() => {
     if (maximized && windowRef.current) {
       windowRef.current.style.transform = "";
     }
   }, [maximized]);
-  // Agrega este useEffect después de los otros useEffect en desktop.tsx
-  // (alrededor de la línea donde están los otros useEffect para drag)
 
   useEffect(() => {
     const handleNotepadMouseMove = (e: MouseEvent) => {
@@ -207,14 +173,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       window.removeEventListener("mousemove", handleNotepadMouseMove);
       window.removeEventListener("mouseup", handleNotepadMouseUp);
     };
-  }, [notepadMaximized]); // Dependencia para que se actualice cuando cambie notepadMaximized
+  }, [notepadMaximized]);
 
-  // También agrega este useEffect para resetear la transformación cuando se maximiza
   useEffect(() => {
     if (notepadMaximized && notepadRef.current) {
       notepadRef.current.style.transform = "";
     }
   }, [notepadMaximized]);
+
   const handleMinimize = () => setWindowState("minimized");
   const handleMaximize = () => setMaximized((prev) => !prev);
   const handleClose = () => {
@@ -228,12 +194,11 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     } else {
       setWindowState("open");
       setShowVsCodeMsg(false);
-      bringToFront("vscode"); // Siempre traer al frente al abrir
+      bringToFront("vscode");
     }
     setMaximized(false);
   };
 
-  // Handler para abrir Bloc de Notas desde el escritorio
   const handleOpenNotepad = () => {
     if (showNotepad && !notepadMinimized) {
       setShowNotepadMsg(true);
@@ -243,11 +208,10 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       setNotepadMinimized(false);
       setNotepadMaximized(false);
       setShowNotepadMsg(false);
-      bringToFront("notepad"); // Siempre traer al frente al abrir
+      bringToFront("notepad");
     }
   };
 
-  // Handler para abrir CV desde el escritorio
   const handleOpenCV = () => {
     if (showCV) {
       setShowCVMsg(true);
@@ -259,10 +223,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     }
   };
 
-  // Handler para cerrar CV
   const handleCloseCV = () => setShowCV(false);
 
-  // Handler para abrir la calculadora desde el escritorio
   const handleOpenCalculator = () => {
     if (showCalculator && !calculatorMinimized) {
       setShowCalculatorMsg(true);
@@ -274,25 +236,20 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     }
   };
 
-  // Handler para minimizar la calculadora
   const handleCalculatorMinimize = () => setCalculatorMinimized(true);
 
-  // Handler para cerrar la calculadora
   const handleCalculatorClose = () => {
     setShowCalculator(false);
     setCalculatorMinimized(false);
   };
-  // Refs para mover Bloc de Notas
+
   const notepadDragging = useRef(false);
   const notepadDragOffset = useRef({ x: 0, y: 0 });
 
-  // Z-index dinámico para CV
-  // Z-index dinámico para ventanas
   const vscodeZ = activeWindow === "vscode" ? 60 : 50;
   const notepadZ = activeWindow === "notepad" ? 60 : 50;
   const calculatorZ = activeWindow === "calculator" ? 60 : 50;
 
-  // Estados y refs para la ventana CV
   const [cvMaximized, setCVMaximized] = useState(false);
   const cvInitialX =
     typeof window !== "undefined" ? window.innerWidth / 2 + 320 : 400;
@@ -313,6 +270,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     document.body.style.cursor = "move";
     document.body.style.userSelect = "none";
   };
+
   const centerTime = currentTime.toLocaleTimeString("es-ES", {
     hour: "2-digit",
     minute: "2-digit",
@@ -323,6 +281,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     month: "long",
     year: "numeric",
   });
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (cvDragging.current && !cvMaximized && cvRef.current) {
@@ -354,18 +313,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     }
   }, [cvMaximized]);
 
-  // Handler para descargar CV
   const handleDownloadCV = () => {
     window.open("/CV.pdf", "_blank");
   };
 
-  // 1. actualColor
   const actualColor = customColor ?? solidColor;
-
-  // 2. portfolioTextColor
   const portfolioTextColor = isColorLight(actualColor) ? "#232323" : "#f5f5f5";
-
-  // 3. notepadRef y notepadPositionRef
   const notepadRef = useRef<HTMLDivElement>(null);
   const notepadInitialX =
     typeof window !== "undefined" ? window.innerWidth / 2 - 200 : 100;
@@ -373,7 +326,6 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     typeof window !== "undefined" ? window.innerHeight * 0.22 : 100;
   const notepadPositionRef = useRef({ x: notepadInitialX, y: notepadInitialY });
 
-  // 4. handleNotepadDragStart
   const handleNotepadDragStart = (e: React.MouseEvent) => {
     if (notepadMaximized) return;
     notepadDragging.current = true;
@@ -385,7 +337,6 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     document.body.style.userSelect = "none";
   };
 
-  // 5. handleNotepadClose, handleNotepadMinimize, handleNotepadMaximize
   const handleNotepadClose = () => {
     setShowNotepad(false);
     setNotepadMinimized(false);
@@ -394,10 +345,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   const handleNotepadMinimize = () => setNotepadMinimized(true);
   const handleNotepadMaximize = () => setNotepadMaximized((prev) => !prev);
 
-  // 6. toggleStartMenu
   const toggleStartMenu = () => setShowStartMenu((prev) => !prev);
 
-  // --- Calculadora movible y minimizable ---
   const calculatorRef = useRef<HTMLDivElement>(null);
   const calculatorInitialX =
     typeof window !== "undefined" ? window.innerWidth / 2 - 160 : 100;
@@ -427,7 +376,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         const newY = e.clientY - calculatorDragOffset.current.y;
         calculatorPositionRef.current = {
           x: Math.max(0, Math.min(window.innerWidth - 320, newX)),
-          y: Math.max(0, Math.min(window.innerHeight - 60, newY)), // Permite mover arriba y a los costados
+          y: Math.max(0, Math.min(window.innerHeight - 60, newY)),
         };
         calculatorRef.current.style.transform = `translate3d(${calculatorPositionRef.current.x}px, ${calculatorPositionRef.current.y}px, 0)`;
       }
@@ -451,17 +400,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     }
   }, [calculatorMinimized]);
 
-  // 1. Modifica el estado de ventanas activas
   const [windowOrder, setWindowOrder] = useState<string[]>([]);
 
-  // 2. Función para obtener z-index basado en la posición en el array
   const getZIndex = (windowId: string) => {
     const index = windowOrder.indexOf(windowId);
-    if (index === -1) return 50; // Base z-index para ventanas no en el array
-    return 51 + index; // Incrementa z-index por posición (51, 52, 53...)
+    if (index === -1) return 50;
+    return 51 + index;
   };
 
-  // 3. Función para activar una ventana
   const bringToFront = (windowId: string) => {
     setWindowOrder((prev) => {
       const newOrder = prev.filter((id) => id !== windowId);
@@ -469,7 +415,6 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     });
   };
 
-  // 4. Modifica los handlers de las ventanas
   const handleVSCodeOpen = () => {
     if (windowState === "open") {
       setShowVsCodeMsg(true);
@@ -477,7 +422,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     } else {
       setWindowState("open");
       setShowVsCodeMsg(false);
-      bringToFront("vscode"); // Siempre traer al frente al abrir
+      bringToFront("vscode");
     }
   };
 
@@ -488,17 +433,16 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     } else {
       setShowNotepad(true);
       setNotepadMinimized(false);
-      bringToFront("notepad"); // Siempre traer al frente al abrir
+      bringToFront("notepad");
     }
   };
 
   const handleCalculatorOpen = () => {
     setShowCalculator(true);
     setCalculatorMinimized(false);
-    bringToFront("calculator"); // Traer al frente al restaurar
+    bringToFront("calculator");
   };
 
-  // 1. Ajustar las ventanas para pantallas pequeñas
   const getWindowDimensions = () => {
     const isMobile = window.innerWidth < 768;
     return {
@@ -525,14 +469,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
-    // Check on mount
     checkIsMobile();
-
-    // Add resize listener
     window.addEventListener("resize", checkIsMobile);
-
-    // Cleanup
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
@@ -540,19 +478,16 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 1. Estado para búsqueda
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState<
     { label: string; action: () => void }[]
   >([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
-  // 2. Opciones de búsqueda
   const searchOptions = [
     {
       label: "Portafolio",
@@ -589,20 +524,15 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   ];
   const searchMenuRef = useRef<HTMLDivElement>(null);
 
-  // 3. Filtrar resultados al escribir
   useEffect(() => {
-    console.log("Buscando:", searchText);
-    console.log(showSearchResults);
     if (searchText.trim() === "") {
       setSearchResults([]);
-      // No ocultes el menú aquí, deja que el blur lo oculte
       return;
     }
     const filtered = searchOptions.filter((opt) =>
       opt.label.toLowerCase().includes(searchText.toLowerCase())
     );
     setSearchResults(filtered);
-    // No cambies showSearchResults aquí
   }, [searchText]);
 
   return (
@@ -642,7 +572,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
           style={{ minWidth: 90 }}
         >
           <div className="bg-[#232323cc] rounded-lg p-3 shadow-lg hover:scale-105 transition">
-            <img src="./vscode.svg" alt="VSCode" className="w-12 h-12 mb-1" />
+            <Image
+              src="/vscode.svg"
+              alt="Ícono de VSCode - Portafolio"
+              title="Abrir Portafolio"
+              width={48}
+              height={48}
+              className="w-12 h-12 mb-1"
+            />
           </div>
           <span
             className="text-sm mt-2 font-semibold drop-shadow"
@@ -703,7 +640,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       {/* Notificación tipo Windows para VSCode */}
       {showVsCodeMsg && (
         <div className="fixed bottom-8 right-8 z-70 flex items-center gap-3 bg-[#232323] border border-[#444] shadow-xl rounded-lg px-6 py-4 animate-slide-in">
-          <img src="./vscode.svg" alt="VSCode" className="w-8 h-8" />
+          <Image
+            src="/vscode.svg"
+            alt="Ícono de VSCode - Portafolio"
+            title="Portafolio"
+            width={32}
+            height={32}
+            className="w-8 h-8"
+          />
           <div>
             <div className="text-white font-semibold mb-1">Portafolio</div>
             <div className="text-[#cccccc] text-sm">
@@ -757,10 +701,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         <div className="absolute bottom-12 left-0 w-full md:w-80 h-auto bg-[#1f1f1f] backdrop-blur-xl border border-[#333] rounded-tr-lg shadow-2xl z-30">
           <div className="p-4">
             <div className="flex items-center gap-3 mb-4">
-              <img
-                src="/profile.jpg"
-                alt="Lautaro"
+              <Image
+                src="/profile.webp"
+                alt="Foto de Lautaro Faure"
+                title="Lautaro Faure"
+                width={32}
+                height={32}
                 className="w-8 h-8 rounded-full object-cover border-2 border-[#0078d4]"
+                priority
               />
               <span className="text-white text-sm font-semibold">Lautaro</span>
             </div>
@@ -811,9 +759,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                       setCustomColor(null);
                     }}
                   >
-                    <img
+                    <Image
                       src={wp.url}
-                      alt={wp.name}
+                      alt={`Fondo de pantalla: ${wp.name}`}
+                      title={wp.name}
+                      width={160}
+                      height={80}
                       className="w-full h-20 object-cover"
                     />
                     <div className="bg-[#232323] text-white text-xs py-1 text-center">
@@ -1123,7 +1074,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   }
                 }}
               >
-                <img src="./vscode.svg" alt="VSCode" className="h-5 w-5" />
+                <Image
+                  src="/vscode.svg"
+                  alt="Ícono de VSCode - Portafolio"
+                  title="Portafolio"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5"
+                />
                 {windowState === "open" && (
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
                 )}

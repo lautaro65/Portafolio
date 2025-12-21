@@ -1,9 +1,9 @@
-// Nuevo archivo: components/Calculator.tsx
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export function CalculatorContent() {
-  const [display, setDisplay] = useState('0');
-  const [equation, setEquation] = useState('');
+  const [display, setDisplay] = useState("0");
+  const [equation, setEquation] = useState("");
   const [isNewNumber, setIsNewNumber] = useState(true);
 
   const handleNumber = (num: string) => {
@@ -24,18 +24,18 @@ export function CalculatorContent() {
     try {
       const result = eval(equation + display);
       setDisplay(result.toString());
-      setEquation('');
+      setEquation("");
       setIsNewNumber(true);
-    } catch (error) {
-      setDisplay('Error');
-      setEquation('');
+    } catch {
+      setDisplay("Error");
+      setEquation("");
       setIsNewNumber(true);
     }
   };
 
   const handleClear = () => {
-    setDisplay('0');
-    setEquation('');
+    setDisplay("0");
+    setEquation("");
     setIsNewNumber(true);
   };
 
@@ -49,47 +49,83 @@ export function CalculatorContent() {
 
       {/* Botones */}
       <div className="grid grid-cols-4 gap-2">
-        <button onClick={handleClear} className="col-span-2 p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold">
+        <button
+          onClick={handleClear}
+          className="col-span-2 p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
+        >
           C
         </button>
-        <button onClick={() => handleOperator('/')} className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold">
+        <button
+          onClick={() => handleOperator("/")}
+          className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
+        >
           ÷
         </button>
-        <button onClick={() => handleOperator('*')} className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold">
+        <button
+          onClick={() => handleOperator("*")}
+          className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
+        >
           ×
         </button>
-        
-        {[7,8,9].map(num => (
-          <button key={num} onClick={() => handleNumber(num.toString())} className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold">
+
+        {[7, 8, 9].map((num) => (
+          <button
+            key={num}
+            onClick={() => handleNumber(num.toString())}
+            className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold"
+          >
             {num}
           </button>
         ))}
-        <button onClick={() => handleOperator('-')} className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold">
+        <button
+          onClick={() => handleOperator("-")}
+          className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
+        >
           -
         </button>
-        
-        {[4,5,6].map(num => (
-          <button key={num} onClick={() => handleNumber(num.toString())} className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold">
+
+        {[4, 5, 6].map((num) => (
+          <button
+            key={num}
+            onClick={() => handleNumber(num.toString())}
+            className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold"
+          >
             {num}
           </button>
         ))}
-        <button onClick={() => handleOperator('+')} className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold">
+        <button
+          onClick={() => handleOperator("+")}
+          className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
+        >
           +
         </button>
-        
-        {[1,2,3].map(num => (
-          <button key={num} onClick={() => handleNumber(num.toString())} className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold">
+
+        {[1, 2, 3].map((num) => (
+          <button
+            key={num}
+            onClick={() => handleNumber(num.toString())}
+            className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold"
+          >
             {num}
           </button>
         ))}
-        <button onClick={handleEqual} className="p-4 bg-[#0078d4] hover:bg-[#006cbd] text-white rounded-lg font-semibold">
+        <button
+          onClick={handleEqual}
+          className="p-4 bg-[#0078d4] hover:bg-[#006cbd] text-white rounded-lg font-semibold"
+        >
           =
         </button>
-        
-        <button onClick={() => handleNumber('0')} className="col-span-2 p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold">
+
+        <button
+          onClick={() => handleNumber("0")}
+          className="col-span-2 p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold"
+        >
           0
         </button>
-        <button onClick={() => handleNumber('.')} className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold">
+        <button
+          onClick={() => handleNumber(".")}
+          className="p-4 bg-white hover:bg-[#f5f5f5] rounded-lg font-semibold"
+        >
           .
         </button>
       </div>

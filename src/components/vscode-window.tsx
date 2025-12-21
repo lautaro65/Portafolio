@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PortfolioContent from "./portfolio-content";
-import { useState, useEffect } from "react";
 import {
   Minus,
   X,
@@ -25,7 +24,7 @@ interface VSCodeWindowProps {
   onMaximize: () => void;
   onClose: () => void;
   maximized: boolean;
-  onDragStart?: (e: React.MouseEvent) => void; // <-- NUEVA PROP
+  onDragStart?: (e: React.MouseEvent) => void;
 }
 
 export function VSCodeWindow({
@@ -39,10 +38,9 @@ export function VSCodeWindow({
   const [terminalOpen, setTerminalOpen] = useState(true);
   const [terminalCollapsed, setTerminalCollapsed] = useState(true);
   const [activeFile, setActiveFile] = useState("about.md");
-  const [openFiles, setOpenFiles] = useState<string[]>(["about.md"]); // NUEVO ESTADO
+  const [openFiles, setOpenFiles] = useState<string[]>(["about.md"]);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [activePanel, setActivePanel] = useState("explorer");
-  const [terminalCommand, setTerminalCommand] = useState("!help");
   const [currentTheme, setCurrentTheme] = useState("Dark+");
   const [terminalHeight, setTerminalHeight] = useState(220);
   const [isResizing, setIsResizing] = useState(false);
@@ -145,7 +143,7 @@ export function VSCodeWindow({
       children: [
         { name: "about.md", type: "file" },
         { name: "habilidades.md", type: "file" },
-        { name: "proceso.md", type: "file" }, // Add new file here
+        { name: "proceso.md", type: "file" },
       ],
     },
     {
@@ -162,68 +160,11 @@ export function VSCodeWindow({
     },
   ];
 
-  const skills = [
-    {
-      name: "React",
-      description:
-        "Una biblioteca de JavaScript para construir interfaces de usuario",
-      level: 95,
-      featured: true,
-    },
-    {
-      name: "TypeScript",
-      description: "JavaScript tipado que se compila a JavaScript plano",
-      level: 90,
-      featured: true,
-    },
-    {
-      name: "Next.js",
-      description: "El framework de React para producción",
-      level: 88,
-      featured: true,
-    },
-    {
-      name: "Tailwind CSS",
-      description: "Un framework CSS utility-first",
-      level: 92,
-      featured: false,
-    },
-    {
-      name: "Node.js",
-      description: "Entorno de ejecución de JavaScript del lado del servidor",
-      level: 85,
-      featured: false,
-    },
-    {
-      name: "Python",
-      description: "Lenguaje de programación de alto nivel",
-      level: 80,
-      featured: false,
-    },
-    {
-      name: "Figma",
-      description: "Herramienta de diseño colaborativo",
-      level: 75,
-      featured: false,
-    },
-    {
-      name: "Git",
-      description: "Sistema de control de versiones distribuido",
-      level: 88,
-      featured: false,
-    },
-  ];
-
-  const handleTerminalCommand = (command: string) => {
-    setTerminalCommand(command);
-  };
-
   const handleThemeChange = (themeName: string) => {
     setCurrentTheme(themeName);
     setShowThemeMenu(false);
   };
 
-  // Abrir archivo (agrega a openFiles si no está)
   const handleOpenFile = (file: string) => {
     setActiveFile(file);
     if (!openFiles.includes(file)) {
@@ -231,40 +172,37 @@ export function VSCodeWindow({
     }
   };
 
-  // Cerrar pestaña
   const handleCloseFile = (file: string) => {
     const filtered = openFiles.filter((f) => f !== file);
     setOpenFiles(filtered);
-    // Si el activo se cierra, cambiar al anterior o al primero
     if (activeFile === file) {
       setActiveFile(filtered.length ? filtered[filtered.length - 1] : "");
     }
   };
 
-  // Resizer handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = () => {
     setIsResizing(true);
     document.body.style.cursor = "ns-resize";
   };
 
-  const handleSidebarMouseDown = (e: React.MouseEvent) => {
+  const handleSidebarMouseDown = () => {
     setIsSidebarResizing(true);
     document.body.style.cursor = "ew-resize";
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing) return;
       const windowHeight = window.innerHeight;
       const newHeight = Math.max(100, Math.min(400, windowHeight - e.clientY));
       setTerminalHeight(newHeight);
-      document.body.style.userSelect = "none"; // Evita la selección de texto
+      document.body.style.userSelect = "none";
     };
 
     const handleMouseUp = () => {
       setIsResizing(false);
       document.body.style.cursor = "default";
-      document.body.style.userSelect = "auto"; // Habilita la selección de texto
+      document.body.style.userSelect = "auto";
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
@@ -281,7 +219,7 @@ export function VSCodeWindow({
     };
   }, [isResizing]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleSidebarMouseMove = (e: MouseEvent) => {
       if (!isSidebarResizing) return;
       setSidebarWidth((prev) =>
@@ -308,7 +246,7 @@ export function VSCodeWindow({
 
   return (
     <div
-      className={` w-full font-mono flex flex-col transition-colors duration-200 ${
+      className={`w-full font-mono flex flex-col transition-colors duration-200 ${
         maximized ? "h-screen" : "h-auto max-h-[90vh]"
       }`}
       style={{ backgroundColor: theme.bg, color: theme.text }}
@@ -336,6 +274,8 @@ export function VSCodeWindow({
         </div>
         <div className="flex items-center space-x-1">
           <Button
+            aria-label="Minimizar ventana"
+            title="Minimizar"
             onClick={onMinimize}
             variant="ghost"
             size="sm"
@@ -353,6 +293,8 @@ export function VSCodeWindow({
           {/* Solo mostrar maximizar en desktop */}
           {!isMobile && (
             <Button
+              aria-label={maximized ? "Restaurar ventana" : "Maximizar ventana"}
+              title={maximized ? "Restaurar" : "Maximizar"}
               onClick={onMaximize}
               variant="ghost"
               size="sm"
@@ -373,6 +315,8 @@ export function VSCodeWindow({
             </Button>
           )}
           <Button
+            aria-label="Cerrar ventana"
+            title="Cerrar"
             onClick={onClose}
             variant="ghost"
             size="sm"
@@ -411,11 +355,11 @@ export function VSCodeWindow({
                   <button
                     className="ml-1 p-1 rounded transition"
                     style={{
-                      background: theme.activityBar + "22", // o theme.sidebar + "22"
+                      background: theme.activityBar + "22",
                     }}
                     onClick={() => {
                       setMobileExplorerOpen((v) => !v);
-                      setShowThemeMenu(false); // Oculta el menú de temas al alternar explorador
+                      setShowThemeMenu(false);
                     }}
                     aria-label="Abrir/cerrar explorador"
                     type="button"
@@ -434,7 +378,7 @@ export function VSCodeWindow({
                   className="h-8 w-8 p-0"
                   onClick={() => {
                     setShowThemeMenu(!showThemeMenu);
-                    setMobileExplorerOpen(false); // Oculta el explorador al abrir temas
+                    setMobileExplorerOpen(false);
                   }}
                 >
                   <Settings className="h-5 w-5" />
@@ -451,7 +395,7 @@ export function VSCodeWindow({
                         <div
                           className="py-2 px-3  rounded cursor-pointer"
                           style={{
-                            background: theme.activityBar + "22", // o theme.sidebar + "22"
+                            background: theme.activityBar + "22",
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -475,7 +419,7 @@ export function VSCodeWindow({
                                 key={child.name}
                                 className="py-2 px-3  rounded cursor-pointer"
                                 style={{
-                                  background: theme.activityBar + "22", // o theme.sidebar + "22"
+                                  background: theme.activityBar + "22",
                                 }}
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -518,7 +462,7 @@ export function VSCodeWindow({
                 <div
                   className="mt-2 z-50 min-w-[180px] border rounded-lg shadow-xl p-3 flex flex-col gap-2"
                   style={{
-                    background: theme.sidebar, // <--- usa el color del theme
+                    background: theme.sidebar,
                     borderColor: theme.border,
                   }}
                 >
@@ -670,6 +614,8 @@ export function VSCodeWindow({
               <Button
                 variant="ghost"
                 size="sm"
+                aria-label="Abrir explorador"
+                title="Explorador"
                 className={
                   sidebarOpen && activePanel === "explorer"
                     ? "h-10 w-10 p-0 border-l-2"
@@ -701,8 +647,10 @@ export function VSCodeWindow({
                   variant="ghost"
                   size="sm"
                   className="h-10 w-10 p-0 "
+                  aria-label="Abrir menú de temas"
+                  title="Cambiar tema"
                   style={{
-                    background: theme.activityBar + "22", // o theme.sidebar + "22"
+                    background: theme.activityBar + "22",
                   }}
                   onClick={() => setShowThemeMenu(!showThemeMenu)}
                 >
@@ -977,6 +925,8 @@ export function VSCodeWindow({
                 <Button
                   variant="ghost"
                   size="sm"
+                  aria-label="Cerrar pestaña"
+                  title="Cerrar pestaña"
                   className="h-4 w-4 p-0 hover:bg-[#404040]"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -1042,6 +992,8 @@ export function VSCodeWindow({
                 <Button
                   variant="ghost"
                   size="sm"
+                  aria-label="Cerrar terminal"
+                  title="Cerrar terminal"
                   className="h-6 w-6 p-0 hover:bg-[#404040]"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -1078,10 +1030,22 @@ export function VSCodeWindow({
           >
             Terminal
           </Button>
-          <a href="https://linkedin.com" className="hover:underline text-white">
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline text-white"
+            title="LinkedIn"
+          >
             LinkedIn
           </a>
-          <a href="https://github.com" className="hover:underline text-white">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline text-white"
+            title="GitHub"
+          >
             GitHub
           </a>
         </div>
@@ -1107,7 +1071,7 @@ function FileTreeItem({
 }: FileTreeItemProps) {
   const [expanded, setExpanded] = useState(item.expanded || false);
 
-  const hoverBg = theme.activityBar + "22"; // leve opacidad
+  const hoverBg = theme.activityBar + "22";
   const activeBg = theme.editor;
 
   if (item.type === "folder") {

@@ -7,7 +7,7 @@ interface NotepadWindowProps {
   onMaximize: () => void;
   maximized: boolean;
   content: string;
-  onDragStart?: (e: React.MouseEvent) => void; // <-- Nueva prop
+  onDragStart?: (e: React.MouseEvent) => void;
 }
 
 export default function NotepadWindow({

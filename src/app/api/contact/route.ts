@@ -14,12 +14,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Envía el email usando Resend
     const data = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to: "lautaroofaure@gmail.com",
       subject: `Nuevo mensaje de contacto de ${name}`,
-      replyTo: email, // <-- Cambiado de reply_to a replyTo
+      replyTo: email,
       html: `
         <h2>Nuevo mensaje de contacto</h2>
         <p><b>Nombre:</b> ${name}</p>
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
+  } catch {
     return NextResponse.json(
       { ok: false, error: "Error en el servidor" },
       { status: 500 }
