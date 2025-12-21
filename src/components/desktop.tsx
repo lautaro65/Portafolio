@@ -752,8 +752,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         </div>
       )}
 
-      {/* Menú Inicio - Solo mostrar cuando NO esté maximizada */}
-      {showStartMenu && !maximized && (
+      {/* Menú Inicio  */}
+      {showStartMenu && (
         <div className="absolute bottom-12 left-0 w-full md:w-80 h-auto bg-[#1f1f1f] backdrop-blur-xl border border-[#333] rounded-tr-lg shadow-2xl z-30">
           <div className="p-4">
             <div className="flex items-center gap-3 mb-4">
