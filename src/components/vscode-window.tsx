@@ -1031,7 +1031,7 @@ export function VSCodeWindow({
             Terminal
           </Button>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline text-white"
@@ -1040,7 +1040,7 @@ export function VSCodeWindow({
             LinkedIn
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/lautaro65"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline text-white"
@@ -1270,7 +1270,7 @@ function TerminalContent({ theme }: { theme: any }) {
             <span style={{ color: theme.accent }}>contacto</span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
-            <b>Email:</b> lautarofnewells@gmail.com
+            <b>Email:</b> lautaroofaure@gmail.com
             <br />
             <b>LinkedIn:</b>{" "}
             <a
@@ -1337,8 +1337,8 @@ function TerminalContent({ theme }: { theme: any }) {
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
             <a
-              href="./CV.pdf"
-              download="lautaro-cv.pdf"
+              href="./Curriculum-Vitae-Lautaro-Faure.pdf"
+              download="lautaro_faure_cv.pdf"
               className="text-[#4fc1ff] underline"
             >
               Descargar CV (PDF)

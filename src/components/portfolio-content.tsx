@@ -102,7 +102,7 @@ function AboutPage({ theme }: { theme?: any }) {
           </div>
           <div className="flex flex-wrap gap-3 mb-4">
             <a
-              href="https://github.com/lautaro"
+              href="https://github.com/lautaro65"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded transition flex items-center gap-2 text-sm font-medium"
@@ -115,7 +115,7 @@ function AboutPage({ theme }: { theme?: any }) {
               <Github className="h-4 w-4" /> GitHub
             </a>
             <a
-              href="https://linkedin.com/in/lautaro"
+              href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded transition flex items-center gap-2 text-sm font-medium"
@@ -128,7 +128,9 @@ function AboutPage({ theme }: { theme?: any }) {
               <ExternalLink className="h-4 w-4" /> LinkedIn
             </a>
             <a
-              href="mailto:lautaro@gmail.com"
+              href="mailto:lautaroofaure@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2 rounded transition flex items-center gap-2 text-sm font-medium"
               style={{
                 background: theme?.sidebar,
@@ -139,7 +141,7 @@ function AboutPage({ theme }: { theme?: any }) {
               <Mail className="h-4 w-4" /> Gmail
             </a>
             <a
-              href="/cv-lautaro.pdf"
+              href="/Curriculum-Vitae-Lautaro-Faure.pdf"
               download
               className="px-4 py-2 rounded transition flex items-center gap-2 text-sm font-medium"
               style={{
@@ -467,7 +469,9 @@ function ContactPage({ theme }: { theme?: any }) {
             </p>
             <div className="flex flex-col gap-3 w-full max-w-xs">
               <a
-                href="mailto:lautaro@gmail.com"
+                href="mailto:lautaroofaure@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition border"
                 style={{
                   background: theme?.sidebar || "#232323",
@@ -475,10 +479,10 @@ function ContactPage({ theme }: { theme?: any }) {
                   color: theme?.accent || "#9cdcfe",
                 }}
               >
-                <Mail className="h-5 w-5" /> lautaro@gmail.com
+                <Mail className="h-5 w-5" /> lautaroofaure@gmail.com
               </a>
               <a
-                href="https://linkedin.com/in/lautaro"
+                href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition border"
@@ -491,7 +495,7 @@ function ContactPage({ theme }: { theme?: any }) {
                 <ExternalLink className="h-5 w-5" /> LinkedIn
               </a>
               <a
-                href="https://github.com/lautaro"
+                href="https://github.com/lautaro65"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition border"
@@ -895,7 +899,7 @@ function ProcessPage({ theme }: { theme?: any }) {
               Contactar Mail
             </a>
             <a
-              href="https://linkedin.com/in/lautaro"
+              href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
               className="mt-2 px-6 py-2 rounded text-base font-semibold shadow-md transition flex items-center gap-2"
               target="_blank"
               rel="noopener noreferrer"
