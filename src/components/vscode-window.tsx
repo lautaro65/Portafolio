@@ -281,12 +281,14 @@ export function VSCodeWindow({
             size="sm"
             className="h-6 w-6 p-0"
             style={{ transition: "background 0.15s" }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = theme.border)
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "transparent")
-            }
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#232323";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = theme.text;
+            }}
           >
             <Minus className="h-3 w-3" />
           </Button>
@@ -616,19 +618,34 @@ export function VSCodeWindow({
                 size="sm"
                 aria-label="Abrir explorador"
                 title="Explorador"
-                className={
-                  sidebarOpen && activePanel === "explorer"
-                    ? "h-10 w-10 p-0 border-l-2"
-                    : "h-10 w-10 p-0 "
-                }
+                className={`h-10 w-10 p-0 border-l-2`}
                 style={{
-                  background: theme.activityBar + "22",
-                  ...(sidebarOpen && activePanel === "explorer"
-                    ? {
-                        backgroundColor: theme.activityBar + "52",
-                        borderLeftColor: theme.accent,
-                      }
-                    : {}),
+                  background:
+                    sidebarOpen && activePanel === "explorer"
+                      ? "#232323"
+                      : theme.activityBar + "22",
+                  color:
+                    sidebarOpen && activePanel === "explorer"
+                      ? "#fff"
+                      : theme.text,
+                  borderLeftColor:
+                    sidebarOpen && activePanel === "explorer"
+                      ? theme.accent
+                      : "transparent",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#232323";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    sidebarOpen && activePanel === "explorer"
+                      ? "#232323"
+                      : theme.activityBar + "22";
+                  e.currentTarget.style.color =
+                    sidebarOpen && activePanel === "explorer"
+                      ? "#fff"
+                      : theme.text;
                 }}
                 onClick={() => {
                   // Toggle sidebar
@@ -660,8 +677,9 @@ export function VSCodeWindow({
                   <div
                     className="absolute left-12 top-0 z-50 min-w-[180px] border rounded-lg shadow-xl p-3 flex flex-col gap-2"
                     style={{
-                      background: theme.sidebar,
+                      background: "#232323",
                       borderColor: theme.border,
+                      color: "#fff",
                     }}
                   >
                     <div

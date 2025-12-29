@@ -8,19 +8,18 @@ import {
   File,
   Search,
   Folder,
-  Settings,
   Wifi,
   Volume2,
-  Battery,
   User,
   FileText,
   X,
   Calculator,
   Minus,
 } from "lucide-react";
-import React from "react";
+import type React from "react";
 import { CalculatorContent } from "./Calculator";
 import Image from "next/image";
+import { CertificacionesWindow } from "./CertificacionesWindow";
 
 const wallpapers = [
   { name: "Pradera verde", url: "/wallpapers/5.jpg", type: "image" },
@@ -42,9 +41,9 @@ const solidColors = [
 
 function isColorLight(hex: string) {
   hex = hex.replace("#", "");
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
+  const r = Number.parseInt(hex.substring(0, 2), 16);
+  const g = Number.parseInt(hex.substring(2, 4), 16);
+  const b = Number.parseInt(hex.substring(4, 6), 16);
   return 0.299 * r + 0.587 * g + 0.114 * b > 200;
 }
 
@@ -65,7 +64,7 @@ export function Desktop() {
   const [notepadMaximized, setNotepadMaximized] = useState(false);
   const [notepadMinimized, setNotepadMinimized] = useState(false);
   const [activeWindow, setActiveWindow] = useState<
-    "vscode" | "notepad" | "cv" | "calculator" | null
+    "vscode" | "notepad" | "cv" | "calculator" | "certificaciones" | null
   >(null);
   const [showNotepadMsg, setShowNotepadMsg] = useState(false);
   const [showCV, setShowCV] = useState(false);
@@ -73,6 +72,10 @@ export function Desktop() {
   const [showCalculator, setShowCalculator] = useState(false);
   const [calculatorMinimized, setCalculatorMinimized] = useState(false);
   const [showCalculatorMsg, setShowCalculatorMsg] = useState(false);
+
+  const [volume, setVolume] = useState(50);
+  const [showVolumeControl, setShowVolumeControl] = useState(false);
+  const [showWifiMenu, setShowWifiMenu] = useState(false);
 
   const notepadContent = `¿Por qué contratarme?
 
@@ -250,6 +253,71 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   const notepadZ = activeWindow === "notepad" ? 60 : 50;
   const calculatorZ = activeWindow === "calculator" ? 60 : 50;
 
+  // Agrega el estado para maximizar/minimizar la ventana de certificaciones
+  const [certificacionesMaximized, setCertificacionesMaximized] =
+    useState(true);
+  const [certificacionesMinimized, setCertificacionesMinimized] =
+    useState(false);
+
+  // Referencias y lógica para mover la ventana (opcional, puedes mejorarla)
+  const certificacionesRef = useRef<HTMLDivElement>(null);
+  const certificacionesInitialX =
+    typeof window !== "undefined" ? window.innerWidth / 2 - 250 : 100;
+  const certificacionesInitialY =
+    typeof window !== "undefined" ? window.innerHeight * 0.18 : 100;
+  const certificacionesPositionRef = useRef({
+    x: certificacionesInitialX,
+    y: certificacionesInitialY,
+  });
+  const certificacionesDragging = useRef(false);
+  const certificacionesDragOffset = useRef({ x: 0, y: 0 });
+
+  const handleCertificacionesDragStart = (e: React.MouseEvent) => {
+    if (certificacionesMaximized) return;
+    certificacionesDragging.current = true;
+    certificacionesDragOffset.current = {
+      x: e.clientX - certificacionesPositionRef.current.x,
+      y: e.clientY - certificacionesPositionRef.current.y,
+    };
+    document.body.style.cursor = "move";
+    document.body.style.userSelect = "none";
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (
+        certificacionesDragging.current &&
+        !certificacionesMaximized &&
+        certificacionesRef.current
+      ) {
+        const newX = e.clientX - certificacionesDragOffset.current.x;
+        const newY = e.clientY - certificacionesDragOffset.current.y;
+        certificacionesPositionRef.current = {
+          x: Math.max(0, Math.min(window.innerWidth - 600, newX)),
+          y: Math.max(0, Math.min(window.innerHeight - 120, newY)),
+        };
+        certificacionesRef.current.style.transform = `translate3d(${certificacionesPositionRef.current.x}px, ${certificacionesPositionRef.current.y}px, 0)`;
+      }
+    };
+    const handleMouseUp = () => {
+      certificacionesDragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [certificacionesMaximized]);
+
+  useEffect(() => {
+    if (certificacionesMaximized && certificacionesRef.current) {
+      certificacionesRef.current.style.transform = "";
+    }
+  }, [certificacionesMaximized]);
+
   const [cvMaximized, setCVMaximized] = useState(false);
   const cvInitialX =
     typeof window !== "undefined" ? window.innerWidth / 2 + 320 : 400;
@@ -314,7 +382,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   }, [cvMaximized]);
 
   const handleDownloadCV = () => {
-    window.open("/CV.pdf", "_blank");
+    window.open("/Curriculum-Vitae-Lautaro-Faure.pdf", "_blank");
   };
 
   const actualColor = customColor ?? solidColor;
@@ -521,36 +589,47 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         handleOpenCalculator();
       },
     },
+    {
+      label: "Certificaciones",
+      action: () => {
+        setShowSearchResults(false);
+        setSearchText("");
+        setActiveWindow("certificaciones");
+        setCertificacionesMinimized(false);
+        bringToFront("certificaciones");
+      },
+    },
   ];
   const searchMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (searchText.trim() === "") {
-      setSearchResults([]);
-      return;
+      setSearchResults(searchOptions);
+    } else {
+      const filtered = searchOptions.filter((option) =>
+        option.label.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setSearchResults(filtered);
     }
-    const filtered = searchOptions.filter((opt) =>
-      opt.label.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setSearchResults(filtered);
   }, [searchText]);
 
   return (
     <div
-      className="relative h-screen w-full overflow-hidden"
-      style={
-        wallpaperType === "image"
-          ? {
-              backgroundImage: `url(${wallpaper})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              transition: "background-image 0.4s",
-            }
-          : {
-              background: actualColor,
-              transition: "background 0.4s",
-            }
-      }
+      className="h-screen w-full overflow-hidden relative"
+      style={{
+        backgroundImage:
+          wallpaperType === "image" ? `url(${wallpaper})` : "none",
+        backgroundColor:
+          wallpaperType === "color" ? actualColor : "transparent",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      onClick={() => {
+        if (showStartMenu) setShowStartMenu(false);
+        if (showWallpaperMenu) setShowWallpaperMenu(false);
+        if (showVolumeControl) setShowVolumeControl(false);
+        if (showWifiMenu) setShowWifiMenu(false);
+      }}
     >
       {/* Fondo con textura */}
       <div
@@ -573,7 +652,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         >
           <div className="bg-[#232323cc] rounded-lg p-3 shadow-lg hover:scale-105 transition">
             <Image
-              src="/vscode.svg"
+              src="./vscode.svg"
               alt="Ícono de VSCode - Portafolio"
               title="Abrir Portafolio"
               width={48}
@@ -636,12 +715,110 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             Calculadora
           </span>
         </div>
+        {/* Certificaciones */}
+        <div
+          className="flex flex-col items-center cursor-pointer"
+          onClick={() => {
+            if (
+              activeWindow === "certificaciones" &&
+              !certificacionesMinimized
+            ) {
+              setActiveWindow(null);
+            } else {
+              setActiveWindow("certificaciones");
+              setCertificacionesMinimized(false);
+              bringToFront("certificaciones");
+            }
+          }}
+          style={{ minWidth: 90 }}
+        >
+          <div className="rounded-lg p-3 hover:scale-105 transition flex items-center justify-center bg-transparent">
+            {/* SVG de carpeta estilo Windows, fondo transparente, más grande y cambia si está abierta */}
+            {activeWindow === "certificaciones" ? (
+              // Carpeta abierta
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+              >
+                <linearGradient
+                  id="openFolder1"
+                  x1="24"
+                  x2="24"
+                  y1="6.955"
+                  y2="23.167"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0" stopColor="#eba600"></stop>
+                  <stop offset="1" stopColor="#c28200"></stop>
+                </linearGradient>
+                <path
+                  fill="url(#openFolder1)"
+                  d="M24.414,10.414l-2.536-2.536C21.316,7.316,20.553,7,19.757,7H5C3.895,7,3,7.895,3,9v30	c0,1.105,0.895,2,2,2h38c1.105,0,2-0.895,2-2V13c0-1.105-0.895-2-2-2H25.828C25.298,11,24.789,10.789,24.414,10.414z"
+                ></path>
+                <linearGradient
+                  id="openFolder2"
+                  x1="24.066"
+                  x2="24.066"
+                  y1="19.228"
+                  y2="33.821"
+                  gradientTransform="matrix(-1 0 0 1 48 0)"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0" stopColor="#ffd869"></stop>
+                  <stop offset="1" stopColor="#fec52b"></stop>
+                </linearGradient>
+                <path
+                  fill="url(#openFolder2)"
+                  d="M24,23l3.854-3.854C27.947,19.053,28.074,19,28.207,19H44.81c1.176,0,2.098,1.01,1.992,2.181	l-1.636,18C45.072,40.211,44.208,41,43.174,41H4.79c-1.019,0-1.875-0.766-1.988-1.779L1.062,23.555C1.029,23.259,1.261,23,1.559,23	H24z"
+                ></path>
+              </svg>
+            ) : (
+              // Carpeta cerrada (igual que antes pero más grande)
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Cuerpo principal de la carpeta */}
+                <path
+                  d="M4 38V10.5C4 9.11929 5.11929 8 6.5 8H18.5C19.3284 8 20.0784 8.50001 20.4142 9.24264L22.0858 12.7574C22.4216 13.5 23.1716 14 24 14H41.5C42.8807 14 44 15.1193 44 16.5V38C44 39.3807 42.8807 40.5 41.5 40.5H6.5C5.11929 40.5 4 39.3807 4 38Z"
+                  fill="#F3D19C"
+                  stroke="#C2A14A"
+                  strokeWidth="1.5"
+                />
+                {/* Detalle de la solapa */}
+                <path
+                  d="M4 14H20.5L22.5 17.5H44"
+                  stroke="#C2A14A"
+                  strokeWidth="1.5"
+                  fill="none"
+                />
+                {/* Sombra interior */}
+                <path
+                  d="M6 18H42V38C42 39.1046 41.1046 40 40 40H8C6.89543 40 6 39.1046 6 38V18Z"
+                  fill="#E6C87A"
+                  opacity="0.6"
+                />
+              </svg>
+            )}
+          </div>
+          <span
+            className="text-sm mt-2 font-semibold drop-shadow"
+            style={{ color: portfolioTextColor }}
+          >
+            Certificaciones
+          </span>
+        </div>
       </div>
       {/* Notificación tipo Windows para VSCode */}
       {showVsCodeMsg && (
         <div className="fixed bottom-8 right-8 z-70 flex items-center gap-3 bg-[#232323] border border-[#444] shadow-xl rounded-lg px-6 py-4 animate-slide-in">
           <Image
-            src="/vscode.svg"
+            src="./vscode.svg"
             alt="Ícono de VSCode - Portafolio"
             title="Portafolio"
             width={32}
@@ -711,6 +888,20 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 priority
               />
               <span className="text-white text-sm font-semibold">Lautaro</span>
+              {isMobile && (
+                <span className="text-xs ml-auto text-gray-300 ">
+                  {currentTime.toLocaleTimeString("es-ES", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}{" "}
+                  <br />
+                  {currentTime.toLocaleDateString("es-ES", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </span>
+              )}
             </div>
             <div className="space-y-2">
               <div
@@ -760,7 +951,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                     }}
                   >
                     <Image
-                      src={wp.url}
+                      src={wp.url || "/placeholder.svg"}
                       alt={`Fondo de pantalla: ${wp.name}`}
                       title={wp.name}
                       width={160}
@@ -830,6 +1021,41 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         </div>
       )}
 
+      {activeWindow === "certificaciones" && !certificacionesMinimized && (
+        <div
+          ref={certificacionesRef}
+          className={`fixed ${
+            certificacionesMaximized || isMobile
+              ? "top-0 left-0 w-full h-full"
+              : "w-[600px] h-[480px] rounded-xl shadow-2xl border border-[#ccc]"
+          }`}
+          style={{
+            ...(certificacionesMaximized || isMobile
+              ? {}
+              : {
+                  minWidth: "400px",
+                  minHeight: "320px",
+                  transform: `translate3d(${certificacionesPositionRef.current.x}px, ${certificacionesPositionRef.current.y}px, 0)`,
+                  transition: "none",
+                }),
+            zIndex: getZIndex("certificaciones"),
+          }}
+          onMouseDown={() => bringToFront("certificaciones")}
+        >
+          <CertificacionesWindow
+            onClose={() => {
+              setActiveWindow(null);
+              setCertificacionesMinimized(false);
+              setCertificacionesMaximized(true);
+            }}
+            onMinimize={() => setCertificacionesMinimized(true)}
+            onMaximize={() => setCertificacionesMaximized((prev) => !prev)}
+            maximized={certificacionesMaximized}
+            onDragStart={handleCertificacionesDragStart}
+          />
+        </div>
+      )}
+
       {/* Ventana VSCode */}
       {windowState === "open" && (
         <div
@@ -864,7 +1090,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         </div>
       )}
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center select-none pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10  flex-col items-center select-none pointer-events-none hidden md:flex">
         <div className="text-6xl font-bold text-white drop-shadow-lg">
           {centerTime}
         </div>
@@ -1004,51 +1230,54 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 value={searchText}
                 onChange={(e) => {
                   setSearchText(e.target.value);
-                  setShowSearchResults(true); // Mostrar resultados al escribir
+                  setShowSearchResults(true);
                 }}
-                onFocus={() => {
-                  if (searchText.trim() !== "") setShowSearchResults(true);
-                }}
+                onFocus={() => setShowSearchResults(true)}
                 onBlur={() =>
-                  setTimeout(() => setShowSearchResults(false), 150)
+                  setTimeout(() => setShowSearchResults(false), 200)
                 }
                 autoComplete="off"
               />
-              {/* Menú de resultados */}
               {showSearchResults && (
-                <div className="absolute left-0 top-full mt-1 w-full bg-[#232323] border border-[#444] rounded-lg shadow-xl z-50">
-                  {searchResults.map((result, idx) => (
-                    <button
-                      key={result.label}
-                      className="w-full text-left px-4 py-2 text-white hover:bg-[#0078d4] hover:text-white transition rounded"
-                      onClick={result.action}
-                    >
-                      {result.label}
-                    </button>
-                  ))}
-                  {searchResults.length === 0 && (
-                    <div className="px-4 py-2 text-gray-400">
-                      Sin resultados
-                    </div>
-                  )}
+                <div className="absolute left-0 bottom-full mb-2 w-[320px] bg-[rgba(30,30,30,0.98)] backdrop-blur-xl border border-[rgba(255,255,255,0.15)] rounded-lg shadow-2xl z-50 overflow-hidden">
+                  <div className="p-3 border-b border-[rgba(255,255,255,0.1)]">
+                    <p className="text-xs text-gray-400 uppercase tracking-wide">
+                      Mejores coincidencias
+                    </p>
+                  </div>
+                  <div className="max-h-[300px] overflow-y-auto">
+                    {searchResults.map((result) => (
+                      <button
+                        key={result.label}
+                        className="w-full text-left px-4 py-3 text-white hover:bg-[rgba(255,255,255,0.1)] transition flex items-center gap-3"
+                        onClick={result.action}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
+                        <div className="w-8 h-8 bg-[rgba(0,120,212,0.2)] rounded flex items-center justify-center">
+                          <Search className="w-4 h-4 text-[#0078d4]" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium">
+                            {result.label}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            Aplicación
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                    {searchResults.length === 0 && (
+                      <div className="px-4 py-8 text-center">
+                        <Search className="w-12 h-12 text-gray-600 mx-auto mb-2" />
+                        <p className="text-gray-400 text-sm">
+                          No se encontraron resultados
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
-
-            {/* Vista de tareas */}
-            <button className="h-full w-12 flex items-center justify-center hover:bg-[rgba(255,255,255,0.1)] transition-colors ml-2 group relative">
-              <svg
-                className="w-5 h-5 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M5 9h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1s.45 1 1 1zm0 4h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1s.45 1 1 1zm0 4h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1s.45 1 1 1z" />
-              </svg>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Vista de tareas
-              </div>
-            </button>
 
             {/* Separador */}
             <div className="h-6 w-[1px] bg-[rgba(255,255,255,0.2)] mx-2" />
@@ -1075,8 +1304,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 }}
               >
                 <Image
-                  src="/vscode.svg"
-                  alt="Ícono de VSCode - Portafolio"
+                  src="./vscode.svg"
+                  alt="VSCode"
                   title="Portafolio"
                   width={20}
                   height={20}
@@ -1144,24 +1373,276 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   Calculadora
                 </div>
               </button>
-              {/* ...otros botones... */}
+
+              {/* Certificaciones en barra de tareas */}
+              <button
+                className={`flex items-center justify-center h-10 w-10 rounded-sm transition-all relative group ${
+                  activeWindow === "certificaciones"
+                    ? "bg-[rgba(255,255,255,0.15)] border-b-2 border-[#0078d4]"
+                    : "hover:bg-[rgba(255,255,255,0.1)]"
+                }`}
+                onClick={() => {
+                  if (
+                    activeWindow === "certificaciones" &&
+                    !certificacionesMinimized
+                  ) {
+                    setActiveWindow(null);
+                  } else {
+                    setActiveWindow("certificaciones");
+                    setCertificacionesMinimized(false);
+                    bringToFront("certificaciones");
+                  }
+                }}
+              >
+                {/* SVG de carpeta estilo Windows, igual que en el escritorio */}
+                {activeWindow === "certificaciones" ? (
+                  // Carpeta abierta
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 48 48"
+                  >
+                    <linearGradient
+                      id="openFolder1-taskbar"
+                      x1="24"
+                      x2="24"
+                      y1="6.955"
+                      y2="23.167"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stopColor="#eba600"></stop>
+                      <stop offset="1" stopColor="#c28200"></stop>
+                    </linearGradient>
+                    <path
+                      fill="url(#openFolder1-taskbar)"
+                      d="M24.414,10.414l-2.536-2.536C21.316,7.316,20.553,7,19.757,7H5C3.895,7,3,7.895,3,9v30	c0,1.105,0.895,2,2,2h38c1.105,0,2-0.895,2-2V13c0-1.105-0.895-2-2-2H25.828C25.298,11,24.789,10.789,24.414,10.414z"
+                    ></path>
+                    <linearGradient
+                      id="openFolder2-taskbar"
+                      x1="24.066"
+                      x2="24.066"
+                      y1="19.228"
+                      y2="33.821"
+                      gradientTransform="matrix(-1 0 0 1 48 0)"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stopColor="#ffd869"></stop>
+                      <stop offset="1" stopColor="#fec52b"></stop>
+                    </linearGradient>
+                    <path
+                      fill="url(#openFolder2-taskbar)"
+                      d="M24,23l3.854-3.854C27.947,19.053,28.074,19,28.207,19H44.81c1.176,0,2.098,1.01,1.992,2.181	l-1.636,18C45.072,40.211,44.208,41,43.174,41H4.79c-1.019,0-1.875-0.766-1.988-1.779L1.062,23.555C1.029,23.259,1.261,23,1.559,23	H24z"
+                    ></path>
+                  </svg>
+                ) : (
+                  // Carpeta cerrada
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 38V10.5C4 9.11929 5.11929 8 6.5 8H18.5C19.3284 8 20.0784 8.50001 20.4142 9.24264L22.0858 12.7574C22.4216 13.5 23.1716 14 24 14H41.5C42.8807 14 44 15.1193 44 16.5V38C44 39.3807 42.8807 40.5 41.5 40.5H6.5C5.11929 40.5 4 39.3807 4 38Z"
+                      fill="#F3D19C"
+                      stroke="#C2A14A"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      d="M4 14H20.5L22.5 17.5H44"
+                      stroke="#C2A14A"
+                      strokeWidth="1.5"
+                      fill="none"
+                    />
+                    <path
+                      d="M6 18H42V38C42 39.1046 41.1046 40 40 40H8C6.89543 40 6 39.1046 6 38V18Z"
+                      fill="#E6C87A"
+                      opacity="0.6"
+                    />
+                  </svg>
+                )}
+                {activeWindow === "certificaciones" && (
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
+                )}
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Certificaciones
+                </div>
+              </button>
             </div>
 
             {/* Espaciador flexible */}
             <div className="flex-1" />
 
-            {/* Área de notificaciones */}
-            <div className="flex items-center gap-2 px-3">
-              {/* Iconos del sistema */}
-              <button className="p-1 hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors">
-                <Wifi className="w-4 h-4 text-white" />
-              </button>
-              <button className="p-1 hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors">
-                <Volume2 className="w-4 h-4 text-white" />
-              </button>
-              <button className="p-1 hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors">
-                <Battery className="w-4 h-4 text-white" />
-              </button>
+            <div className="flex items-center gap-1 px-3">
+              {/* Control de WiFi */}
+              <div className="relative">
+                <button
+                  className="p-1.5 hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors relative group"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowWifiMenu(!showWifiMenu);
+                    setShowVolumeControl(false);
+                  }}
+                >
+                  <Wifi className="w-4 h-4 text-white" />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                    Red
+                  </div>
+                </button>
+
+                {/* Menú de WiFi estilo Windows */}
+                {showWifiMenu && (
+                  <div
+                    className="absolute bottom-full right-0 mb-2 w-[320px] bg-[rgba(30,30,30,0.98)] backdrop-blur-xl border border-[rgba(255,255,255,0.15)] rounded-lg shadow-2xl overflow-hidden"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="p-4 border-b border-[rgba(255,255,255,0.1)]">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-white font-medium flex items-center gap-2">
+                          <Wifi className="w-5 h-5" />
+                          Redes disponibles
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="max-h-[280px] overflow-y-auto p-2">
+                      {[
+                        { name: "WiFi Casa", signal: 4, secured: true },
+                        { name: "WiFi Vecino", signal: 3, secured: true },
+                        { name: "Red Pública", signal: 2, secured: false },
+                        { name: "WiFi Oficina", signal: 1, secured: true },
+                      ].map((network, idx) => (
+                        <button
+                          key={idx}
+                          className="w-full p-3 hover:bg-[rgba(255,255,255,0.1)] rounded-lg transition flex items-center justify-between group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="relative">
+                              <Wifi
+                                className={`w-5 h-5 ${
+                                  idx === 0 ? "text-[#0078d4]" : "text-gray-400"
+                                }`}
+                              />
+                              {idx === 0 && (
+                                <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border border-[#1e1e1e]" />
+                              )}
+                            </div>
+                            <div className="text-left">
+                              <div
+                                className={`text-sm ${
+                                  idx === 0
+                                    ? "text-white font-medium"
+                                    : "text-gray-300"
+                                }`}
+                              >
+                                {network.name}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {network.secured ? "Segura" : "Abierta"}
+                                {idx === 0 && " • Conectado"}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex gap-0.5">
+                            {[...Array(4)].map((_, i) => (
+                              <div
+                                key={i}
+                                className={`w-1 ${
+                                  i === 0
+                                    ? "h-2"
+                                    : i === 1
+                                    ? "h-3"
+                                    : i === 2
+                                    ? "h-4"
+                                    : "h-5"
+                                } rounded-sm ${
+                                  i < network.signal
+                                    ? idx === 0
+                                      ? "bg-[#0078d4]"
+                                      : "bg-gray-400"
+                                    : "bg-gray-700"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Control de Volumen */}
+              <div className="relative">
+                <button
+                  className="p-1.5 hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors relative group"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowVolumeControl(!showVolumeControl);
+                    setShowWifiMenu(false);
+                  }}
+                >
+                  <Volume2 className="w-4 h-4 text-white" />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                    Volumen: {volume}%
+                  </div>
+                </button>
+
+                {/* Panel de control de volumen */}
+                {showVolumeControl && (
+                  <div
+                    className="absolute bottom-full right-0 mb-2 w-[280px] bg-[rgba(30,30,30,0.98)] backdrop-blur-xl border border-[rgba(255,255,255,0.15)] rounded-lg shadow-2xl p-4"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-white font-medium flex items-center gap-2">
+                        <Volume2 className="w-5 h-5" />
+                        Volumen
+                      </h3>
+                      <span className="text-[#0078d4] text-sm font-medium">
+                        {volume}%
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Volume2 className="w-4 h-4 text-gray-400" />
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={volume}
+                        onChange={(e) => setVolume(Number(e.target.value))}
+                        className="flex-1 h-1.5 bg-[rgba(255,255,255,0.1)] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#0078d4] [&::-webkit-slider-thumb]:cursor-pointer hover:[&::-webkit-slider-thumb]:bg-[#005a9e] [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#0078d4] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer hover:[&::-moz-range-thumb]:bg-[#005a9e]"
+                      />
+                      <span className="text-white text-xs w-8 text-right">
+                        {volume}
+                      </span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-[rgba(255,255,255,0.1)]">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setVolume(0)}
+                          className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded transition"
+                        >
+                          Silenciar
+                        </button>
+                        <button
+                          onClick={() => setVolume(50)}
+                          className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded transition"
+                        >
+                          50%
+                        </button>
+                        <button
+                          onClick={() => setVolume(100)}
+                          className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded transition"
+                        >
+                          Máximo
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Separador */}
               <div className="h-6 w-[1px] bg-[rgba(255,255,255,0.2)] mx-1" />
@@ -1180,13 +1661,6 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                     month: "2-digit",
                     year: "numeric",
                   })}
-                </div>
-              </button>
-
-              {/* Botón de notificaciones */}
-              <button className="h-10 w-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.1)] rounded transition-colors">
-                <div className="w-4 h-4 border border-white rounded-sm relative">
-                  <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#ff6b35] rounded-full -translate-y-0.5 translate-x-0.5" />
                 </div>
               </button>
             </div>
