@@ -1,7 +1,21 @@
 "use client";
 import { useState } from "react";
 
-export function CalculatorContent() {
+interface CalculatorContentProps {
+  dict: {
+    calculator: {
+      clear: string;
+      divide: string;
+      multiply: string;
+      subtract: string;
+      add: string;
+      equal: string;
+      error: string;
+    };
+  };
+}
+
+export function CalculatorContent({ dict }: CalculatorContentProps) {
   const [display, setDisplay] = useState("0");
   const [equation, setEquation] = useState("");
   const [isNewNumber, setIsNewNumber] = useState(true);
@@ -27,7 +41,7 @@ export function CalculatorContent() {
       setEquation("");
       setIsNewNumber(true);
     } catch {
-      setDisplay("Error");
+      setDisplay(dict.calculator.error || "Error");
       setEquation("");
       setIsNewNumber(true);
     }
@@ -53,19 +67,19 @@ export function CalculatorContent() {
           onClick={handleClear}
           className="col-span-2 p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
         >
-          C
+          {dict.calculator.clear || "C"}
         </button>
         <button
           onClick={() => handleOperator("/")}
           className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
         >
-          ÷
+          {dict.calculator.divide || "÷"}
         </button>
         <button
           onClick={() => handleOperator("*")}
           className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
         >
-          ×
+          {dict.calculator.multiply || "×"}
         </button>
 
         {[7, 8, 9].map((num) => (
@@ -81,7 +95,7 @@ export function CalculatorContent() {
           onClick={() => handleOperator("-")}
           className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
         >
-          -
+          {dict.calculator.subtract || "-"}
         </button>
 
         {[4, 5, 6].map((num) => (
@@ -97,7 +111,7 @@ export function CalculatorContent() {
           onClick={() => handleOperator("+")}
           className="p-4 bg-[#e1e1e1] hover:bg-[#d1d1d1] rounded-lg font-semibold"
         >
-          +
+          {dict.calculator.add || "+"}
         </button>
 
         {[1, 2, 3].map((num) => (
@@ -113,7 +127,7 @@ export function CalculatorContent() {
           onClick={handleEqual}
           className="p-4 bg-[#0078d4] hover:bg-[#006cbd] text-white rounded-lg font-semibold"
         >
-          =
+          {dict.calculator.equal || "="}
         </button>
 
         <button

@@ -25,6 +25,8 @@ interface VSCodeWindowProps {
   onClose: () => void;
   maximized: boolean;
   onDragStart?: (e: React.MouseEvent) => void;
+  dict: any;
+  lang: string;
 }
 
 export function VSCodeWindow({
@@ -33,6 +35,8 @@ export function VSCodeWindow({
   onClose,
   maximized,
   onDragStart,
+  dict,
+  lang,
 }: VSCodeWindowProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [terminalOpen, setTerminalOpen] = useState(true);
@@ -269,13 +273,13 @@ export function VSCodeWindow({
             </Button>
           )}
           <div className="text-sm font-medium truncate">
-            {isMobile ? "Portfolio" : "Portfolio - Visual Studio Code"}
+            {isMobile ? dict.vscode.windowTitleMobile : dict.vscode.windowTitle}
           </div>
         </div>
         <div className="flex items-center space-x-1">
           <Button
-            aria-label="Minimizar ventana"
-            title="Minimizar"
+            aria-label={dict.vscode.minimize}
+            title={dict.vscode.minimize}
             onClick={onMinimize}
             variant="ghost"
             size="sm"
@@ -295,8 +299,10 @@ export function VSCodeWindow({
           {/* Solo mostrar maximizar en desktop */}
           {!isMobile && (
             <Button
-              aria-label={maximized ? "Restaurar ventana" : "Maximizar ventana"}
-              title={maximized ? "Restaurar" : "Maximizar"}
+              aria-label={
+                maximized ? dict.vscode.restore : dict.vscode.maximize
+              }
+              title={maximized ? dict.vscode.restore : dict.vscode.maximize}
               onClick={onMaximize}
               variant="ghost"
               size="sm"
@@ -317,8 +323,8 @@ export function VSCodeWindow({
             </Button>
           )}
           <Button
-            aria-label="Cerrar ventana"
-            title="Cerrar"
+            aria-label={dict.vscode.close}
+            title={dict.vscode.close}
             onClick={onClose}
             variant="ghost"
             size="sm"
@@ -352,7 +358,7 @@ export function VSCodeWindow({
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold uppercase">
-                    Explorador
+                    {dict.vscode.explorer}
                   </span>
                   <button
                     className="ml-1 p-1 rounded transition"
@@ -363,7 +369,7 @@ export function VSCodeWindow({
                       setMobileExplorerOpen((v) => !v);
                       setShowThemeMenu(false);
                     }}
-                    aria-label="Abrir/cerrar explorador"
+                    aria-label={dict.vscode.explorer}
                     type="button"
                   >
                     {mobileExplorerOpen ? (
@@ -386,7 +392,6 @@ export function VSCodeWindow({
                   <Settings className="h-5 w-5" />
                 </Button>
               </div>
-
               {/* Explorador de archivos solo si está abierto y no se muestra el menú de temas */}
               {mobileExplorerOpen && !showThemeMenu && (
                 <div className="space-y-1">
@@ -472,7 +477,7 @@ export function VSCodeWindow({
                     className="pb-2 text-xs font-semibold border-b"
                     style={{ color: theme.text, borderColor: theme.border }}
                   >
-                    Selecciona un tema
+                    {dict.vscode.themeMenu}
                   </div>
                   {Object.keys(themes).map((themeName) => (
                     <div
@@ -616,8 +621,8 @@ export function VSCodeWindow({
               <Button
                 variant="ghost"
                 size="sm"
-                aria-label="Abrir explorador"
-                title="Explorador"
+                aria-label={dict.vscode.explorer}
+                title={dict.vscode.explorer}
                 className={`h-10 w-10 p-0 border-l-2`}
                 style={{
                   background:
@@ -648,7 +653,6 @@ export function VSCodeWindow({
                       : theme.text;
                 }}
                 onClick={() => {
-                  // Toggle sidebar
                   if (sidebarOpen && activePanel === "explorer") {
                     setSidebarOpen(false);
                   } else {
@@ -664,8 +668,8 @@ export function VSCodeWindow({
                   variant="ghost"
                   size="sm"
                   className="h-10 w-10 p-0 "
-                  aria-label="Abrir menú de temas"
-                  title="Cambiar tema"
+                  aria-label={dict.vscode.changeTheme}
+                  title={dict.vscode.changeTheme}
                   style={{
                     background: theme.activityBar + "22",
                   }}
@@ -686,7 +690,7 @@ export function VSCodeWindow({
                       className="pb-2 text-xs font-semibold border-b"
                       style={{ color: theme.text, borderColor: theme.border }}
                     >
-                      Selecciona un tema
+                      {dict.vscode.themeMenu}
                     </div>
                     {Object.keys(themes).map((themeName) => (
                       <div
@@ -878,7 +882,7 @@ export function VSCodeWindow({
                       className="p-2 text-xs font-semibold uppercase tracking-wide"
                       style={{ color: theme.text }}
                     >
-                      Explorador
+                      {dict.vscode.explorer}
                     </div>
                     <div className="flex-1 px-2">
                       {fileStructure.map((item, index) => (
@@ -943,8 +947,8 @@ export function VSCodeWindow({
                 <Button
                   variant="ghost"
                   size="sm"
-                  aria-label="Cerrar pestaña"
-                  title="Cerrar pestaña"
+                  aria-label={dict.vscode.closeTab}
+                  title={dict.vscode.closeTab}
                   className="h-4 w-4 p-0 hover:bg-[#404040]"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -962,7 +966,7 @@ export function VSCodeWindow({
             className="flex-1 overflow-auto"
             style={{ backgroundColor: theme.editor }}
           >
-            <PortfolioContent activeFile={activeFile} theme={theme} />
+            <PortfolioContent dict={dict} activeFile={activeFile} theme={theme} />
           </div>
 
           {/* Terminal Resizer */}
@@ -1000,7 +1004,7 @@ export function VSCodeWindow({
               >
                 <div className="flex items-center space-x-2">
                   <TerminalIcon className="h-4 w-4" />
-                  <span className="text-sm">TERMINAL</span>
+                  <span className="text-sm">{dict.vscode.terminal}</span>
                   {terminalCollapsed ? (
                     <ChevronUp className="h-3 w-3" />
                   ) : (
@@ -1010,8 +1014,8 @@ export function VSCodeWindow({
                 <Button
                   variant="ghost"
                   size="sm"
-                  aria-label="Cerrar terminal"
-                  title="Cerrar terminal"
+                  aria-label={dict.vscode.close}
+                  title={dict.vscode.close}
                   className="h-6 w-6 p-0 hover:bg-[#404040]"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -1021,7 +1025,9 @@ export function VSCodeWindow({
                   <X className="h-3 w-3" />
                 </Button>
               </div>
-              {!terminalCollapsed && <TerminalContent theme={theme} />}
+              {!terminalCollapsed && (
+                <TerminalContent theme={theme} dict={dict} lang={lang} />
+              )}
             </div>
           )}
         </div>
@@ -1033,7 +1039,7 @@ export function VSCodeWindow({
         style={{ backgroundColor: theme.accent }}
       >
         <div className="flex items-center space-x-4">
-          <span>Online</span>
+          <span>{dict.vscode.online}</span>
         </div>
         <div className="flex items-center space-x-4">
           <Button
@@ -1046,25 +1052,25 @@ export function VSCodeWindow({
               if (!terminalOpen) setTerminalCollapsed(false);
             }}
           >
-            Terminal
+            {dict.vscode.terminalBtn}
           </Button>
           <a
             href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline text-white"
-            title="LinkedIn"
+            title={dict.vscode.linkedin}
           >
-            LinkedIn
+            {dict.vscode.linkedin}
           </a>
           <a
             href="https://github.com/lautaro65"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline text-white"
-            title="GitHub"
+            title={dict.vscode.github}
           >
-            GitHub
+            {dict.vscode.github}
           </a>
         </div>
       </div>
@@ -1159,9 +1165,15 @@ function FileTreeItem({
   );
 }
 
-// Agrega este componente al final del archivo
-
-function TerminalContent({ theme }: { theme: any }) {
+function TerminalContent({
+  theme,
+  dict,
+  lang,
+}: {
+  theme: any;
+  dict: any;
+  lang: string;
+}) {
   const [step, setStep] = useState<
     "welcome" | "help" | "perfil" | "contacto" | "status" | "download"
   >("welcome");
@@ -1174,19 +1186,17 @@ function TerminalContent({ theme }: { theme: any }) {
         color: theme.text,
         userSelect: "text",
         transition: "background 0.2s",
-        scrollbarColor: "#444 #222", // Para navegadores que soportan scrollbar-color
-        scrollbarWidth: "thin", // Para Firefox
+        scrollbarColor: "#444 #222",
+        scrollbarWidth: "thin",
       }}
     >
       {step === "welcome" && (
         <>
           <div>
-            <span style={{ color: theme.accent }}>
-              Bienvenido a mi-portfolio.dev
-            </span>
+            <span style={{ color: theme.accent }}>{dict.terminal.welcome}</span>
           </div>
           <div className="mt-1">
-            <span>Presiona </span>
+            <span>{dict.terminal.pressHelp.split("{help}")[0]}</span>
             <button
               className="text-[#4fc1ff] underline px-1 py-0 bg-transparent border-none cursor-pointer"
               style={{ fontSize: "inherit" }}
@@ -1194,7 +1204,7 @@ function TerminalContent({ theme }: { theme: any }) {
             >
               help
             </button>
-            <span> para empezar.</span>
+            <span>{dict.terminal.pressHelp.split("{help}")[1]}</span>
           </div>
           <div className="mt-4 flex items-center">
             <span className="mr-2" style={{ color: theme.accent }}>
@@ -1208,10 +1218,12 @@ function TerminalContent({ theme }: { theme: any }) {
         <>
           <div>
             <span style={{ color: theme.text }}>user@portfolio:~$ </span>
-            <span style={{ color: theme.accent }}>help</span>
+            <span style={{ color: theme.accent }}>
+              {dict.terminal.helpCommand}
+            </span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
-            Comandos disponibles:
+            {dict.terminal.availableCommands}:
           </div>
           <div className="mt-1 flex flex-row flex-wrap gap-x-4 gap-y-2">
             <TerminalCmd
@@ -1235,7 +1247,7 @@ function TerminalContent({ theme }: { theme: any }) {
               theme={theme}
             />
             <TerminalCmd
-              label="limpiar"
+              label={dict.terminal.clear}
               onClick={() => setStep("welcome")}
               theme={theme}
             />
@@ -1255,17 +1267,14 @@ function TerminalContent({ theme }: { theme: any }) {
             <span style={{ color: theme.accent }}>perfil</span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
-            <b>Nombre:</b> Lautaro Octavio Faure
+            <b>{dict.terminal.name}:</b> Lautaro Octavio Faure
             <br />
-            <b>Edad:</b> 19 años
+            <b>{dict.terminal.age}:</b> 19
             <br />
-            <b>Ubicación:</b> Argentina, Cordoba
+            <b>{dict.terminal.location}:</b> Argentina, Cordoba
             <br />
-            <b>Descripción:</b> Soy un desarrollador web apasionado por crear
-            experiencias digitales atractivas y funcionales. Me especializo en
-            tecnologías como React, Next.js y Tailwind CSS para construir
-            aplicaciones modernas y responsivas. Siempre estoy buscando aprender
-            nuevas habilidades y enfrentar desafíos técnicos.
+            <b>{dict.terminal.description}:</b>
+            {dict.terminal.profileDescription}
           </div>
           <div className="mt-3 flex flex-row flex-wrap gap-x-4 gap-y-2">
             <TerminalCmd
@@ -1274,7 +1283,7 @@ function TerminalContent({ theme }: { theme: any }) {
               theme={theme}
             />
             <TerminalCmd
-              label="limpiar"
+              label={dict.terminal.clear}
               onClick={() => setStep("welcome")}
               theme={theme}
             />
@@ -1288,24 +1297,24 @@ function TerminalContent({ theme }: { theme: any }) {
             <span style={{ color: theme.accent }}>contacto</span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
-            <b>Email:</b> lautaroofaure@gmail.com
+            <b>{dict.terminal.email}:</b> lautaroofaure@gmail.com
             <br />
-            <b>LinkedIn:</b>{" "}
+            <b>{dict.terminal.linkedin}:</b>{" "}
             <a
               href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
               target="_blank"
               className="text-[#4fc1ff] underline"
             >
-              linkedin.com
+              {dict.terminal.linkedin}.com
             </a>
             <br />
-            <b>GitHub:</b>{" "}
+            <b>{dict.terminal.github}:</b>{" "}
             <a
               href="https://github.com/lautaro65"
               target="_blank"
               className="text-[#4fc1ff] underline"
             >
-              github.com
+              {dict.terminal.github}.com
             </a>
           </div>
           <div className="mt-3 flex flex-row flex-wrap gap-x-4 gap-y-2">
@@ -1315,7 +1324,7 @@ function TerminalContent({ theme }: { theme: any }) {
               theme={theme}
             />
             <TerminalCmd
-              label="limpiar"
+              label={dict.terminal.clear}
               onClick={() => setStep("welcome")}
               theme={theme}
             />
@@ -1326,11 +1335,10 @@ function TerminalContent({ theme }: { theme: any }) {
         <>
           <div>
             <span style={{ color: theme.text }}>user@portfolio:~$ </span>
-            <span style={{ color: theme.accent }}>status</span>
+            <span style={{ color: theme.accent }}>{dict.terminal.status}</span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
-            <b>Estado actual:</b> Disponible para nuevos proyectos y
-            colaboraciones.
+            <b>{dict.terminal.currentStatus}:</b> {dict.terminal.available}
             <br />
           </div>
           <div className="mt-3 flex flex-row flex-wrap gap-x-4 gap-y-2">
@@ -1340,7 +1348,7 @@ function TerminalContent({ theme }: { theme: any }) {
               theme={theme}
             />
             <TerminalCmd
-              label="limpiar"
+              label={dict.terminal.clear}
               onClick={() => setStep("welcome")}
               theme={theme}
             />
@@ -1351,15 +1359,25 @@ function TerminalContent({ theme }: { theme: any }) {
         <>
           <div>
             <span style={{ color: theme.text }}>user@portfolio:~$ </span>
-            <span style={{ color: theme.accent }}>download cv</span>
+            <span style={{ color: theme.accent }}>
+              {dict.terminal.downloadCV}
+            </span>
           </div>
           <div className="mt-2" style={{ color: theme.text }}>
             <a
-              href="./Curriculum-Vitae-Lautaro-Faure.pdf"
-              download="lautaro_faure_cv.pdf"
+              href={
+                lang === "en"
+                  ? "./Curriculum-Vitae-Lautaro-Faure-English.pdf"
+                  : "./Curriculum-Vitae-Lautaro-Faure.pdf"
+              }
+              download={
+                lang === "en"
+                  ? "lautaro_faure_cv_en.pdf"
+                  : "lautaro_faure_cv.pdf"
+              }
               className="text-[#4fc1ff] underline"
             >
-              Descargar CV (PDF)
+              {dict.terminal.downloadLink}
             </a>
           </div>
           <div className="mt-3 flex flex-row flex-wrap gap-x-4 gap-y-2">
@@ -1369,7 +1387,7 @@ function TerminalContent({ theme }: { theme: any }) {
               theme={theme}
             />
             <TerminalCmd
-              label="limpiar"
+              label={dict.terminal.clear}
               onClick={() => setStep("welcome")}
               theme={theme}
             />

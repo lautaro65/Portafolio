@@ -22,21 +22,21 @@ import Image from "next/image";
 import { CertificacionesWindow } from "./CertificacionesWindow";
 
 const wallpapers = [
-  { name: "Pradera verde", url: "/wallpapers/5.jpg", type: "image" },
-  { name: "Playa del naufragio", url: "/wallpapers/6.jpg", type: "image" },
-  { name: "Arco marino", url: "/wallpapers/7.jpg", type: "image" },
-  { name: "Árbol solitario", url: "/wallpapers/8.jpg", type: "image" },
-  { name: "Lago Braies", url: "/wallpapers/9.jpg", type: "image" },
-  { name: "Ventana de luz", url: "/wallpapers/11.jpg", type: "image" },
+  { key: "meadow", url: "/wallpapers/5.jpg", type: "image" },
+  { key: "shipwreckBeach", url: "/wallpapers/6.jpg", type: "image" },
+  { key: "seaArch", url: "/wallpapers/7.jpg", type: "image" },
+  { key: "loneTree", url: "/wallpapers/8.jpg", type: "image" },
+  { key: "braiesLake", url: "/wallpapers/9.jpg", type: "image" },
+  { key: "windowOfLight", url: "/wallpapers/11.jpg", type: "image" },
 ];
 
 const solidColors = [
-  { name: "Azul Windows", color: "#0078d4" },
-  { name: "Negro", color: "#232323" },
-  { name: "Gris", color: "#444444" },
-  { name: "Verde", color: "#228B22" },
-  { name: "Rojo", color: "#B22222" },
-  { name: "Blanco", color: "#f5f5f5" },
+  { key: "windowsBlue", color: "#0078d4" },
+  { key: "black", color: "#232323" },
+  { key: "gray", color: "#444444" },
+  { key: "green", color: "#228B22" },
+  { key: "red", color: "#B22222" },
+  { key: "white", color: "#f5f5f5" },
 ];
 
 function isColorLight(hex: string) {
@@ -47,7 +47,12 @@ function isColorLight(hex: string) {
   return 0.299 * r + 0.587 * g + 0.114 * b > 200;
 }
 
-export function Desktop() {
+type DesktopProps = {
+  dict: any;
+  lang: string;
+};
+
+export function Desktop({ dict, lang }: DesktopProps) {
   const [windowState, setWindowState] = useState("open");
   const [maximized, setMaximized] = useState(true);
   const [showVsCodeMsg, setShowVsCodeMsg] = useState(false);
@@ -77,18 +82,7 @@ export function Desktop() {
   const [showVolumeControl, setShowVolumeControl] = useState(false);
   const [showWifiMenu, setShowWifiMenu] = useState(false);
 
-  const notepadContent = `¿Por qué contratarme?
-
-• Experiencia profesional en desarrollo web con React, Next.js y TypeScript.
-• Capacidad para trabajar en equipo y comunicar ideas de forma clara.
-• Proactividad y aprendizaje constante de nuevas tecnologías.
-• Compromiso con la calidad y los plazos de entrega.
-• Pasión por crear productos digitales útiles y atractivos.
-
-Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu mejor opción!
-
----
-💡 Por si no te diste cuenta, podés cambiar el fondo haciendo clic en el botón de usuario abajo a la izquierda. `;
+  const notepadContent = dict.desktop.notepadContent;
 
   const [initialX, setInitialX] = useState(0);
   const [initialY, setInitialY] = useState(0);
@@ -338,12 +332,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
     document.body.style.cursor = "move";
     document.body.style.userSelect = "none";
   };
+  const locale = lang === "en" ? "en-US" : "es-ES";
 
-  const centerTime = currentTime.toLocaleTimeString("es-ES", {
+  const centerTime = currentTime.toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const centerDate = currentTime.toLocaleDateString("es-ES", {
+
+  const centerDate = currentTime.toLocaleDateString(locale, {
     weekday: "long",
     day: "2-digit",
     month: "long",
@@ -382,7 +378,11 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
   }, [cvMaximized]);
 
   const handleDownloadCV = () => {
-    window.open("/Curriculum-Vitae-Lautaro-Faure.pdf", "_blank");
+    if (lang === "en") {
+      window.open("/Curriculum-Vitae-Lautaro-Faure-English.pdf", "_blank");
+    } else {
+      window.open("/Curriculum-Vitae-Lautaro-Faure.pdf", "_blank");
+    }
   };
 
   const actualColor = customColor ?? solidColor;
@@ -558,7 +558,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
 
   const searchOptions = [
     {
-      label: "Portafolio",
+      label: dict.desktop.vscode || "Portafolio",
       action: () => {
         setShowSearchResults(false);
         setSearchText("");
@@ -566,7 +566,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       },
     },
     {
-      label: "¿Por qué contratarme?",
+      label: dict.desktop.notepad || "Bloc de notas",
       action: () => {
         setShowSearchResults(false);
         setSearchText("");
@@ -574,7 +574,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       },
     },
     {
-      label: "Descargar CV",
+      label: dict.desktop.downloadCV || "Descargar CV",
       action: () => {
         setShowSearchResults(false);
         setSearchText("");
@@ -582,7 +582,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       },
     },
     {
-      label: "Calculadora",
+      label: dict.desktop.calculator || "Calculadora",
       action: () => {
         setShowSearchResults(false);
         setSearchText("");
@@ -590,7 +590,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
       },
     },
     {
-      label: "Certificaciones",
+      label: dict.desktop.certifications || "Certificaciones",
       action: () => {
         setShowSearchResults(false);
         setSearchText("");
@@ -664,7 +664,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             className="text-sm mt-2 font-semibold drop-shadow"
             style={{ color: portfolioTextColor }}
           >
-            Portafolio
+            {dict.desktop.vscode || "Portafolio"}
           </span>
         </div>
         {/* Bloc de Notas */}
@@ -680,7 +680,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             className="text-sm mt-2 font-semibold drop-shadow"
             style={{ color: portfolioTextColor }}
           >
-            ¿Por qué contratarme?
+            {dict.desktop.notepad || "¿Por qué contratarme?"}
           </span>
         </div>
         {/* Descargar CV */}
@@ -696,7 +696,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             className="text-sm mt-2 font-semibold drop-shadow"
             style={{ color: portfolioTextColor }}
           >
-            Descargar CV
+            {dict.desktop.downloadCV || "Descargar CV"}
           </span>
         </div>
         {/* Calculadora */}
@@ -712,7 +712,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             className="text-sm mt-2 font-semibold drop-shadow"
             style={{ color: portfolioTextColor }}
           >
-            Calculadora
+            {dict.desktop.calculator || "Calculadora"}
           </span>
         </div>
         {/* Certificaciones */}
@@ -826,9 +826,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             className="w-8 h-8"
           />
           <div>
-            <div className="text-white font-semibold mb-1">Portafolio</div>
+            <div className="text-white font-semibold mb-1">
+              {dict.desktop.vscode || "Portafolio"}
+            </div>
             <div className="text-[#cccccc] text-sm">
-              No puede abrir 2 VS Code al mismo tiempo
+              {dict.desktop.vscodeOpenMsg ||
+                "No puede abrir 2 portafolios al mismo tiempo"}
             </div>
           </div>
         </div>
@@ -839,9 +842,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         <div className="fixed bottom-8 right-8 z-70 flex items-center gap-3 bg-[#232323] border border-[#444] shadow-xl rounded-lg px-6 py-4 animate-slide-in">
           <FileText className="w-8 h-8 text-[#0078d4]" />
           <div>
-            <div className="text-white font-semibold mb-1">Bloc de notas</div>
+            <div className="text-white font-semibold mb-1">
+              {dict.desktop.notepad || "Bloc de notas"}
+            </div>
             <div className="text-[#cccccc] text-sm">
-              No puede abrir 2 blocs de notas al mismo tiempo
+              {dict.desktop.notepadOpenMsg ||
+                "No puede abrir 2 blocs de notas al mismo tiempo"}
             </div>
           </div>
         </div>
@@ -865,9 +871,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         <div className="fixed bottom-8 right-8 z-70 flex items-center gap-3 bg-[#232323] border border-[#444] shadow-xl rounded-lg px-6 py-4 animate-slide-in">
           <Calculator className="w-8 h-8 text-[#0078d4]" />
           <div>
-            <div className="text-white font-semibold mb-1">Calculadora</div>
+            <div className="text-white font-semibold mb-1">
+              {dict.desktop.calculator || "Calculadora"}
+            </div>
             <div className="text-[#cccccc] text-sm">
-              No puede abrir 2 calculadoras al mismo tiempo
+              {dict.desktop.calculatorOpenMsg ||
+                "No puede abrir 2 calculadoras al mismo tiempo"}
             </div>
           </div>
         </div>
@@ -910,13 +919,16 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
               >
                 <Folder className="w-4 h-4 text-gray-300" />
                 <span className="text-gray-300 text-sm">
-                  Cambiar fondo de pantalla
+                  {dict.startMenu.changeWallpaper ||
+                    "Cambiar fondo de pantalla"}
                 </span>
               </div>
 
               <div className="flex items-center gap-3 p-2 hover:bg-[#333] rounded cursor-pointer">
                 <User className="w-4 h-4 text-gray-300" />
-                <span className="text-gray-300 text-sm">Usuario: Lautaro</span>
+                <span className="text-gray-300 text-sm">
+                  {dict.startMenu.user || "Usuario: Lautaro"}
+                </span>
               </div>
             </div>
           </div>
@@ -928,16 +940,17 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
         <div className="fixed inset-0 bg-black/40 z-[100] p-4 md:p-0">
           <div className="bg-[#232323] rounded-xl shadow-2xl p-4 md:p-8 w-full md:w-[340px]">
             <h2 className="text-white text-lg font-semibold mb-4">
-              Elige un fondo de pantalla
+              {dict.wallpaperMenu.title || "Seleccionar fondo de pantalla"}
             </h2>
             <div className="mb-4">
               <span className="text-xs text-[#9cdcfe] font-semibold">
-                Imágenes
+                {dict.wallpaperMenu.predefinedWallpapers ||
+                  "Fondos de pantalla predefinidos"}
               </span>
               <div className="grid grid-cols-2 gap-4 mt-2">
                 {wallpapers.map((wp) => (
                   <button
-                    key={wp.name}
+                    key={wp.key} // <-- usa wp.key aquí
                     className={`rounded-lg overflow-hidden border-2 transition-all ${
                       wallpaperType === "image" && wallpaper === wp.url
                         ? "border-[#0078d4]"
@@ -952,14 +965,14 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   >
                     <Image
                       src={wp.url || "/placeholder.svg"}
-                      alt={`Fondo de pantalla: ${wp.name}`}
-                      title={wp.name}
+                      alt={`Fondo de pantalla: ${dict.wallpapers[wp.key]}`}
+                      title={dict.wallpapers[wp.key]}
                       width={160}
                       height={80}
                       className="w-full h-20 object-cover"
                     />
                     <div className="bg-[#232323] text-white text-xs py-1 text-center">
-                      {wp.name}
+                      {dict.wallpapers[wp.key]}
                     </div>
                   </button>
                 ))}
@@ -967,12 +980,12 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             </div>
             <div className="mb-2 mt-6">
               <span className="text-xs text-[#9cdcfe] font-semibold">
-                Colores sólidos
+                {dict.wallpaperMenu.solidColors || "Colores sólidos"}
               </span>
               <div className="grid grid-cols-3 gap-3 mt-2">
                 {solidColors.map((sc) => (
                   <button
-                    key={sc.name}
+                    key={sc.key}
                     className={`rounded-lg border-2 h-12 w-full flex items-center justify-center transition-all ${
                       wallpaperType === "color" && actualColor === sc.color
                         ? "border-[#0078d4]"
@@ -991,7 +1004,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                         sc.color === "#f5f5f5" ? "text-[#232323]" : "text-white"
                       }`}
                     >
-                      {sc.name}
+                      {dict.colors[sc.key]}
                     </span>
                   </button>
                 ))}
@@ -1008,14 +1021,16 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   className="w-10 h-10 rounded border border-[#444] cursor-pointer"
                   title="Color personalizado"
                 />
-                <span className="text-xs text-white">Color personalizado</span>
+                <span className="text-xs text-white">
+                  {dict.wallpaperMenu.customColor || "Color personalizado"}
+                </span>
               </div>
             </div>
             <button
               className="mt-6 w-full py-2 bg-[#0078d4] text-white rounded hover:bg-[#005fa3] transition"
               onClick={() => setShowWallpaperMenu(false)}
             >
-              Cancelar
+              {dict.wallpaperMenu.cancel || "Cancelar"}
             </button>
           </div>
         </div>
@@ -1052,6 +1067,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             onMaximize={() => setCertificacionesMaximized((prev) => !prev)}
             maximized={certificacionesMaximized}
             onDragStart={handleCertificacionesDragStart}
+            dict={dict}
+            lang={lang}
           />
         </div>
       )}
@@ -1086,6 +1103,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             onClose={handleClose}
             maximized={maximized}
             onDragStart={handleDragStart}
+            dict={dict}
+            lang={lang}
           />
         </div>
       )}
@@ -1128,6 +1147,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             maximized={notepadMaximized}
             content={notepadContent}
             onDragStart={handleNotepadDragStart}
+            dict={dict}
           />
         </div>
       )}
@@ -1159,7 +1179,9 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             onMouseDown={handleCalculatorDragStart}
           />
           <div className="flex items-center justify-between px-4 py-2 bg-[#f5f5f5] border-b border-[#ccc] rounded-t-xl">
-            <span className="font-semibold text-[#232323]">Calculadora</span>
+            <span className="font-semibold text-[#232323]">
+              {dict.calculator.calculator || "Calculator"}
+            </span>
             <div className="flex gap-2 items-center">
               <button
                 onClick={handleCalculatorMinimize}
@@ -1178,7 +1200,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
             </div>
           </div>
           <div className="flex-1 flex items-center justify-center text-gray-400 text-lg">
-            <CalculatorContent />
+            <CalculatorContent dict={dict} />
           </div>
         </div>
       )}
@@ -1216,7 +1238,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 <rect x="16" y="17" width="14" height="11" />
               </svg>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Inicio
+                {dict.startMenu.start || "Inicio"}
               </div>
             </button>
 
@@ -1225,7 +1247,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
               <Search className="w-4 h-4 text-gray-300 mr-2" />
               <input
                 type="text"
-                placeholder="Escriba aquí para buscar"
+                placeholder={dict.desktop.searchPlaceholder || "Buscar..."}
                 className="bg-transparent text-white text-sm placeholder-gray-400 outline-none flex-1"
                 value={searchText}
                 onChange={(e) => {
@@ -1242,7 +1264,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 <div className="absolute left-0 bottom-full mb-2 w-[320px] bg-[rgba(30,30,30,0.98)] backdrop-blur-xl border border-[rgba(255,255,255,0.15)] rounded-lg shadow-2xl z-50 overflow-hidden">
                   <div className="p-3 border-b border-[rgba(255,255,255,0.1)]">
                     <p className="text-xs text-gray-400 uppercase tracking-wide">
-                      Mejores coincidencias
+                      {dict.desktop.bestMatches || "Mejores coincidencias"}
                     </p>
                   </div>
                   <div className="max-h-[300px] overflow-y-auto">
@@ -1260,9 +1282,6 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                           <div className="text-sm font-medium">
                             {result.label}
                           </div>
-                          <div className="text-xs text-gray-400">
-                            Aplicación
-                          </div>
                         </div>
                       </button>
                     ))}
@@ -1270,7 +1289,8 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                       <div className="px-4 py-8 text-center">
                         <Search className="w-12 h-12 text-gray-600 mx-auto mb-2" />
                         <p className="text-gray-400 text-sm">
-                          No se encontraron resultados
+                          {dict.desktop.noResults ||
+                            "No se encontraron resultados"}
                         </p>
                       </div>
                     )}
@@ -1315,7 +1335,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
                 )}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  Portafolio
+                  {dict.desktop.vscode || "Portafolio"}
                 </div>
               </button>
 
@@ -1342,7 +1362,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
                 )}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  ¿Por qué contratarme?
+                  {dict.desktop.notepad || "Bloc de notas"}
                 </div>
               </button>
 
@@ -1370,7 +1390,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
                 )}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  Calculadora
+                  {dict.desktop.calculator || "Calculadora"}
                 </div>
               </button>
 
@@ -1467,7 +1487,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-0.5 bg-[#0078d4]" />
                 )}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  Certificaciones
+                  {dict.desktop.certifications || "Certificaciones"}
                 </div>
               </button>
             </div>
@@ -1488,7 +1508,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 >
                   <Wifi className="w-4 h-4 text-white" />
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    Red
+                    {dict.desktop.network || "Red"}
                   </div>
                 </button>
 
@@ -1502,16 +1522,32 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="text-white font-medium flex items-center gap-2">
                           <Wifi className="w-5 h-5" />
-                          Redes disponibles
+                          {dict.desktop.wifiNetworks || "Redes WiFi"}
                         </h3>
                       </div>
                     </div>
                     <div className="max-h-[280px] overflow-y-auto p-2">
                       {[
-                        { name: "WiFi Casa", signal: 4, secured: true },
-                        { name: "WiFi Vecino", signal: 3, secured: true },
-                        { name: "Red Pública", signal: 2, secured: false },
-                        { name: "WiFi Oficina", signal: 1, secured: true },
+                        {
+                          name: dict.desktop.homeWifi || "WiFi Casa",
+                          signal: 4,
+                          secured: true,
+                        },
+                        {
+                          name: dict.desktop.neighborWifi || "WiFi Vecino",
+                          signal: 3,
+                          secured: true,
+                        },
+                        {
+                          name: dict.desktop.publicWifi || "Red Pública",
+                          signal: 2,
+                          secured: false,
+                        },
+                        {
+                          name: dict.desktop.officeWifi || "WiFi Oficina",
+                          signal: 1,
+                          secured: true,
+                        },
                       ].map((network, idx) => (
                         <button
                           key={idx}
@@ -1585,7 +1621,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                 >
                   <Volume2 className="w-4 h-4 text-white" />
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#333] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    Volumen: {volume}%
+                    {dict.desktop.volume || "Volumen"}: {volume}%
                   </div>
                 </button>
 
@@ -1598,7 +1634,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-white font-medium flex items-center gap-2">
                         <Volume2 className="w-5 h-5" />
-                        Volumen
+                        {dict.desktop.volume || "Volumen"}
                       </h3>
                       <span className="text-[#0078d4] text-sm font-medium">
                         {volume}%
@@ -1624,7 +1660,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                           onClick={() => setVolume(0)}
                           className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded transition"
                         >
-                          Silenciar
+                          {dict.desktop.mute || "Silencio"}
                         </button>
                         <button
                           onClick={() => setVolume(50)}
@@ -1636,7 +1672,7 @@ Si buscas alguien responsable, creativo y con ganas de aportar valor, ¡soy tu m
                           onClick={() => setVolume(100)}
                           className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded transition"
                         >
-                          Máximo
+                          {dict.desktop.max || "Máximo"}
                         </button>
                       </div>
                     </div>

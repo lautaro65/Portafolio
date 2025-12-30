@@ -26,20 +26,26 @@ interface PortfolioContentProps {
     text: string;
     accent: string;
   };
+  dict: any;
 }
 
 export default function PortfolioContent({
   activeFile,
   theme,
+  dict,
 }: PortfolioContentProps) {
-  if (activeFile === "proyectos.js") return <ProjectsPage theme={theme} />;
-  if (activeFile === "contacto.md") return <ContactPage theme={theme} />;
-  if (activeFile === "habilidades.md") return <SkillsPage theme={theme} />;
-  if (activeFile === "proceso.md") return <ProcessPage theme={theme} />;
-  return <AboutPage theme={theme} />;
+  if (activeFile === "proyectos.js")
+    return <ProjectsPage dict={dict} theme={theme} />;
+  if (activeFile === "contacto.md")
+    return <ContactPage dict={dict} theme={theme} />;
+  if (activeFile === "habilidades.md")
+    return <SkillsPage dict={dict} theme={theme} />;
+  if (activeFile === "proceso.md")
+    return <ProcessPage dict={dict} theme={theme} />;
+  return <AboutPage dict={dict} theme={theme} />;
 }
 
-function AboutPage({ theme }: { theme?: any }) {
+function AboutPage({ dict, theme }: { dict: any; theme?: any }) {
   return (
     <div
       className="p-2 md:p-8 min-h-full w-full overflow-x-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#232323] [&::-webkit-scrollbar-thumb]:bg-[#444] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#555]"
@@ -54,7 +60,7 @@ function AboutPage({ theme }: { theme?: any }) {
             className="uppercase text-xs tracking-widest mb-2"
             style={{ color: theme?.accent }}
           >
-            PORTAFOLIO / 2025
+            {dict.portfolio.portfolio} / 2025
           </span>
           <h1
             className="text-5xl md:text-6xl font-bold mb-2 leading-tight"
@@ -72,16 +78,17 @@ function AboutPage({ theme }: { theme?: any }) {
             className="text-lg mb-6 max-w-md"
             style={{ color: theme?.text, opacity: 0.85 }}
           >
-            Full Stack Developer creando experiencias digitales en la
-            intersección de{" "}
+            {dict.portfolio.subtitle}
             <span style={{ fontWeight: 600, color: theme?.text }}>
-              tecnología
+              {dict.portfolio.technology}
             </span>
-            ,{" "}
-            <span style={{ fontWeight: 600, color: theme?.text }}>diseño</span>{" "}
-            y{" "}
+            ,
             <span style={{ fontWeight: 600, color: theme?.text }}>
-              usabilidad
+              {dict.portfolio.design}
+            </span>
+            {dict.portfolio.and}
+            <span style={{ fontWeight: 600, color: theme?.text }}>
+              {dict.portfolio.usability}
             </span>
             .
           </p>
@@ -91,7 +98,7 @@ function AboutPage({ theme }: { theme?: any }) {
               style={{ color: "#22c55e" }}
             >
               <span className="inline-block w-2 h-2 rounded-full bg-green-400" />{" "}
-              Disponible para trabajar
+              {dict.portfolio.available}
             </span>
             <span
               className="text-sm"
@@ -150,7 +157,7 @@ function AboutPage({ theme }: { theme?: any }) {
                 color: "#fff",
               }}
             >
-              <User className="h-4 w-4" /> Descargar CV
+              <User className="h-4 w-4" /> {dict.portfolio.downloadCV}
             </a>
           </div>
         </div>
@@ -173,7 +180,7 @@ function AboutPage({ theme }: { theme?: any }) {
                 className="uppercase text-xs tracking-widest"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Actualmente
+                {dict.portfolio.current}
               </span>
               <div className="mt-2">
                 <span
@@ -186,13 +193,13 @@ function AboutPage({ theme }: { theme?: any }) {
                   className="block text-sm"
                   style={{ color: theme?.accent }}
                 >
-                  @ Mi Empresa
+                  @ Faure
                 </span>
                 <span
                   className="block text-xs"
                   style={{ color: theme?.text, opacity: 0.7 }}
                 >
-                  2023 — Presente
+                  2021 — Presente
                 </span>
               </div>
             </div>
@@ -201,7 +208,7 @@ function AboutPage({ theme }: { theme?: any }) {
                 className="uppercase text-xs tracking-widest"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Focus
+                {dict.portfolio.focus}
               </span>
               <div className="flex flex-wrap gap-2 mt-2">
                 {["React", "TypeScript", "Node.js", "UI/UX", "MongoDB"].map(
@@ -227,37 +234,35 @@ function AboutPage({ theme }: { theme?: any }) {
   );
 }
 
-function ProjectsPage({ theme }: { theme?: any }) {
+function ProjectsPage({ theme, dict }: { theme?: any; dict: any }) {
   const projects = [
     {
       title: "Apple Landing Page Demo",
-      description:
-        "Clon interactivo de la landing page de Apple, replicando animaciones, diseño responsivo y experiencia visual premium.",
+      description: dict.portfolio.appleDescription,
       technologies: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
       github: "https://github.com/lautaro65/Clone-Apple",
       demo: "https://clone-apple-zeta.vercel.app",
-      status: "Completado",
+      status: dict.portfolio.completed,
     },
     {
       title: "Controllity Demo",
-      description:
-        "Demo de la plataforma Controllity: gestión de tareas, tableros Kanban y colaboración en tiempo real.\n\n⚠️ Esta es una demo de prueba, por eso no está optimizada ni tiene un estilo estandarizado. En una misma página pueden verse componentes similares con diseños distintos, ya que el foco fue mostrar funcionalidades y no la UI final.",
+      description: dict.portfolio.controllityDescription,
       technologies: ["React", "Node.js", "Socket.io", "MongoDB"],
       github: null,
       demo: "https://controllity.vercel.app",
-      status: "En desarrollo",
+      status: dict.portfolio.inProgress,
     },
   ];
 
   function formatProject(project: (typeof projects)[0]) {
     return `{
-  title: "${project.title}",
-  description: \`${project.description}\`,
-  technologies: [${project.technologies.map((t) => `"${t}"`).join(", ")}],
-  github: ${project.github ? `"${project.github}"` : "null"},
-  demo: ${project.demo ? `"${project.demo}"` : "null"},
-  status: "${project.status}"
-}`;
+    title: "${project.title}",
+    description: \`${project.description}\`,
+    technologies: [${project.technologies.map((t) => `"${t}"`).join(", ")}],
+    github: ${project.github ? `"${project.github}"` : "null"},
+    demo: ${project.demo ? `"${project.demo}"` : "null"},
+    status: "${project.status}"
+    }`;
   }
 
   return (
@@ -267,13 +272,13 @@ function ProjectsPage({ theme }: { theme?: any }) {
           className="uppercase text-xs tracking-widest"
           style={{ color: theme?.accent || "#9cdcfe" }}
         >
-          PROYECTOS / 2025
+          {dict.portfolio.mainProjects}
         </span>
         <h1
           className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 leading-tight"
           style={{ color: theme?.text || "#fff" }}
         >
-          Proyectos Destacados
+          {dict.portfolio.featuredProjects}
         </h1>
         <div className="flex flex-col gap-8">
           {projects.map((project, idx) => (
@@ -303,11 +308,11 @@ function ProjectsPage({ theme }: { theme?: any }) {
                   className="px-3 py-1 rounded-full text-xs font-semibold mt-2 sm:mt-0"
                   style={{
                     background:
-                      project.status === "Completado"
+                      project.status === dict.portfolio.completed
                         ? theme?.accent || "#007acc"
                         : theme?.activityBar || "#3c3c3c",
                     color:
-                      project.status === "Completado"
+                      project.status === dict.portfolio.completed
                         ? "#fff"
                         : theme?.text || "#cccccc",
                   }}
@@ -330,11 +335,8 @@ function ProjectsPage({ theme }: { theme?: any }) {
                       background: theme?.sidebar,
                     }}
                   >
-                    <strong>Nota:</strong> El repositorio es privado y la demo
-                    no está optimizada ni estandarizada visualmente, ya que es
-                    una prueba funcional. En una misma página pueden verse
-                    componentes similares con diseños distintos, porque el foco
-                    fue mostrar funcionalidades y no la UI final.
+                    <strong>{dict.portfolio.note}:</strong>{" "}
+                    {dict.portfolio.noteContent}
                   </div>
                   <div
                     className="text-sm rounded px-3 py-2 mt-1"
@@ -344,13 +346,13 @@ function ProjectsPage({ theme }: { theme?: any }) {
                       border: `1px solid ${theme?.border}`,
                     }}
                   >
-                    <strong>⚠️ Recomendación:</strong> Para probar la demo,
-                    puedes usar la siguiente cuenta de prueba:
+                    <strong>{dict.portfolio.recommendation}:</strong>{" "}
+                    {dict.portfolio.recommendationContent}
                     <br />
                     <span style={{ color: theme?.accent }}>
-                      <b>Mail:</b> DEMO@gmail.com
+                      <b>{dict.portfolio.mail}:</b> DEMO@gmail.com
                       <br />
-                      <b>Contraseña:</b> DEMO123
+                      <b>{dict.portfolio.password}:</b> DEMO123
                     </span>
                   </div>
                 </div>
@@ -367,7 +369,7 @@ function ProjectsPage({ theme }: { theme?: any }) {
                       color: "#fff",
                     }}
                   >
-                    <Github className="h-4 w-4" /> Código
+                    <Github className="h-4 w-4" /> {dict.portfolio.code}
                   </a>
                 ) : (
                   <button
@@ -379,7 +381,7 @@ function ProjectsPage({ theme }: { theme?: any }) {
                       border: `1px solid ${theme?.border || "#444"}`,
                     }}
                   >
-                    <Github className="h-4 w-4" /> Código privado
+                    <Github className="h-4 w-4" /> {dict.portfolio.privateCode}
                   </button>
                 )}
                 {project.demo && (
@@ -394,7 +396,7 @@ function ProjectsPage({ theme }: { theme?: any }) {
                       color: theme?.text || "#cccccc",
                     }}
                   >
-                    <ExternalLink className="h-4 w-4" /> Demo
+                    <ExternalLink className="h-4 w-4" /> {dict.portfolio.demo}
                   </a>
                 )}
               </div>
@@ -406,7 +408,7 @@ function ProjectsPage({ theme }: { theme?: any }) {
   );
 }
 
-function ContactPage({ theme }: { theme?: any }) {
+function ContactPage({ theme, dict }: { theme?: any; dict: any }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle"
@@ -447,7 +449,7 @@ function ContactPage({ theme }: { theme?: any }) {
           className="uppercase text-xs tracking-widest mb-1"
           style={{ color: theme?.accent || "#9cdcfe" }}
         >
-          CONTACTO / 2025
+          {dict.portfolio.contact}
         </span>
         <h1
           className="text-4xl md:text-5xl font-bold w-full mb-2 leading-tight"
@@ -455,7 +457,7 @@ function ContactPage({ theme }: { theme?: any }) {
             color: theme?.text || "#fff",
           }}
         >
-          Contacto
+          {dict.portfolio.contactTitle}
         </h1>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-full">
           <div className="flex-1 flex flex-col items-start justify-start gap-4 px-0 md:px-2 py-0">
@@ -463,9 +465,14 @@ function ContactPage({ theme }: { theme?: any }) {
               className="text-lg mb-2"
               style={{ color: theme?.text || "#cccccc" }}
             >
-              ¿Te gustaría trabajar conmigo o tienes alguna consulta?
-              <br />
-              Puedes contactarme directamente por email o a través de mis redes.
+              {dict.portfolio.contactSubtitle
+                .split("\n")
+                .map((line: string, i: number) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
             </p>
             <div className="flex flex-col gap-3 w-full max-w-xs">
               <a
@@ -492,7 +499,7 @@ function ContactPage({ theme }: { theme?: any }) {
                   color: theme?.accent || "#9cdcfe",
                 }}
               >
-                <ExternalLink className="h-5 w-5" /> LinkedIn
+                <ExternalLink className="h-5 w-5" /> {dict.portfolio.linkedin}
               </a>
               <a
                 href="https://github.com/lautaro65"
@@ -505,7 +512,7 @@ function ContactPage({ theme }: { theme?: any }) {
                   color: theme?.accent || "#9cdcfe",
                 }}
               >
-                <Github className="h-5 w-5" /> GitHub
+                <Github className="h-5 w-5" /> {dict.portfolio.github}
               </a>
             </div>
             <div className="flex items-center gap-2 mt-4">
@@ -513,7 +520,9 @@ function ContactPage({ theme }: { theme?: any }) {
                 className="h-5 w-5"
                 style={{ color: theme?.accent || "#007acc" }}
               />
-              <span style={{ color: theme?.text || "#cccccc" }}>Argentina</span>
+              <span style={{ color: theme?.text || "#cccccc" }}>
+                {dict.portfolio.country}
+              </span>
             </div>
           </div>
           <div
@@ -527,7 +536,7 @@ function ContactPage({ theme }: { theme?: any }) {
               className="text-xl font-semibold mb-4 w-full text-center"
               style={{ color: theme?.accent || "#4fc1ff" }}
             >
-              Envíame un mensaje
+              {dict.portfolio.sendMessage}
             </h2>
             <form
               onSubmit={handleSubmit}
@@ -537,7 +546,7 @@ function ContactPage({ theme }: { theme?: any }) {
                 type="text"
                 name="name"
                 required
-                placeholder="Tu nombre"
+                placeholder={dict.portfolio.yourName}
                 value={form.name}
                 onChange={handleChange}
                 className="w-full rounded px-3 py-2 text-sm md:text-base transition"
@@ -551,7 +560,7 @@ function ContactPage({ theme }: { theme?: any }) {
                 type="email"
                 name="email"
                 required
-                placeholder="Tu email"
+                placeholder={dict.portfolio.yourEmail}
                 value={form.email}
                 onChange={handleChange}
                 className="w-full rounded px-3 py-2 text-sm md:text-base transition"
@@ -565,7 +574,7 @@ function ContactPage({ theme }: { theme?: any }) {
                 name="message"
                 required
                 rows={6}
-                placeholder="Tu mensaje..."
+                placeholder={dict.portfolio.yourMessage}
                 value={form.message}
                 onChange={handleChange}
                 className="w-full rounded px-3 py-2 resize-none text-sm md:text-base transition"
@@ -585,16 +594,18 @@ function ContactPage({ theme }: { theme?: any }) {
                 }}
                 disabled={status === "sending"}
               >
-                {status === "sending" ? "Enviando..." : "Enviar"}
+                {status === "sending"
+                  ? dict.portfolio.sending
+                  : dict.portfolio.send}
               </Button>
               {status === "sent" && (
                 <div className="text-green-500 text-center mt-2">
-                  ¡Mensaje enviado correctamente!
+                  {dict.portfolio.sent}
                 </div>
               )}
               {status === "error" && (
                 <div className="text-red-500 text-center mt-2">
-                  Ocurrió un error. Intenta de nuevo.
+                  {dict.portfolio.error}
                 </div>
               )}
             </form>
@@ -605,7 +616,7 @@ function ContactPage({ theme }: { theme?: any }) {
   );
 }
 
-function SkillsPage({ theme }: { theme?: any }) {
+function SkillsPage({ theme, dict }: { theme?: any; dict: any }) {
   const skills = [
     { name: "React", type: "Frontend" },
     { name: "TypeScript", type: "Frontend" },
@@ -629,10 +640,10 @@ function SkillsPage({ theme }: { theme?: any }) {
   ];
 
   const categories = [
-    { label: "Frontend", color: "#4fc1ff" },
-    { label: "Backend", color: "#ffcc66" },
-    { label: "Database", color: "#a6e22e" },
-    { label: "Tools", color: "#bd93f9" },
+    { label: dict.portfolio.frontend || "Frontend", color: "#4fc1ff" },
+    { label: dict.portfolio.backend || "Backend", color: "#ffcc66" },
+    { label: dict.portfolio.database || "Database", color: "#a6e22e" },
+    { label: dict.portfolio.tools || "Tools", color: "#bd93f9" },
   ];
 
   return (
@@ -649,29 +660,32 @@ function SkillsPage({ theme }: { theme?: any }) {
             className="uppercase text-xs tracking-widest mb-2"
             style={{ color: theme?.accent }}
           >
-            HABILIDADES / 2025
+            {dict.portfolio.skills}
           </span>
           <h1
             className="text-5xl md:text-6xl font-bold mb-2 leading-tight"
             style={{ color: theme?.text }}
           >
-            Stack & Skills
+            {dict.portfolio.stackSkills}
           </h1>
           <h2
             className="text-2xl md:text-3xl font-light mb-6 leading-tight"
             style={{ color: theme?.text, opacity: 0.8 }}
           >
-            Tecnologías y herramientas que domino
+            {dict.portfolio.skillsSubtitle}
           </h2>
           <p
             className="text-lg mb-6 max-w-md"
             style={{ color: theme?.text, opacity: 0.85 }}
           >
-            Experiencia sólida en desarrollo web moderno, backend escalable y
-            bases de datos.
-            <br />
-            Siempre aprendiendo y mejorando mis habilidades técnicas y de
-            colaboración.
+            {dict.portfolio.skillsDescription
+              .split("\n")
+              .map((line: string, i: number) => (
+                <span key={i}>
+                  {line}
+                  <br />
+                </span>
+              ))}
           </p>
           <div className="flex flex-wrap gap-3 mt-2">
             {categories.map((cat) => (
@@ -696,7 +710,7 @@ function SkillsPage({ theme }: { theme?: any }) {
                 className="uppercase text-xs tracking-widest block mb-6"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Tecnologías principales
+                {dict.portfolio.mainTechnologies}
               </span>
               <div className="flex flex-wrap gap-3">
                 {skills.map((skill) => (
@@ -721,7 +735,7 @@ function SkillsPage({ theme }: { theme?: any }) {
                 className="uppercase text-xs tracking-widest block mb-6"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Herramientas y extras
+                {dict.portfolio.toolsExtras}
               </span>
               <div className="flex flex-wrap gap-3">
                 {["Git", "Docker", "AWS", "Jest"].map((tool) => (
@@ -746,7 +760,7 @@ function SkillsPage({ theme }: { theme?: any }) {
   );
 }
 
-function ProcessPage({ theme }: { theme?: any }) {
+function ProcessPage({ theme, dict }: { theme?: any; dict: any }) {
   return (
     <div
       className="p-2 md:p-8 min-h-full w-full overflow-x-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#232323] [&::-webkit-scrollbar-thumb]:bg-[#444] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#555]"
@@ -760,27 +774,25 @@ function ProcessPage({ theme }: { theme?: any }) {
           className="uppercase text-xs tracking-widest mb-2 block"
           style={{ color: theme?.accent || "#9cdcfe" }}
         >
-          PROCESO / 2025
+          {dict.portfolio.process}
         </span>
         <h1
           className="text-4xl md:text-5xl font-bold mb-2 leading-tight flex items-center gap-2"
           style={{ color: theme?.text }}
         >
-          🚀 Por Qué Invertir en Mi Contratación
+          {dict.portfolio.whyHire}
         </h1>
         <h2
           className="text-2xl font-light mb-4 leading-tight"
           style={{ color: theme?.text, opacity: 0.8 }}
         >
-          Full Stack Developer | Valor Comprobado en Equipos de Alto Rendimiento
+          {dict.portfolio.whyHireSubtitle}
         </h2>
         <p
           className="text-lg mb-4 max-w-2xl"
           style={{ color: theme?.text, opacity: 0.85 }}
         >
-          Mi foco va más allá del código: me integro rápidamente, aporto
-          soluciones end-to-end y garantizo la calidad, escalabilidad y
-          mantenibilidad de los productos que construimos.
+          {dict.portfolio.whyHireDescription}
         </p>
         <div
           className="rounded-xl shadow-lg p-4 md:p-8 flex flex-col gap-4 transition-colors"
@@ -798,74 +810,61 @@ function ProcessPage({ theme }: { theme?: any }) {
             className="text-lg md:text-2xl font-bold mb-2 flex items-center gap-2"
             style={{ color: theme?.accent || "#4fc1ff" }}
           >
-            I. 🎯 Mis Ejes de Contribución Clave
+            {dict.portfolio.contributionAxes}
           </h3>
           <p
             className="text-base mb-2"
             style={{ color: theme?.text, opacity: 0.85 }}
           >
-            Esta sección debe destacar tu impacto directo en el negocio y el
-            equipo:
+            {dict.portfolio.contributionAxesDescription}
           </p>
           <ol className="list-decimal pl-6 space-y-4">
             <li>
               <span className="font-semibold" style={{ color: theme?.text }}>
-                🌉 Dominio End-to-End (Full Stack):
+                {dict.portfolio.e2e}
               </span>
               <br />
               <span
                 className="text-sm"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Valor: Reduzco la fricción y los handoffs entre equipos. Mi
-                dominio desde la DB (PostgreSQL/MongoDB) hasta el Pixel
-                (React/Next.js) garantiza que la solución sea coherente, rápida
-                y eficiente en ambas capas.
+                {dict.portfolio.e2eValue}
               </span>
             </li>
             <li>
               <span className="font-semibold" style={{ color: theme?.text }}>
-                📈 Mentalidad de Escalabilidad:
+                {dict.portfolio.scalability}
               </span>
               <br />
               <span
                 className="text-sm"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Valor: No solo escribo código que funciona, sino código que
-                escala. Implemento arquitecturas robustas (Node.js,
-                Microservicios, Docker) que soportan el crecimiento del negocio
-                y reducen la deuda técnica a largo plazo.
+                {dict.portfolio.scalabilityValue}
               </span>
             </li>
             <li>
               <span className="font-semibold" style={{ color: theme?.text }}>
-                🤝 Integración y Colaboración Ágil:
+                {dict.portfolio.agile}
               </span>
               <br />
               <span
                 className="text-sm"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Valor: Soy proactivo en ceremonias ágiles (sprints, reviews,
-                retros). Uso Git y CI/CD como herramientas de colaboración
-                esenciales, asegurando que mis contribuciones se integren de
-                forma segura y fluida con el trabajo del equipo.
+                {dict.portfolio.agileValue}
               </span>
             </li>
             <li>
               <span className="font-semibold" style={{ color: theme?.text }}>
-                🧪 Compromiso con la Calidad (QA/Testing):
+                {dict.portfolio.quality}
               </span>
               <br />
               <span
                 className="text-sm"
                 style={{ color: theme?.text, opacity: 0.7 }}
               >
-                Valor: La calidad es una responsabilidad, no un paso opcional.
-                Implemento rigurosamente pruebas unitarias (Jest) y me adhiero a
-                estándares de TypeScript y clean code para minimizar bugs en
-                producción.
+                {dict.portfolio.qualityValue}
               </span>
             </li>
           </ol>
@@ -876,13 +875,13 @@ function ProcessPage({ theme }: { theme?: any }) {
               className="text-lg font-bold mb-2"
               style={{ color: theme?.accent || "#4fc1ff" }}
             >
-              III. ✉️ Siguiente Paso
+              {dict.portfolio.nextStep}
             </h3>
             <p
               className="text-base mb-2"
               style={{ color: theme?.text, opacity: 0.85 }}
             >
-              Estoy listo para aportar valor desde el Día 1.
+              {dict.portfolio.nextStepDescription}
             </p>
           </div>
           <div>
@@ -896,7 +895,7 @@ function ProcessPage({ theme }: { theme?: any }) {
                 color: "#fff",
               }}
             >
-              Contactar Mail
+              {dict.portfolio.contactMail}
             </a>
             <a
               href="https://www.linkedin.com/in/lautaro-ocatavio-faure"
@@ -908,7 +907,7 @@ function ProcessPage({ theme }: { theme?: any }) {
                 color: "#fff",
               }}
             >
-              Contactar LinkedIn
+              {dict.portfolio.contactLinkedin}
             </a>
           </div>
         </div>

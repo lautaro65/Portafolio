@@ -8,8 +8,12 @@ interface NotepadWindowProps {
   maximized: boolean;
   content: string;
   onDragStart?: (e: React.MouseEvent) => void;
+  dict: {
+    desktop: {
+      notepad: string;
+    };
+  };
 }
-
 export default function NotepadWindow({
   onClose,
   onMinimize,
@@ -17,6 +21,7 @@ export default function NotepadWindow({
   maximized,
   content,
   onDragStart,
+  dict,
 }: NotepadWindowProps) {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -24,10 +29,14 @@ export default function NotepadWindow({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-2 bg-[#f5f5f5] border-b border-[#ccc] rounded-t-xl"
+        className={`flex items-center justify-between px-4 py-2 bg-[#f5f5f5] border-b border-[#ccc] ${
+          maximized ? "" : "rounded-t-xl"
+        }`}
         onMouseDown={onDragStart}
       >
-        <span className="font-semibold text-[#232323]">Bloc de notas</span>
+        <span className="font-semibold text-[#232323]">
+          {dict?.desktop?.notepad || "Bloc de notas"}
+        </span>
         <div className="flex gap-2 items-center">
           <button
             onClick={onMinimize}
