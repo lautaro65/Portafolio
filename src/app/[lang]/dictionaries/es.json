@@ -235,5 +235,7 @@
     "error": "Ocurrió un error. Intenta de nuevo.",
     "appleDescription": "Clon interactivo de la landing page de Apple, replicando animaciones, diseño responsivo y experiencia visual premium.",
     "controllityDescription": "Demo de la plataforma Controllity: gestión de tareas, tableros Kanban y colaboración en tiempo real.\n\n⚠️ Esta es una demo de prueba, por eso no está optimizada ni tiene un estilo estandarizado. En una misma página pueden verse componentes similares con diseños distintos, ya que el foco fue mostrar funcionalidades y no la UI final."
+    ,
+    "ecommerceDescription": "Demo de e-commerce con dashboard funcional para gestión de productos, usuarios y pedidos. Fue desarrollado en menos de una semana y media como prueba de concepto. Si se tratara de un proyecto real, el desarrollo sería mucho más prolijo, detallado y adaptado a las necesidades del cliente."
   }
 }

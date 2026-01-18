@@ -223,7 +223,7 @@ function AboutPage({ dict, theme }: { dict: any; theme?: any }) {
                     >
                       {focus}
                     </span>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -250,6 +250,20 @@ function ProjectsPage({ theme, dict }: { theme?: any; dict: any }) {
       technologies: ["React", "Node.js", "Socket.io", "MongoDB"],
       github: null,
       demo: "https://controllity.vercel.app",
+      status: dict.portfolio.inProgress,
+    },
+    {
+      title: "E-commerce Demo ",
+      description: dict.portfolio.ecommerceDescription,
+      technologies: [
+        "Next.js",
+        "TypeScript",
+        "Stripe",
+        "Tailwind CSS",
+        "postgresql",
+      ],
+      github: null,
+      demo: "https://e-commerce-demo-alpha-eosin.vercel.app/",
       status: dict.portfolio.inProgress,
     },
   ];
@@ -411,11 +425,11 @@ function ProjectsPage({ theme, dict }: { theme?: any; dict: any }) {
 function ContactPage({ theme, dict }: { theme?: any; dict: any }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
+    "idle",
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
