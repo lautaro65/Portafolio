@@ -20,6 +20,7 @@ import type React from "react";
 import { CalculatorContent } from "./Calculator";
 import Image from "next/image";
 import { CertificacionesWindow } from "./CertificacionesWindow";
+import { GoogleWindow } from "./GoogleWindow";
 
 const wallpapers = [
   { key: "meadow", url: "/wallpapers/5.jpg", type: "image" },
@@ -60,7 +61,7 @@ export function Desktop({ dict, lang }: DesktopProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [wallpaper, setWallpaper] = useState(wallpapers[5].url);
   const [wallpaperType, setWallpaperType] = useState<"image" | "color">(
-    "image"
+    "image",
   );
   const [solidColor, setSolidColor] = useState(solidColors[0].color);
   const [customColor, setCustomColor] = useState<string | null>(null);
@@ -69,7 +70,13 @@ export function Desktop({ dict, lang }: DesktopProps) {
   const [notepadMaximized, setNotepadMaximized] = useState(false);
   const [notepadMinimized, setNotepadMinimized] = useState(false);
   const [activeWindow, setActiveWindow] = useState<
-    "vscode" | "notepad" | "cv" | "calculator" | "certificaciones" | null
+    | "vscode"
+    | "notepad"
+    | "cv"
+    | "calculator"
+    | "certificaciones"
+    | "google"
+    | null
   >(null);
   const [showNotepadMsg, setShowNotepadMsg] = useState(false);
   const [showCV, setShowCV] = useState(false);
@@ -77,6 +84,76 @@ export function Desktop({ dict, lang }: DesktopProps) {
   const [showCalculator, setShowCalculator] = useState(false);
   const [calculatorMinimized, setCalculatorMinimized] = useState(false);
   const [showCalculatorMsg, setShowCalculatorMsg] = useState(false);
+
+  // Estado Google Window
+  const [showGoogle, setShowGoogle] = useState(false);
+  const [googleMaximized, setGoogleMaximized] = useState(true);
+  const [googleMinimized, setGoogleMinimized] = useState(false);
+
+  // Drag Google Window
+  const googleRef = useRef<HTMLDivElement>(null);
+  const googleInitialX =
+    typeof window !== "undefined" ? window.innerWidth / 2 - 100 : 100;
+  const googleInitialY =
+    typeof window !== "undefined" ? window.innerHeight * 0.18 : 100;
+  const googlePositionRef = useRef({ x: googleInitialX, y: googleInitialY });
+  const googleDragging = useRef(false);
+  const googleDragOffset = useRef({ x: 0, y: 0 });
+
+  const handleGoogleDragStart = (e: React.MouseEvent) => {
+    if (googleMaximized) return;
+    googleDragging.current = true;
+    googleDragOffset.current = {
+      x: e.clientX - googlePositionRef.current.x,
+      y: e.clientY - googlePositionRef.current.y,
+    };
+    document.body.style.cursor = "move";
+    document.body.style.userSelect = "none";
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (googleDragging.current && !googleMaximized && googleRef.current) {
+        googlePositionRef.current = {
+          x: e.clientX - googleDragOffset.current.x,
+          y: e.clientY - googleDragOffset.current.y,
+        };
+        googleRef.current.style.transform = `translate(${googlePositionRef.current.x}px, ${googlePositionRef.current.y}px)`;
+      }
+    };
+    const handleMouseUp = () => {
+      googleDragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [googleMaximized]);
+
+  useEffect(() => {
+    if (googleMaximized && googleRef.current) {
+      googleRef.current.style.transform = "";
+    }
+  }, [googleMaximized]);
+
+  // Control Google Window
+  const handleGoogleOpen = () => {
+    setShowGoogle(true);
+    setGoogleMinimized(false);
+    setActiveWindow("google");
+    bringToFront("google");
+  };
+  const handleGoogleClose = () => {
+    setShowGoogle(false);
+    setGoogleMinimized(false);
+    setActiveWindow(null);
+  };
+  const handleGoogleMinimize = () => setGoogleMinimized(true);
+  const handleGoogleMaximize = () => setGoogleMaximized((prev) => !prev);
 
   const [volume, setVolume] = useState(50);
   const [showVolumeControl, setShowVolumeControl] = useState(false);
@@ -558,6 +635,15 @@ export function Desktop({ dict, lang }: DesktopProps) {
 
   const searchOptions = [
     {
+      label: "Google",
+      action: () => {
+        setShowSearchResults(false);
+        setSearchText("");
+        handleGoogleOpen();
+      },
+    },
+
+    {
       label: dict.desktop.vscode || "Portafolio",
       action: () => {
         setShowSearchResults(false);
@@ -607,7 +693,7 @@ export function Desktop({ dict, lang }: DesktopProps) {
       setSearchResults(searchOptions);
     } else {
       const filtered = searchOptions.filter((option) =>
-        option.label.toLowerCase().includes(searchText.toLowerCase())
+        option.label.toLowerCase().includes(searchText.toLowerCase()),
       );
       setSearchResults(filtered);
     }
@@ -813,6 +899,29 @@ export function Desktop({ dict, lang }: DesktopProps) {
             Certificaciones
           </span>
         </div>
+        {/* Google */}
+        <div
+          className="flex flex-col items-center cursor-pointer"
+          onClick={handleGoogleOpen}
+          style={{ minWidth: 90 }}
+        >
+          <div className="bg-[#f5f5f5cc] rounded-lg p-3 shadow-lg hover:scale-105 transition flex items-center justify-center">
+            <Image
+              src="/google-icon.png"
+              alt="Ícono de Google"
+              title="Abrir Google"
+              width={48}
+              height={48}
+              className="w-12 h-12 mb-1"
+            />
+          </div>
+          <span
+            className="text-sm mt-2 font-semibold drop-shadow"
+            style={{ color: portfolioTextColor }}
+          >
+            Google
+          </span>
+        </div>
       </div>
       {/* Notificación tipo Windows para VSCode */}
       {showVsCodeMsg && (
@@ -836,6 +945,44 @@ export function Desktop({ dict, lang }: DesktopProps) {
           </div>
         </div>
       )}
+
+      {/* Google Window SIEMPRE montada, solo oculta visualmente si está minimizada o cerrada */}
+      <div
+        ref={googleRef}
+        style={{
+          display: showGoogle && !googleMinimized ? undefined : "none",
+          ...(googleMaximized
+            ? {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                zIndex: getZIndex("google"),
+              }
+            : {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "60vw",
+                minWidth: "350px",
+                height: "65vh",
+                minHeight: "400px",
+                zIndex: getZIndex("google"),
+                transform: `translate(${googlePositionRef.current.x}px, ${googlePositionRef.current.y}px)`,
+              }),
+        }}
+        onMouseDown={() => bringToFront("google")}
+      >
+        <GoogleWindow
+          onClose={handleGoogleClose}
+          onMinimize={handleGoogleMinimize}
+          onMaximize={handleGoogleMaximize}
+          maximized={googleMaximized}
+          onDragStart={handleGoogleDragStart}
+          dict={dict}
+        />
+      </div>
 
       {/* Notificación tipo Windows para Bloc de Notas */}
       {showNotepadMsg && (
@@ -1490,6 +1637,25 @@ export function Desktop({ dict, lang }: DesktopProps) {
                   {dict.desktop.certifications || "Certificaciones"}
                 </div>
               </button>
+
+              <button
+                className={`w-10 h-10 flex items-center justify-center rounded-lg transition border-2 ${activeWindow === "google" ? "border-[#4285F4] bg-blue-100" : "border-transparent hover:bg-[#e0e0e0]"} ${googleMinimized ? "opacity-60" : ""}`}
+                onClick={handleGoogleOpen}
+                title="Google"
+                style={{
+                  boxShadow:
+                    activeWindow === "google" ? "0 0 0 2px #4285F4" : undefined,
+                }}
+              >
+                <Image
+                  src="/google-icon.png"
+                  alt="Google"
+                  title="Abrir Google"
+                  width={28}
+                  height={28}
+                  className="w-7 h-7"
+                />
+              </button>
             </div>
 
             {/* Espaciador flexible */}
@@ -1588,10 +1754,10 @@ export function Desktop({ dict, lang }: DesktopProps) {
                                   i === 0
                                     ? "h-2"
                                     : i === 1
-                                    ? "h-3"
-                                    : i === 2
-                                    ? "h-4"
-                                    : "h-5"
+                                      ? "h-3"
+                                      : i === 2
+                                        ? "h-4"
+                                        : "h-5"
                                 } rounded-sm ${
                                   i < network.signal
                                     ? idx === 0
