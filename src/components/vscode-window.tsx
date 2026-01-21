@@ -180,7 +180,7 @@ export function VSCodeWindow({
     const filtered = openFiles.filter((f) => f !== file);
     setOpenFiles(filtered);
     if (activeFile === file) {
-      setActiveFile(filtered.length ? filtered[filtered.length - 1] : "");
+      setActiveFile((filtered[filtered.length - 1] ?? "about.md"));
     }
   };
 
@@ -1401,11 +1401,10 @@ function TerminalContent({
 function TerminalCmd({
   label,
   onClick,
-  theme,
 }: {
   label: string;
   onClick: () => void;
-  theme: any;
+  theme?: any;
 }) { 
   return (
     <button

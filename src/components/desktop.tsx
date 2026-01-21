@@ -59,11 +59,11 @@ export function Desktop({ dict, lang }: DesktopProps) {
   const [showVsCodeMsg, setShowVsCodeMsg] = useState(false);
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [wallpaper, setWallpaper] = useState(wallpapers[5].url);
+  const [wallpaper, setWallpaper] = useState(wallpapers[5]?.url ?? "/wallpapers/11.jpg");
   const [wallpaperType, setWallpaperType] = useState<"image" | "color">(
     "image",
   );
-  const [solidColor, setSolidColor] = useState(solidColors[0].color);
+  const [solidColor, setSolidColor] = useState(solidColors[0]?.color ?? "#0078d4");
   const [customColor, setCustomColor] = useState<string | null>(null);
   const [showWallpaperMenu, setShowWallpaperMenu] = useState(false);
   const [showNotepad, setShowNotepad] = useState(false);

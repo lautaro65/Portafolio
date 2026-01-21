@@ -21,7 +21,7 @@ export function proxy(request: NextRequest) {
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) return NextResponse.next();
 
   // Solo redirigir la raíz
   if (pathname === "/") {
@@ -29,6 +29,8 @@ export function proxy(request: NextRequest) {
     request.nextUrl.pathname = `/${locale}/`;
     return NextResponse.redirect(request.nextUrl);
   }
+  
+  return NextResponse.next();
 }
 
 export const config = {

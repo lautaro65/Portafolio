@@ -1,18 +1,8 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ExternalLink, Github, Mail, MapPin, Phone, User } from "lucide-react";
-import { motion } from "framer-motion";
+import { ExternalLink, Github, Mail, MapPin, User } from "lucide-react";
 
 interface PortfolioContentProps {
   activeFile: string;
