@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WorkWithMe from "./Google/WorkWithMe";
 import EstilosDeDiseno from "./Google/EstilosDeDiseno";
-import type { CSSProperties } from "react";
 
 // Playground component type
 type PlaygroundComponent = {
@@ -33,7 +32,7 @@ export function GoogleWindow({
   const [isNotDesktop, setIsNotDesktop] = useState(false);
   useEffect(() => {
     const check = () => {
-      setIsNotDesktop(window.innerWidth < 1024);
+      setIsNotDesktop((window.innerWidth ?? 0) < 1024);
     };
     check();
     window.addEventListener("resize", check);
@@ -110,8 +109,8 @@ export function GoogleWindow({
     setTabs(newTabs);
     if (activeTab === id) {
       // Seleccionar tab a la izquierda, o derecha si no hay
-      if (idx > 0) setActiveTab(newTabs[idx - 1].id);
-      else setActiveTab(newTabs[0].id);
+      if (idx > 0) setActiveTab(newTabs[idx - 1]?.id ?? newTabs[0]?.id ?? 1);
+      else setActiveTab(newTabs[0]?.id ?? 1);
     }
   };
 
@@ -169,8 +168,8 @@ export function GoogleWindow({
           const h = tab.history[tab.historyIndex];
           return {
             ...t,
-            title: ` ${dict.google.ResultsFor || "Resultados de"} \"${h.value}\"`,
-            url: ` ${dict.google.ResultsFor || "Resultados de"} ${h.value}`,
+            title: ` ${dict.google.ResultsFor || "Resultados de"} \"${h?.value ?? ""}\"`,
+            url: ` ${dict.google.ResultsFor || "Resultados de"} ${h?.value ?? ""}`,
           };
         }
       }),
@@ -374,9 +373,9 @@ export function GoogleWindow({
                   const prevH = t.history[t.historyIndex - 1];
                   return {
                     ...t,
-                    searchValue: prevH.value,
-                    searchResult: prevH.result,
-                    show404: prevH.is404,
+                    searchValue: prevH?.value ?? "",
+                    searchResult: prevH?.result ?? null,
+                    show404: prevH?.is404 ?? false,
                     historyIndex: t.historyIndex - 1,
                   };
                 } else {
@@ -415,9 +414,9 @@ export function GoogleWindow({
                   const nextH = t.history[t.historyIndex + 1];
                   return {
                     ...t,
-                    searchValue: nextH.value,
-                    searchResult: nextH.result,
-                    show404: nextH.is404,
+                    searchValue: nextH?.value ?? "",
+                    searchResult: nextH?.result ?? null,
+                    show404: nextH?.is404 ?? false,
                     historyIndex: t.historyIndex + 1,
                   };
                 }
@@ -443,7 +442,7 @@ export function GoogleWindow({
           onClick={() => {
             const current = tab.history[tab.historyIndex];
             // Si está en la página de Google, animar igual y mantener historial
-            if (tab.historyIndex === 0) {
+            if (tab.historyIndex === 0 || !current) {
               setTabs((prev) =>
                 prev.map((t) =>
                   t.id === activeTab
@@ -462,12 +461,12 @@ export function GoogleWindow({
             setTabs((prev) =>
               prev.map((t) => {
                 if (t.id !== activeTab) return t;
-                if (current.result) {
+                if (current?.result) {
                   return {
                     ...t,
                     searchResult: null,
                   };
-                } else if (current.is404) {
+                } else if (current?.is404) {
                   return {
                     ...t,
                     show404: false,
@@ -481,13 +480,13 @@ export function GoogleWindow({
               setTabs((prev) =>
                 prev.map((t) => {
                   if (t.id !== activeTab) return t;
-                  if (current.result) {
+                  if (current?.result) {
                     return {
                       ...t,
                       searchResult: current.result,
                       show404: false,
                     };
-                  } else if (current.is404) {
+                  } else if (current?.is404) {
                     return {
                       ...t,
                       searchResult: null,
@@ -787,7 +786,7 @@ export function GoogleWindow({
                   >
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
-                  {window.innerWidth >= 768 &&
+                  {(window.innerWidth ?? 0) >= 768 &&
                     maximized &&
                     dict.google.BackToGoogle}
                 </button>

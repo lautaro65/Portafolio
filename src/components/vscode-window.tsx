@@ -1406,14 +1406,14 @@ function TerminalCmd({
   label: string;
   onClick: () => void;
   theme: any;
-}) {
+}) { 
   return (
     <button
       className="text-[#4fc1ff] underline px-0 py-0 bg-transparent border-none text-left cursor-pointer"
       style={{ fontSize: "inherit", width: "fit-content" }}
       onClick={onClick}
       type="button"
-    >
+    > 
       {">"} {label}
     </button>
   );

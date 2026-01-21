@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Moon,
   Sun,
-  Building2,
-  User,
   Briefcase,
   Download,
   ArrowRight,

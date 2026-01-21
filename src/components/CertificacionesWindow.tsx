@@ -132,10 +132,6 @@ export function CertificacionesWindow({
     </svg>
   );
 
-  function truncateText(text: string, maxLength: number) {
-    return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
-  }
-
   const courseTabs = [
     "Conceptos clave",
     "Qué aprendí",

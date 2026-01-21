@@ -79,8 +79,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
     | null
   >(null);
   const [showNotepadMsg, setShowNotepadMsg] = useState(false);
-  const [showCV, setShowCV] = useState(false);
-  const [showCVMsg, setShowCVMsg] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
   const [calculatorMinimized, setCalculatorMinimized] = useState(false);
   const [showCalculatorMsg, setShowCalculatorMsg] = useState(false);
@@ -286,19 +284,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
     }
   };
 
-  const handleOpenCV = () => {
-    if (showCV) {
-      setShowCVMsg(true);
-      setTimeout(() => setShowCVMsg(false), 2000);
-    } else {
-      setShowCV(true);
-      setActiveWindow("cv");
-      setShowCVMsg(false);
-    }
-  };
-
-  const handleCloseCV = () => setShowCV(false);
-
   const handleOpenCalculator = () => {
     if (showCalculator && !calculatorMinimized) {
       setShowCalculatorMsg(true);
@@ -319,10 +304,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
 
   const notepadDragging = useRef(false);
   const notepadDragOffset = useRef({ x: 0, y: 0 });
-
-  const vscodeZ = activeWindow === "vscode" ? 60 : 50;
-  const notepadZ = activeWindow === "notepad" ? 60 : 50;
-  const calculatorZ = activeWindow === "calculator" ? 60 : 50;
 
   // Agrega el estado para maximizar/minimizar la ventana de certificaciones
   const [certificacionesMaximized, setCertificacionesMaximized] =
@@ -389,7 +370,7 @@ export function Desktop({ dict, lang }: DesktopProps) {
     }
   }, [certificacionesMaximized]);
 
-  const [cvMaximized, setCVMaximized] = useState(false);
+  const [cvMaximized] = useState(false);
   const cvInitialX =
     typeof window !== "undefined" ? window.innerWidth / 2 + 320 : 400;
   const cvInitialY =
@@ -399,16 +380,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
   const cvDragging = useRef(false);
   const cvDragOffset = useRef({ x: 0, y: 0 });
 
-  const handleCVDragStart = (e: React.MouseEvent) => {
-    if (cvMaximized) return;
-    cvDragging.current = true;
-    cvDragOffset.current = {
-      x: e.clientX - cvPositionRef.current.x,
-      y: e.clientY - cvPositionRef.current.y,
-    };
-    document.body.style.cursor = "move";
-    document.body.style.userSelect = "none";
-  };
   const locale = lang === "en" ? "en-US" : "es-ES";
 
   const centerTime = currentTime.toLocaleTimeString(locale, {
@@ -560,34 +531,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
     });
   };
 
-  const handleVSCodeOpen = () => {
-    if (windowState === "open") {
-      setShowVsCodeMsg(true);
-      setTimeout(() => setShowVsCodeMsg(false), 2000);
-    } else {
-      setWindowState("open");
-      setShowVsCodeMsg(false);
-      bringToFront("vscode");
-    }
-  };
-
-  const handleNotepadOpen = () => {
-    if (showNotepad && !notepadMinimized) {
-      setShowNotepadMsg(true);
-      setTimeout(() => setShowNotepadMsg(false), 2000);
-    } else {
-      setShowNotepad(true);
-      setNotepadMinimized(false);
-      bringToFront("notepad");
-    }
-  };
-
-  const handleCalculatorOpen = () => {
-    setShowCalculator(true);
-    setCalculatorMinimized(false);
-    bringToFront("calculator");
-  };
-
   const getWindowDimensions = () => {
     const isMobile = window.innerWidth < 768;
     return {
@@ -686,7 +629,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
       },
     },
   ];
-  const searchMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (searchText.trim() === "") {
@@ -995,19 +937,6 @@ export function Desktop({ dict, lang }: DesktopProps) {
             <div className="text-[#cccccc] text-sm">
               {dict.desktop.notepadOpenMsg ||
                 "No puede abrir 2 blocs de notas al mismo tiempo"}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Notificación tipo Windows para CV */}
-      {showCVMsg && (
-        <div className="fixed bottom-8 right-8 z-70 flex items-center gap-3 bg-[#232323] border border-[#444] shadow-xl rounded-lg px-6 py-4 animate-slide-in">
-          <File className="w-8 h-8 text-[#0078d4]" />
-          <div>
-            <div className="text-white font-semibold mb-1">Curriculum</div>
-            <div className="text-[#cccccc] text-sm">
-              No puede abrir 2 curriculums al mismo tiempo
             </div>
           </div>
         </div>

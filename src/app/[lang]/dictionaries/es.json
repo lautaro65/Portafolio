@@ -1,4 +1,7 @@
 {
+   "products": {
+    "cart": "Add to Cart"
+  },
   "desktop": {
     "vscode": "Portafolio",
     "vscodeOpenMsg": "No puede abrir 2 portafolios al mismo tiempo",

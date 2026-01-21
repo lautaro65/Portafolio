@@ -2,17 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
-  Filter,
   Layers,
   X,
   Eye,
   Palette,
-  Briefcase,
   Sun,
   Moon,
   ArrowRight,
   CheckCircle2,
-  Calendar,
 } from "lucide-react";
 
 function GlassSwitchDemo() {
@@ -634,7 +631,7 @@ const EstilosDeDiseno = ({
   const [modalComp, setModalComp] = useState<ModalCompState>(null);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("Todas");
-  const [styleFilter, setStyleFilter] = useState("");
+  const [styleFilter] = useState("");
   const [selectedStyles, setSelectedStyles] = useState<Record<number, number>>(
     () => {
       const obj: Record<number, number> = {};
@@ -837,6 +834,8 @@ const EstilosDeDiseno = ({
               }
               const style = comp.styles[styleIdx];
 
+              if (!style) return null;
+
               return (
                 <motion.div
                   key={comp.id}
@@ -982,17 +981,17 @@ const EstilosDeDiseno = ({
 
                 <div className="w-full min-h-[280px] rounded-[2.5rem] bg-black/40 border border-white/5 flex items-center justify-center mb-10 relative overflow-hidden p-8">
                   <div className="z-10 w-full max-w-[300px] scale-110 md:scale-125">
-                    {modalComp.comp.styles[modalComp.styleIdx].preview}
+                    {modalComp.comp.styles[modalComp.styleIdx]?.preview}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-600/5 to-transparent" />
                 </div>
 
                 <div className="max-w-md">
                   <h3 className="text-blue-400 font-bold mb-2 uppercase tracking-widest text-sm">
-                    {modalComp.comp.styles[modalComp.styleIdx].type}
+                    {modalComp.comp.styles[modalComp.styleIdx]?.type}
                   </h3>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-8">
-                    {modalComp.comp.styles[modalComp.styleIdx].description}
+                    {modalComp.comp.styles[modalComp.styleIdx]?.description}
                   </p>
 
                   <div className="flex gap-2 flex-wrap justify-center">
