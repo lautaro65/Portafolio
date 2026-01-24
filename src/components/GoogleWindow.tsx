@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WorkWithMe from "./Google/WorkWithMe";
 import EstilosDeDiseno from "./Google/EstilosDeDiseno";
+import PortfolioLautaro from "./Google/PortfolioLautaro";
 
 // Playground component type
 type PlaygroundComponent = {
@@ -28,7 +29,6 @@ export function GoogleWindow({
   onDragStart,
   dict,
 }: GoogleWindowProps) {
-  // Detectar si no es pantalla PC (tablet o mobile)
   const [isNotDesktop, setIsNotDesktop] = useState(false);
   useEffect(() => {
     const check = () => {
@@ -134,6 +134,14 @@ export function GoogleWindow({
         dict.google.ExplicaTuProcesoDeTrabajo ||
         "Explica tu proceso de trabajo, servicios, tarifas y formas de contacto.",
       demo: () => <WorkWithMe dict={dict} maximized={maximized} />,
+    },
+    {
+      name: dict.google.LautaroFaurePortfolio || "Lautaro Faure Portfolio",
+      type: "page",
+      description:
+        dict.google.PortfolioProyectosHabilidades ||
+        "Portfolio profesional con proyectos, habilidades y experiencia. Acceso rápido a mis trabajos destacados.",
+      demo: () => <PortfolioLautaro dict={dict} maximized={maximized} />,
     },
   ];
 
@@ -560,7 +568,7 @@ export function GoogleWindow({
       </div>
 
       {/* Main content placeholder */}
-      <div className="flex-1 flex flex-col items-start justify-start text-[#6b7280] text-base sm:text-lg bg-white relative overflow-y-auto">
+      <div className="flex-1 flex flex-col items-start justify-start text-[#6b7280] text-base sm:text-lg bg-white relative ">
         <div className="w-full flex flex-col items-start justify-start">
           <AnimatePresence mode="wait">
             {tab.historyIndex === 0 && (
@@ -753,6 +761,11 @@ export function GoogleWindow({
                   tab.searchResult.name ===
                     (dict.google.ComoContratarme || "Cómo contratarme") && (
                     <WorkWithMe dict={dict} maximized={maximized} />
+                  )}
+                {tab.searchResult &&
+                  tab.searchResult.name ===
+                    (dict.google.LautaroFaurePortfolio || "Lautaro Faure Portfolio") && (
+                    <PortfolioLautaro dict={dict} maximized={maximized} />
                   )}
                 {/* BOTÓN FLOTANTE VOLVER A GOOGLE */}
                 <button

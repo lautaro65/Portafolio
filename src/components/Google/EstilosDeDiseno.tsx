@@ -652,16 +652,28 @@ const EstilosDeDiseno = ({
     // SSR fallback
     return maximized === false;
   };
+
+  // Detectar desktop minimizado: tamaño >= 768px AND maximized es false
+  const getIsLgAndMinimized = () => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 768 && maximized === false;
+    }
+    return false;
+  };
+
   const [isMobile, setIsMobile] = useState(getIsMobile());
+  const [isLgAndMinimized, setIsLgAndMinimized] = useState(getIsLgAndMinimized());
 
   useEffect(() => {
     setIsMobile(getIsMobile());
+    setIsLgAndMinimized(getIsLgAndMinimized());
   }, [maximized]);
 
   // El useEffect de resize ya lo tienes, así que mantenerlo:
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(getIsMobile());
+      setIsLgAndMinimized(getIsLgAndMinimized());
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -700,7 +712,7 @@ const EstilosDeDiseno = ({
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-700 ${darkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"} p-4 md:p-8`}
+      className={`${isLgAndMinimized ? "h-[60vh] overflow-y-auto" : "h-screen overflow-y-auto"} transition-colors duration-700 ${darkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"} p-4 md:p-8`}
     >
       {/* HEADER SECTION */}
       <div className="max-w-7xl mx-auto mb-12">

@@ -28,15 +28,27 @@ const WorkWithMe = ({ maximized, dict }: WorkWithMeProps) => {
     }
     return maximized === false;
   };
+
+  // Detectar desktop minimizado: tamaño >= 768px AND maximized es false
+  const getIsLgAndMinimized = () => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 768 && maximized === false;
+    }
+    return false;
+  };
+
   const [isMobile, setIsMobile] = useState(getIsMobile());
+  const [isLgAndMinimized, setIsLgAndMinimized] = useState(getIsLgAndMinimized());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     setIsMobile(getIsMobile());
+    setIsLgAndMinimized(getIsLgAndMinimized());
     setMobileMenuOpen(false); // close menu on maximize change
   }, [maximized]);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(getIsMobile());
+      setIsLgAndMinimized(getIsLgAndMinimized());
       setMobileMenuOpen(false); // close menu on resize
     };
     window.addEventListener("resize", handleResize);
@@ -88,7 +100,7 @@ const WorkWithMe = ({ maximized, dict }: WorkWithMeProps) => {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-700 ${darkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"} font-sans selection:bg-blue-500/30`}
+      className={`${isLgAndMinimized ? "h-[60vh] overflow-y-auto" : "h-screen overflow-y-auto"} transition-colors duration-700 ${darkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"} font-sans selection:bg-blue-500/30`}
     >
       {/* BACKGROUND DECORATION (Solo en Dark Mode) */}
       {darkMode && (
